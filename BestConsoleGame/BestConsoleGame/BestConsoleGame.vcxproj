@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\consolegame\MyFirstConsoleGame_0\InputSystem.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\InputSystem.cpp" />
     <ClCompile Include="BestConsoleGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\consolegame\MyFirstConsoleGame_0\InputSystem.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\InputSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
