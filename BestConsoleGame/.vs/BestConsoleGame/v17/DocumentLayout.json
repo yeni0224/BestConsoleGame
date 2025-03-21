@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\",
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\BestConsoleGame\\BestConsoleGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Users\\User\\Desktop\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "BestConsoleGame.cpp",
-              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
               "RelativeDocumentMoniker": "BestConsoleGame\\BestConsoleGame.cpp",
-              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
+              "ToolTip": "C:\\Users\\User\\Desktop\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
               "RelativeToolTip": "BestConsoleGame\\BestConsoleGame.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-20T12:40:22.871Z",
               "EditorCaption": ""
