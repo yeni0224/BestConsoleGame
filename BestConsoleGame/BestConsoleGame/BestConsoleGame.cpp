@@ -24,7 +24,7 @@ namespace global
         {
             currentTime = previousTime = GetTickCount64(); // 틱카운트 받아오기
         }
-
+        
         void UpdateTime() // 
         {
             previousTime = currentTime; 
