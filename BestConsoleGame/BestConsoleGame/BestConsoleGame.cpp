@@ -11,6 +11,7 @@ void DrawPlayer(bool bClear);
 void UpdateGoldMining();
 bool IsInsideZone(COORD pos, SMALL_RECT zone);
 void UpdateAttackUpgrade();
+void UpdateHpUpgrade();
 
 namespace global
 {
@@ -67,6 +68,7 @@ namespace global
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
     SMALL_RECT atkZone = { 45, 2, 61, 8 }; // 공격력 강화소 영역
+    SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
 
 };
 
@@ -105,6 +107,41 @@ void UpdateAttackUpgrade() {
                 global::atk += 10; // 공격력 증가
                 GotoXY(7, 0);
                 printf("공격력 +10        "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+            }
+            else {
+                GotoXY(7, 0);
+                printf("강화 실패...      ");
+            }
+
+
+            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
+            global::input::Set(global::input::IsSpaceKeyOn(), false);
+        }
+    }
+
+    // 키를 떼었을 때 다시 강화 가능하게 만듦
+    if (!global::input::IsSpaceKeyOn()) {
+        global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
+    }
+}
+
+void UpdateHpUpgrade() {
+    if (IsInsideZone(global::curPlayerPos, global::HpZone)) { // 공격력 강화소 안에 있는지 확인
+
+
+        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+            // 강화 진행
+            global::gold -= 1; // 골드 1 감소
+
+            int chance = rand() % 2; // 50% 확률 (0 또는 1)
+            if (chance == 0) {
+                global::max_hp += 100; // 공격력 증가
+                global::hp += 100;
+                GotoXY(7, 0);
+                printf("체력 +100       "); // 기존 메시지를 덮어쓰기 위해 공백 포함
             }
             else {
                 GotoXY(7, 0);
@@ -187,6 +224,7 @@ void Update()
     UpdateGoldMining();
     UpdateGoldStorage();
     UpdateAttackUpgrade();
+    UpdateHpUpgrade();
 
 }
 

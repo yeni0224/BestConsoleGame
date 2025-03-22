@@ -1,10 +1,8 @@
 ﻿  BestConsoleGame.cpp
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(215,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(215,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(215,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(215,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(279,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(279,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  input_Sys.cpp
-  코드를 생성하고 있습니다...
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(253,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(253,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(253,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(253,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(317,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(317,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
   BestConsoleGame.vcxproj -> C:\Users\박준혁\Documents\GitHub\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
