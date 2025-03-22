@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <windows.h>
-#include "../BestConsoleGame/Input.h"
+#include "../BestConsoleGame/InputSystem.h"
 
 bool IsGameRun();
 void UpdatePlayerPosition();
@@ -10,7 +10,6 @@ void GotoXY(int x, int y);
 void DrawPlayer(bool bClear);
 void UpdateGoldMining();
 bool IsInsideZone(COORD pos, SMALL_RECT zone);
-void UpdateAttackUpgrade();
 
 namespace global
 {
@@ -50,7 +49,7 @@ namespace global
 	SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
     SMALL_RECT playerMovableRect = { 5, 5, 30, 30 }; // 플레이어 이동 가능 영역
 
-    const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
+    const int playerMoveSpeed = 100; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
     int gold = 0;
@@ -61,12 +60,9 @@ namespace global
 
     int goldCounter = 0;      // 골드 카운트 (0~10)
     bool isMining = false;    // 채굴 상태 여부
-    bool isUpgrading = false; // 강화 진행 여부
-    bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
-
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
-    SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
-    SMALL_RECT atkZone = { 45, 2, 61, 8 }; // 공격력 강화소 영역
+    SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역 (임시)
+    
 
 };
 
@@ -88,43 +84,6 @@ void Render()
         DrawPlayer(true);
     }
 }
-
-void UpdateAttackUpgrade() {
-    if (IsInsideZone(global::curPlayerPos, global::atkZone)) { // 공격력 강화소 안에 있는지 확인
-        
-
-        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
-            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
-
-            // 강화 진행
-            global::gold -= 1; // 골드 1 감소
-
-            int chance = rand() % 2; // 50% 확률 (0 또는 1)
-            if (chance == 0) {
-                global::atk += 10; // 공격력 증가
-                GotoXY(7, 0);
-                printf("공격력 +10          "); // 기존 메시지를 덮어쓰기 위해 공백 포함
-            }
-            else {
-                GotoXY(7, 0);
-                printf("강화 실패...        ");
-            }
-
-
-            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
-            global::input::Set(global::input::IsSpaceKeyOn(), false);
-        }
-    }
-
-    // 키를 떼었을 때 다시 강화 가능하게 만듦
-    if (!global::input::IsSpaceKeyOn()) {
-        global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
-    }
-}
-
-
-
 
 void FixedUpdate()
 {
@@ -157,7 +116,7 @@ void UpdateGoldMining() {
         if (GetTickCount64() - miningTime >= 500) { // 0.5초(500ms)마다 증가
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
-                GotoXY(7, 0);
+                GotoXY(3, 0);
                 printf("골드 채굴 중: %d/10 ", global::goldCounter);
             }
             miningTime = GetTickCount64(); // 타이머 초기화
@@ -186,7 +145,6 @@ void Update()
     UpdatePlayer();
     UpdateGoldMining();
     UpdateGoldStorage();
-    UpdateAttackUpgrade();
     
 }
 
@@ -220,6 +178,10 @@ char getCharAtPosition(int x, int y) {
 
     return ci.Char.AsciiChar; // 해당 위치 문자 반환
 }
+
+
+
+
 
 
 void UpdatePlayerPosition()

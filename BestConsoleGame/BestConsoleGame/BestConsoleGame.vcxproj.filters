@@ -18,12 +18,12 @@
     <ClCompile Include="BestConsoleGame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
+    <ClCompile Include="..\..\..\..\..\Desktop\InputSystem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="input.h">
+    <ClInclude Include="..\..\..\..\..\Desktop\InputSystem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
