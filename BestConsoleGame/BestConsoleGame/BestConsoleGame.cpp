@@ -77,9 +77,9 @@ void Render()
     GotoXY(0, 0);
     printf("MSG : ");
 
-    GotoXY(60, 0);
+    GotoXY(57, 0);
 
-    printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d", global::goldCounter, global::gold, global::hp, global::max_hp, global::atk);
+    printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d ", global::goldCounter, global::gold, global::hp, global::max_hp, global::atk);
 
     GotoXY(30, 0);
     printf("Player Position (%d, %d)", global::curPlayerPos.X, global::curPlayerPos.Y);
@@ -106,11 +106,11 @@ void UpdateAttackUpgrade() {
             if (chance == 0) {
                 global::atk += 10; // 공격력 증가
                 GotoXY(7, 0);
-                printf("공격력 +10        "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                printf("공격력 +10      "); // 기존 메시지를 덮어쓰기 위해 공백 포함
             }
             else {
                 GotoXY(7, 0);
-                printf("강화 실패...      ");
+                printf("강화 실패...    ");
             }
 
 
@@ -141,7 +141,7 @@ void UpdateHpUpgrade() {
                 global::max_hp += 100; // 공격력 증가
                 global::hp += 100;
                 GotoXY(7, 0);
-                printf("체력 +100       "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                printf("체력 +100     "); // 기존 메시지를 덮어쓰기 위해 공백 포함
             }
             else {
                 GotoXY(7, 0);
