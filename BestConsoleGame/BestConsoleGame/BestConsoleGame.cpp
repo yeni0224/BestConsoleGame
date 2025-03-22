@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <windows.h>
 #include "../BestConsoleGame/Input_Sys.h"
+#include "../BestConsoleGame/Utility.h"
+#include "../BestConsoleGame/Battle.h"
 
 bool IsGameRun();
 void UpdatePlayerPosition();
@@ -273,6 +275,12 @@ void UpdatePlayerPosition()
         if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
             global::curPlayerPos.Y = newY;
         }
+        if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
+            Reset();
+            Battle1();
+            Battle2();
+            BattleText();
+        }
     }
 
     if (global::input::IsDownKeyOn()) // 아래쪽 이동
@@ -282,6 +290,12 @@ void UpdatePlayerPosition()
 
         if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
             global::curPlayerPos.Y = newY;
+        }
+        if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
+            Reset();
+            Battle1();
+            Battle2();
+            BattleText();
         }
     }
 
@@ -293,6 +307,13 @@ void UpdatePlayerPosition()
         if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
             global::curPlayerPos.X = newX;
         }
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
+            Reset();
+            Battle1();
+            Battle2();
+            BattleText();
+        }
+
     }
 
     if (global::input::IsRightKeyOn()) // 오른쪽 이동
@@ -303,6 +324,12 @@ void UpdatePlayerPosition()
         if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
             global::curPlayerPos.X = newX;
         }
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
+            Reset();
+            Battle1();
+            Battle2();
+            BattleText();
+        }
     }
 }
 
@@ -312,11 +339,7 @@ void ProcessInput() // InputSystem.cpp 코드 가져와서 사용
 
 }
 
-void GotoXY(int x, int y) // 커서 위치 이동 함수
-{
-    COORD Cur = { x, y };
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur); // 현재 좌표값 받아서 해당 좌표로 커서 이동
-}
+
 
 void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로 
 {
@@ -485,6 +508,8 @@ void startGame() {
 }
 int main()
 {
+    GotoXY(15, 10);
+    putchar('%');
     global::time::InitTime(); // 시간 초기화
     startGame(); //게임 시작, 기본 화면 구성
 
@@ -497,6 +522,7 @@ int main()
         FixedUpdate();
         Update();
         Render();
+        
     }
 
 
