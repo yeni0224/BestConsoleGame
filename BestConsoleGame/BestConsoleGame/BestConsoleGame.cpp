@@ -8,6 +8,8 @@ void UpdatePlayer();
 void Render();
 void GotoXY(int x, int y);
 void DrawPlayer(bool bClear);
+void UpdateGoldMining();
+bool IsInsideZone(COORD pos, SMALL_RECT zone);
 
 namespace global
 {
@@ -55,15 +57,25 @@ namespace global
     int max_hp = 100;
     int atk = 10;
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
+
+    int goldCounter = 0;      // 골드 카운트 (0~10)
+    bool isMining = false;    // 채굴 상태 여부
+    SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
+    SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역 (임시)
+    
+
 };
 
 void Render()
 {
-    GotoXY(72, 0);
+    GotoXY(0, 0);
+    printf("MSG : ");
 
-    printf("현재 골드: %d  체력 : %d / %d  공격력 : %d", global::gold, global::hp, global::max_hp, global::atk);
+    GotoXY(60, 0);
 
-    GotoXY(45, 0);
+    printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d", global::goldCounter ,global::gold, global::hp, global::max_hp, global::atk);
+
+    GotoXY(30, 0);
     printf("Player Position (%d, %d)", global::curPlayerPos.X, global::curPlayerPos.Y);
     
 
@@ -85,10 +97,55 @@ void FixedUpdate()
     }
 }
 
+bool IsInsideZone(COORD pos, SMALL_RECT zone) {
+    return (pos.X >= zone.Left && pos.X <= zone.Right &&
+        pos.Y >= zone.Top && pos.Y <= zone.Bottom);
+}
+
+void UpdateGoldMining() {
+    if (IsInsideZone(global::curPlayerPos, global::goldZone)) { // 골드존 내부 확인
+        global::isMining = true; // 채굴 상태 활성화
+    }
+    else {
+        global::isMining = false; // 골드존 벗어나면 채굴 중지
+    }
+
+    if (global::isMining) { // 골드존 내부에서만 실행
+        static ULONGLONG miningTime = GetTickCount64();
+
+        if (GetTickCount64() - miningTime >= 500) { // 0.5초(500ms)마다 증가
+            if (global::goldCounter < 10) { // 최대 10까지 증가
+                global::goldCounter++;
+                GotoXY(3, 0);
+                printf("골드 채굴 중: %d/10 ", global::goldCounter);
+            }
+            miningTime = GetTickCount64(); // 타이머 초기화
+        }
+    }
+}
+
+void UpdateGoldStorage() {
+    if (IsInsideZone(global::curPlayerPos, global::homeZone)) { // 집 영역 확인
+        if (global::goldCounter > 0) { // 채굴한 골드가 있을 때 저장
+            global::gold += global::goldCounter;
+            global::goldCounter = 0; // 카운트 초기화
+
+            
+            GotoXY(7, 0);
+            printf("골드 저장 완료!   ");
+        }
+    }
+}
+
+
+
 void Update()
 {
     global::time::updateCount += 1;
     UpdatePlayer();
+    UpdateGoldMining();
+    UpdateGoldStorage();
+    
 }
 
 // 플레이어 갱신
@@ -121,6 +178,11 @@ char getCharAtPosition(int x, int y) {
 
     return ci.Char.AsciiChar; // 해당 위치 문자 반환
 }
+
+
+
+
+
 
 void UpdatePlayerPosition()
 {
@@ -189,7 +251,7 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
     }
 
     GotoXY(global::curPlayerPos.X, global::curPlayerPos.Y); // 이동 후 위치
-    putchar('#'); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
+    printf("#"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
 }
 
 void DrawMovableRect() // 이동불가 영역 표시 = 벽
