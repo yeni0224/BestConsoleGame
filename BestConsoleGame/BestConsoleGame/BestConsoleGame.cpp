@@ -381,7 +381,7 @@ void DrawGoldRect() {
 //        putchar('@');
 //    }
 //}
-
+//123
 void DrawDungeonRect() {
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(90, y);
