@@ -110,44 +110,62 @@ void Clamp(short& n, short min, short max) // 이동 범위 제한
     if (n > max) n = max;
 }
 
+char getCharAtPosition(int x, int y) {
+    CHAR_INFO ci;
+    COORD coord = { (SHORT)x, (SHORT)y };
+    SMALL_RECT rect = { x, y, x, y };
+    COORD bufferSize = { 1, 1 };
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    ReadConsoleOutput(hConsole, &ci, bufferSize, { 0, 0 }, &rect);
+
+    return ci.Char.AsciiChar; // 해당 위치 문자 반환
+}
+
 void UpdatePlayerPosition()
 {
     global::prePlayerPos = global::curPlayerPos;
 
-    if (global::input::IsUpKeyOn()) // 위키 누르면 진입
+    if (global::input::IsUpKeyOn()) // 위쪽 이동
     {
-        global::input::Set(global::input::UP_KEY_INDEX, false); // 위키 누름 상태를 false로 변경 = 이거 안하면 무한입력처리
-        global::curPlayerPos.Y--; // y값 감소 = 위로 이동
-        
-        Clamp(global::curPlayerPos.Y, global::playerMovableRect.Top, global::playerMovableRect.Bottom); //벽 통과 못하게 하는거 이 함수 이용해서 처리
-        
+        global::input::Set(global::input::UP_KEY_INDEX, false);
+        short newY = global::curPlayerPos.Y - 1;
+
+        // 이동하려는 위치의 문자가 '@'가 아니면 이동
+        if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
+            global::curPlayerPos.Y = newY;
+        }
     }
 
-    if (global::input::IsDownKeyOn())
+    if (global::input::IsDownKeyOn()) // 아래쪽 이동
     {
         global::input::Set(global::input::DOWN_KEY_INDEX, false);
-        global::curPlayerPos.Y++;
-        Clamp(global::curPlayerPos.Y, global::playerMovableRect.Top, global::playerMovableRect.Bottom);//벽 통과 못하게 하는거 이 함수 이용해서 처리
-        
+        short newY = global::curPlayerPos.Y + 1;
+
+        if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
+            global::curPlayerPos.Y = newY;
+        }
     }
 
-    if (global::input::IsLeftKeyOn())
+    if (global::input::IsLeftKeyOn()) // 왼쪽 이동
     {
         global::input::Set(global::input::LEFT_KEY_INDEX, false);
-        global::curPlayerPos.X--;
-        Clamp(global::curPlayerPos.X, global::playerMovableRect.Left, global::playerMovableRect.Right);//벽 통과 못하게 하는거 이 함수 이용해서 처리
-        
+        short newX = global::curPlayerPos.X - 1;
+
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
+            global::curPlayerPos.X = newX;
+        }
     }
 
-    if (global::input::IsRightKeyOn())
+    if (global::input::IsRightKeyOn()) // 오른쪽 이동
     {
         global::input::Set(global::input::RIGHT_KEY_INDEX, false);
-        global::curPlayerPos.X++;  
-        Clamp(global::curPlayerPos.X, global::playerMovableRect.Left, global::playerMovableRect.Right);//벽 통과 못하게 하는거 이 함수 이용해서 처리
-        
-    }
+        short newX = global::curPlayerPos.X + 1;
 
-    
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
+            global::curPlayerPos.X = newX;
+        }
+    }
 }
 
 void ProcessInput() // InputSystem.cpp 코드 가져와서 사용
@@ -203,18 +221,18 @@ void DrawMovableRect() // 이동불가 영역 표시 = 벽
 void DrawHomeRect() 
 {
     for (int i = 2; i <= 10; i++) {
-        GotoXY(50, i);
+        GotoXY(40, i);
         putchar('@');
     }
     for (int i = 19; i <= 27; i++) {
-        GotoXY(50, i);
+        GotoXY(40, i);
         putchar('@');
     }
-    for (int i = 40; i < 50; i++) {
+    for (int i = 30; i < 40; i++) {
         GotoXY(i, 10);
         putchar('@');
     }
-    for (int i = 40; i < 50; i++) {
+    for (int i = 30; i < 40; i++) {
         GotoXY(i, 19);
         putchar('@');
     }
@@ -222,18 +240,18 @@ void DrawHomeRect()
 
 void DrawAtkRect() {
     for (int i = 2; i <= 8; i++) {
-        GotoXY(54, i);
+        GotoXY(44, i);
         putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
-        GotoXY(67, i);
+        GotoXY(62, i);
         putchar('@');
     }
 }
 
 void DrawHpRect() {
     for (int i = 2; i <= 8; i++) {
-        GotoXY(71, i);
+        GotoXY(66, i);
         putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
@@ -244,36 +262,36 @@ void DrawHpRect() {
 
 void DrawGoldRect() {
     for (int i = 21; i <= 27; i++) {
-        GotoXY(54, i);
+        GotoXY(44, i);
         putchar('@');
     }
     for (int i = 21; i <= 27; i++) {
-        GotoXY(67, i);
+        GotoXY(79, i);
         putchar('@');
     }
 }
 
-void DrawpoltalRect() {
-    for (int i = 21; i <= 27; i++) {
-        GotoXY(71, i);
-        putchar('@');
-    }
-    for (int i = 21; i <= 27; i++) {
-        GotoXY(84, i);
-        putchar('@');
-    }
-}
+//void DrawpoltalRect() {
+//    for (int i = 21; i <= 27; i++) {
+//        GotoXY(71, i);
+//        putchar('@');
+//    }
+//    for (int i = 21; i <= 27; i++) {
+//        GotoXY(84, i);
+//        putchar('@');
+//    }
+//}
 
 void DrawDungeonRect() {
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) {
+    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(90, y);
         putchar('@');
     }
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) {
+    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(89, y);
         putchar('@');
     }
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) {
+    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(88, y);
         putchar('@');
     }
@@ -317,7 +335,7 @@ void startGame() {
     DrawAtkRect(); //  공격력 강화소 벽 생성
     DrawHpRect(); // 체력 강화소 벽 생성
     DrawGoldRect(); //광산 벽 생성 
-    DrawpoltalRect(); // 던전 입구 벽 생성
+    //DrawpoltalRect(); // 던전 입구 벽 생성
     DrawDungeonRect();
 
     global::prePlayerPos.X = 10;
