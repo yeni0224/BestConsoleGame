@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <windows.h>
-#include "../BestConsoleGame/InputSystem.h"
+#include "../BestConsoleGame/Input_Sys.h"
 
 bool IsGameRun();
 void UpdatePlayerPosition();
@@ -10,14 +10,15 @@ void GotoXY(int x, int y);
 void DrawPlayer(bool bClear);
 void UpdateGoldMining();
 bool IsInsideZone(COORD pos, SMALL_RECT zone);
+void UpdateAttackUpgrade();
 
 namespace global
 {
     namespace time
     {
         ULONGLONG previousTime; //이전 시간
-		ULONGLONG currentTime; //현재 시간
-		ULONGLONG deltaTime; //시간차이
+        ULONGLONG currentTime; //현재 시간
+        ULONGLONG deltaTime; //시간차이
 
         int updateCount;
         int fixedUpdateCount;
@@ -26,10 +27,10 @@ namespace global
         {
             currentTime = previousTime = GetTickCount64(); // 틱카운트 받아오기
         }
-        
+
         void UpdateTime() // 
         {
-            previousTime = currentTime; 
+            previousTime = currentTime;
             currentTime = GetTickCount64();
 
             deltaTime = currentTime - previousTime; // 델타 타임 구하기
@@ -38,7 +39,7 @@ namespace global
 
         ULONGLONG GetDeltaTime()
         {
-     
+
             return deltaTime;
         }
     };
@@ -46,10 +47,10 @@ namespace global
     COORD prePlayerPos;
     COORD curPlayerPos;
 
-	SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
+    SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
     SMALL_RECT playerMovableRect = { 5, 5, 30, 30 }; // 플레이어 이동 가능 영역
 
-    const int playerMoveSpeed = 100; // 플레이어 이동 속도 : 작을수록 빠름
+    const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
     int gold = 0;
@@ -60,9 +61,12 @@ namespace global
 
     int goldCounter = 0;      // 골드 카운트 (0~10)
     bool isMining = false;    // 채굴 상태 여부
+    bool isUpgrading = false; // 강화 진행 여부
+    bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
+
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
-    SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역 (임시)
-    
+    SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
+    SMALL_RECT atkZone = { 45, 2, 61, 8 }; // 공격력 강화소 영역
 
 };
 
@@ -73,17 +77,54 @@ void Render()
 
     GotoXY(60, 0);
 
-    printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d", global::goldCounter ,global::gold, global::hp, global::max_hp, global::atk);
+    printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d", global::goldCounter, global::gold, global::hp, global::max_hp, global::atk);
 
     GotoXY(30, 0);
     printf("Player Position (%d, %d)", global::curPlayerPos.X, global::curPlayerPos.Y);
-    
+
 
     if ((global::prePlayerPos.X != global::curPlayerPos.X) || (global::prePlayerPos.Y != global::curPlayerPos.Y))
     {
         DrawPlayer(true);
     }
 }
+
+void UpdateAttackUpgrade() {
+    if (IsInsideZone(global::curPlayerPos, global::atkZone)) { // 공격력 강화소 안에 있는지 확인
+
+
+        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+            // 강화 진행
+            global::gold -= 1; // 골드 1 감소
+
+            int chance = rand() % 2; // 50% 확률 (0 또는 1)
+            if (chance == 0) {
+                global::atk += 10; // 공격력 증가
+                GotoXY(7, 0);
+                printf("공격력 +10        "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+            }
+            else {
+                GotoXY(7, 0);
+                printf("강화 실패...      ");
+            }
+
+
+            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
+            global::input::Set(global::input::IsSpaceKeyOn(), false);
+        }
+    }
+
+    // 키를 떼었을 때 다시 강화 가능하게 만듦
+    if (!global::input::IsSpaceKeyOn()) {
+        global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
+    }
+}
+
+
+
 
 void FixedUpdate()
 {
@@ -116,7 +157,7 @@ void UpdateGoldMining() {
         if (GetTickCount64() - miningTime >= 500) { // 0.5초(500ms)마다 증가
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
-                GotoXY(3, 0);
+                GotoXY(7, 0);
                 printf("골드 채굴 중: %d/10 ", global::goldCounter);
             }
             miningTime = GetTickCount64(); // 타이머 초기화
@@ -130,7 +171,7 @@ void UpdateGoldStorage() {
             global::gold += global::goldCounter;
             global::goldCounter = 0; // 카운트 초기화
 
-            
+
             GotoXY(7, 0);
             printf("골드 저장 완료!   ");
         }
@@ -145,7 +186,8 @@ void Update()
     UpdatePlayer();
     UpdateGoldMining();
     UpdateGoldStorage();
-    
+    UpdateAttackUpgrade();
+
 }
 
 // 플레이어 갱신
@@ -178,10 +220,6 @@ char getCharAtPosition(int x, int y) {
 
     return ci.Char.AsciiChar; // 해당 위치 문자 반환
 }
-
-
-
-
 
 
 void UpdatePlayerPosition()
@@ -233,7 +271,7 @@ void UpdatePlayerPosition()
 void ProcessInput() // InputSystem.cpp 코드 가져와서 사용
 {
     global::input::UpdateInput(); // ESC,상,하,좌,우,스페이스바 입력 받기
-    
+
 }
 
 void GotoXY(int x, int y) // 커서 위치 이동 함수
@@ -280,7 +318,7 @@ void DrawMovableRect() // 이동불가 영역 표시 = 벽
         putchar('@');
     }
 }
-void DrawHomeRect() 
+void DrawHomeRect()
 {
     for (int i = 2; i <= 10; i++) {
         GotoXY(40, i);
@@ -343,7 +381,7 @@ void DrawGoldRect() {
 //        putchar('@');
 //    }
 //}
-//123
+
 void DrawDungeonRect() {
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(90, y);
@@ -365,7 +403,7 @@ void startGame() {
     cursorInfo.dwSize = 1; // 커서 크기 1~100
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 핸들 불러서 커서 
 
-	CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
+    CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     /*COORD dwSize;                // 콘솔 버퍼의 크기 (가로, 세로)
     COORD dwCursorPosition;     // 현재 커서 위치 (X, Y)
@@ -390,7 +428,7 @@ void startGame() {
     printf("오른쪽: %d\n", global::playerMovableRect.Right);
     printf("아래쪽: %d\n", global::playerMovableRect.Bottom);*/
 
-    
+
 
     DrawMovableRect(); // 테두리 벽 생성
     DrawHomeRect(); // 집 벽 생성
@@ -411,19 +449,19 @@ int main()
 {
     global::time::InitTime(); // 시간 초기화
     startGame(); //게임 시작, 기본 화면 구성
-    
-    
+
+
     while (IsGameRun()) // 게임 루프
     {
         global::time::UpdateTime();
-        
+
         ProcessInput();
         FixedUpdate();
         Update();
         Render();
     }
 
-   
+
     return 0;
 }
 
