@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <windows.h>
-#include "../BestConsoleGame/InputSystem.h"
+#include "../BestConsoleGame/Input.h"
 
 bool IsGameRun();
 void UpdatePlayerPosition();
