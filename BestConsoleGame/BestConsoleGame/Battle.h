@@ -30,9 +30,11 @@ typedef struct
 
 
 void Reset();
+void BattleManager();
 
 void Player();
 void MonsterA();
 void Battle1();
 void Battle2();
-void BattleText();
+void BattleText1();
+void BattleText2();

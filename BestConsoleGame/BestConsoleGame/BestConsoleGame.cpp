@@ -181,9 +181,7 @@ void BattleStart() {
             
             //  여기에 배틀 시작 관련 함수 넣으면 됨!
             Reset();
-            Battle1();
-            Battle2();
-            BattleText();
+            BattleManager();
             //
             // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
             global::input::Set(global::input::IsSpaceKeyOn(), false);
@@ -314,9 +312,7 @@ void UpdatePlayerPosition()
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
             Reset();
-            Battle1();
-            Battle2();
-            BattleText();
+            BattleManager();
         }
     }
 
@@ -330,9 +326,7 @@ void UpdatePlayerPosition()
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
             Reset();
-            Battle1();
-            Battle2();
-            BattleText();
+            BattleManager();
         }
     }
 
@@ -346,9 +340,7 @@ void UpdatePlayerPosition()
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
             Reset();
-            Battle1();
-            Battle2();
-            BattleText();
+            BattleManager();
         }
 
     }
@@ -363,9 +355,7 @@ void UpdatePlayerPosition()
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
             Reset();
-            Battle1();
-            Battle2();
-            BattleText();
+            BattleManager();
         }
     }
 }
