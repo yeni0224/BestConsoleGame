@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -55,18 +55,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "InputSystem.h",
-              "DocumentMoniker": "C:\\Users\\\uBC15\uC900\uD601\\Documents\\GitHub\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\InputSystem.h",
-              "RelativeDocumentMoniker": "BestConsoleGame\\InputSystem.h",
-              "ToolTip": "C:\\Users\\\uBC15\uC900\uD601\\Documents\\GitHub\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\InputSystem.h",
-              "RelativeToolTip": "BestConsoleGame\\InputSystem.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-22T10:12:56.731Z"
             },
             {
               "$type": "Document",
@@ -90,8 +78,7 @@
               "RelativeToolTip": "BestConsoleGame\\Battle.h",
               "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-22T10:04:01.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-22T10:04:01.45Z"
             },
             {
               "$type": "Document",
@@ -149,10 +136,22 @@
               "RelativeDocumentMoniker": "BestConsoleGame\\BestConsoleGame.cpp",
               "ToolTip": "C:\\Users\\\uBC15\uC900\uD601\\Documents\\GitHub\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
               "RelativeToolTip": "BestConsoleGame\\BestConsoleGame.cpp",
-              "ViewState": "AQIAAOgBAAAAAAAAAADwvwACAAAUAAAA",
+              "ViewState": "AQIAAMEAAAAAAAAAAAAmwMoAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-21T13:29:39.738Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "InputSystem.h",
+              "DocumentMoniker": "C:\\Users\\\uBC15\uC900\uD601\\Documents\\GitHub\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\InputSystem.h",
+              "RelativeDocumentMoniker": "BestConsoleGame\\InputSystem.h",
+              "ToolTip": "C:\\Users\\\uBC15\uC900\uD601\\Documents\\GitHub\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\InputSystem.h",
+              "RelativeToolTip": "BestConsoleGame\\InputSystem.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-22T10:12:56.731Z"
             }
           ]
         }

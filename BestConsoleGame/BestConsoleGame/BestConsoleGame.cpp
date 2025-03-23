@@ -62,6 +62,7 @@ namespace global
     int max_hp = 100;
     int atk = 10;
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
+    static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
 
     int goldCounter = 0;      // 골드 카운트 (0~10)
     bool isMining = false;    // 채굴 상태 여부
@@ -69,11 +70,13 @@ namespace global
     bool isReady = false;     // 배틀 시작 여부
     bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
 
+
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
     SMALL_RECT atkZone = { 45, 2, 61, 8 }; // 공격력 강화소 영역
     SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
-    SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역
+    SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역 30 20 39 27
+    SMALL_RECT AutoMoneyBuyZone = { 30, 20, 39, 27 }; // 오토 머니 구매 영역
 
 };
 
@@ -138,7 +141,7 @@ void UpdateAttackUpgrade() {
 }
 
 void UpdateHpUpgrade() {
-    if (IsInsideZone(global::curPlayerPos, global::HpZone)) { // 공격력 강화소 안에 있는지 확인
+    if (IsInsideZone(global::curPlayerPos, global::HpZone)) { // 체력 강화소 안에 있는지 확인
 
 
         // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
@@ -150,7 +153,7 @@ void UpdateHpUpgrade() {
 
             int chance = rand() % 2; // 50% 확률 (0 또는 1)
             if (chance == 0) {
-                global::max_hp += 100; // 공격력 증가
+                global::max_hp += 100; // 체력 증가
                 global::hp += 100;
                 GotoXY(7, 0);
                 printf("체력 +100     "); // 기존 메시지를 덮어쓰기 위해 공백 포함
@@ -171,6 +174,54 @@ void UpdateHpUpgrade() {
         global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
     }
 }
+
+void AutoMoneyBuy() {
+    
+    const int maxPurchases = 3;    // 최대 구매 가능 횟수
+
+    if (IsInsideZone(global::curPlayerPos, global::AutoMoneyBuyZone)) { // 구매 존 안에 있는지 확인
+        
+        if (global::purchaseCount < maxPurchases) {
+            GotoXY(7, 0);
+            printf("구매하시겠습니까?    ");
+        }
+        // 스페이스바를 처음 눌렀을 때만 실행 & 구매 횟수 체크
+        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed && global::purchaseCount < maxPurchases) {
+            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+            // 골드 차감
+            global::gold -= 1; 
+            global::purchaseCount++;  // 구매 횟수 증가
+            GotoXY(37, 20);
+            setColor(6); //노란색
+            printf("(%d)",global::purchaseCount);
+            setColor(15); // 기본색
+
+            
+        }
+
+        // 모든 구매를 완료하면 메시지 표시
+        if (global::purchaseCount >= maxPurchases) {
+            GotoXY(7, 0);
+            printf("구매 한도 도달!     ");
+        }
+    }
+
+    // 키를 떼었을 때 다시 구매 가능하게 설정
+    if (!global::input::IsSpaceKeyOn()) {
+        global::WasSpaceKeyPressed = false;
+    }
+}
+
+void AutoMoney() {
+    static ULONGLONG autoGoldTime = GetTickCount64();
+
+    if (GetTickCount64() - autoGoldTime >= 1000) { // 0.5초(500ms)마다 증가
+        global::gold += global::purchaseCount * 1;
+        autoGoldTime = GetTickCount64(); // 타이머 초기화
+    }
+}
+
 
 void BattleStart() {
     if (IsInsideZone(global::curPlayerPos, global::battleZone)) { // 배틀존 안에 있는지 확인
@@ -267,6 +318,8 @@ void Update()
     UpdateAttackUpgrade();
     UpdateHpUpgrade();
     BattleStart();
+    AutoMoneyBuy();
+    AutoMoney();
 
 }
 
@@ -375,6 +428,7 @@ void ProcessInput() // InputSystem.cpp 코드 가져와서 사용
 
 
 
+
 void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로 
 {
     if (bClear)
@@ -384,7 +438,7 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
     }
 
     GotoXY(global::curPlayerPos.X, global::curPlayerPos.Y); // 이동 후 위치
-    printf("#"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
+    printf("&"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
 }
 
 void DrawMovableRect() // 이동불가 영역 표시 = 벽
@@ -442,6 +496,13 @@ void DrawHomeRect()
         printf("■");
         // putchar('@');
     }
+    setColor(15); // 기존색으로 복귀
+}
+
+void DrawAutoMoney() {
+    GotoXY(30,20);
+    setColor(6); //노란색
+    printf("BUY 50G");
     setColor(15); // 기존색으로 복귀
 }
 
@@ -574,6 +635,7 @@ void startGame() {
     DrawGoldRect(); //광산 벽 생성 
     //DrawpoltalRect(); // 던전 입구 벽 생성
     DrawDungeonRect();
+    DrawAutoMoney();
 
     global::prePlayerPos.X = 10;
     global::prePlayerPos.Y = 10;
