@@ -65,12 +65,14 @@ namespace global
     int goldCounter = 0;      // 골드 카운트 (0~10)
     bool isMining = false;    // 채굴 상태 여부
     bool isUpgrading = false; // 강화 진행 여부
+    bool isReady = false;     // 배틀 시작 여부
     bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
     SMALL_RECT atkZone = { 45, 2, 61, 8 }; // 공격력 강화소 영역
     SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
+    SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역
 
 };
 
@@ -85,6 +87,9 @@ void Render()
 
     GotoXY(30, 0);
     printf("Player Position (%d, %d)", global::curPlayerPos.X, global::curPlayerPos.Y);
+
+    //GotoXY(101, 14);
+    //printf("Battle!");
 
 
     if ((global::prePlayerPos.X != global::curPlayerPos.X) || (global::prePlayerPos.Y != global::curPlayerPos.Y))
@@ -162,6 +167,37 @@ void UpdateHpUpgrade() {
     }
 }
 
+void BattleStart() {
+    if (IsInsideZone(global::curPlayerPos, global::battleZone)) { // 배틀존 안에 있는지 확인
+
+
+        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+        if (global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+            GotoXY(7, 0);
+            printf("배틀시작");
+             
+            
+            //  여기에 배틀 시작 관련 함수 넣으면 됨!
+            Reset();
+            Battle1();
+            Battle2();
+            BattleText();
+            //
+            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
+            global::input::Set(global::input::IsSpaceKeyOn(), false);
+        }
+    }
+
+    // 키를 떼었을 때 다시 강화 가능하게 만듦
+    if (!global::input::IsSpaceKeyOn()) {
+        global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
+    }
+
+    
+}
+
 
 
 
@@ -227,6 +263,7 @@ void Update()
     UpdateGoldStorage();
     UpdateAttackUpgrade();
     UpdateHpUpgrade();
+    BattleStart();
 
 }
 
@@ -357,25 +394,25 @@ void DrawMovableRect() // 이동불가 영역 표시 = 벽
 {
     for (int x = global::playerMovableRect.Left - 1; x < global::playerMovableRect.Right + 1; x++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(x, global::playerMovableRect.Top - 1);
+        GotoXY(x, global::playerMovableRect.Top - 1);        
         putchar('@');
     }
 
     for (int x = global::playerMovableRect.Left - 1; x < global::playerMovableRect.Right + 1; x++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(x, global::playerMovableRect.Bottom + 1);
+        GotoXY(x, global::playerMovableRect.Bottom + 1);        
         putchar('@');
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(global::playerMovableRect.Left - 1, y);
+        GotoXY(global::playerMovableRect.Left - 1, y);     
         putchar('@');
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(global::playerMovableRect.Right + 1, y);
+        GotoXY(global::playerMovableRect.Right + 1, y);        
         putchar('@');
     }
 }
@@ -454,6 +491,16 @@ void DrawDungeonRect() {
     }
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(88, y);
+        putchar('@');
+    }
+    for (int i = 91; i < 118;i++) {
+        GotoXY(i, 12);
+        putchar('@');
+    }
+    for (int i = 13; i < 17; i++) {
+        GotoXY(96, i);
+        putchar('@');
+        GotoXY(112, i);
         putchar('@');
     }
 }
