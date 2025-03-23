@@ -4,6 +4,7 @@
 #include "../BestConsoleGame/Utility.h"
 #include "../BestConsoleGame/Battle.h"
 
+
 bool IsGameRun();
 void UpdatePlayerPosition();
 void UpdatePlayer();
@@ -75,6 +76,10 @@ namespace global
     SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역
 
 };
+
+void setColor(int color) { // 컬러 변경
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
 
 void Render()
 {
@@ -177,8 +182,8 @@ void BattleStart() {
 
             GotoXY(7, 0);
             printf("배틀시작");
-             
-            
+
+
             //  여기에 배틀 시작 관련 함수 넣으면 됨!
             Reset();
             BattleManager();
@@ -193,7 +198,7 @@ void BattleStart() {
         global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
     }
 
-    
+
 }
 
 
@@ -306,8 +311,8 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::UP_KEY_INDEX, false);
         short newY = global::curPlayerPos.Y - 1;
 
-        // 이동하려는 위치의 문자가 '@'가 아니면 이동
-        if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
+        // 이동하려는 위치의 문자가 ' ' 이면 이동 // getCharAtPosition(global::curPlayerPos.X, newY) != '@'
+        if (getCharAtPosition(global::curPlayerPos.X, newY) == ' ') {
             global::curPlayerPos.Y = newY;
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
@@ -320,8 +325,8 @@ void UpdatePlayerPosition()
     {
         global::input::Set(global::input::DOWN_KEY_INDEX, false);
         short newY = global::curPlayerPos.Y + 1;
-
-        if (getCharAtPosition(global::curPlayerPos.X, newY) != '@') {
+        //getCharAtPosition(global::curPlayerPos.X, newY) != '@'
+        if (getCharAtPosition(global::curPlayerPos.X, newY) == ' ') {
             global::curPlayerPos.Y = newY;
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
@@ -335,7 +340,8 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::LEFT_KEY_INDEX, false);
         short newX = global::curPlayerPos.X - 1;
 
-        if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
+        //getCharAtPosition(newX, global::curPlayerPos.Y) != '@'
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) == ' ') {
             global::curPlayerPos.X = newX;
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
@@ -350,7 +356,8 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::RIGHT_KEY_INDEX, false);
         short newX = global::curPlayerPos.X + 1;
 
-        if (getCharAtPosition(newX, global::curPlayerPos.Y) != '@') {
+        // getCharAtPosition(newX, global::curPlayerPos.Y) != '@'
+        if (getCharAtPosition(newX, global::curPlayerPos.Y) == ' ') {
             global::curPlayerPos.X = newX;
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
@@ -382,81 +389,105 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
 
 void DrawMovableRect() // 이동불가 영역 표시 = 벽
 {
+    setColor(8);
     for (int x = global::playerMovableRect.Left - 1; x < global::playerMovableRect.Right + 1; x++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(x, global::playerMovableRect.Top - 1);        
-        putchar('@');
+        GotoXY(x, global::playerMovableRect.Top - 1);
+        printf("■");
+        //putchar('@');
     }
 
     for (int x = global::playerMovableRect.Left - 1; x < global::playerMovableRect.Right + 1; x++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(x, global::playerMovableRect.Bottom + 1);        
-        putchar('@');
+        GotoXY(x, global::playerMovableRect.Bottom + 1);
+        printf("■");
+        //putchar('@');
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(global::playerMovableRect.Left - 1, y);     
-        putchar('@');
+        GotoXY(global::playerMovableRect.Left - 1, y);
+        printf("■");
+        //putchar('@');
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
-        GotoXY(global::playerMovableRect.Right + 1, y);        
-        putchar('@');
+        GotoXY(global::playerMovableRect.Right + 1, y);
+        printf("■");
+        //putchar('@');
     }
+    setColor(15);
 }
 void DrawHomeRect()
 {
+    setColor(8); //회색
     for (int i = 2; i <= 10; i++) {
         GotoXY(40, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 19; i <= 27; i++) {
         GotoXY(40, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 30; i < 40; i++) {
         GotoXY(i, 10);
-        putchar('@');
+        printf("■");
+        // putchar('@');
     }
     for (int i = 30; i < 40; i++) {
         GotoXY(i, 19);
-        putchar('@');
+        printf("■");
+        // putchar('@');
     }
+    setColor(15); // 기존색으로 복귀
 }
 
 void DrawAtkRect() {
+    setColor(12); //빨간색
     for (int i = 2; i <= 8; i++) {
         GotoXY(44, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
         GotoXY(62, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
+    setColor(15); // 기존색으로 복귀
 }
 
 void DrawHpRect() {
+    setColor(10); //초록색
     for (int i = 2; i <= 8; i++) {
         GotoXY(66, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
         GotoXY(84, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
+    setColor(15); // 기존색으로 복귀
 }
 
 void DrawGoldRect() {
+    setColor(6); //노란색
     for (int i = 21; i <= 27; i++) {
         GotoXY(44, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 21; i <= 27; i++) {
         GotoXY(79, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
+    setColor(15); // 기존색으로 복귀
 }
 
 //void DrawpoltalRect() {
@@ -471,28 +502,36 @@ void DrawGoldRect() {
 //}
 
 void DrawDungeonRect() {
+    setColor(8);
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(90, y);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(89, y);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(88, y);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
-    for (int i = 91; i < 118;i++) {
+    for (int i = 91; i < 118; i++) {
         GotoXY(i, 12);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
     for (int i = 13; i < 17; i++) {
         GotoXY(96, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
         GotoXY(112, i);
-        putchar('@');
+        printf("■");
+        //putchar('@');
     }
+    setColor(15);
 }
 
 void startGame() {
@@ -559,7 +598,7 @@ int main()
         FixedUpdate();
         Update();
         Render();
-        
+
     }
 
 
