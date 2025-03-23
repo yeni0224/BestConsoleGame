@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <windows.h>
 
+
 PLAYER player;
 MONSTERA monsterA;
 
@@ -13,21 +14,26 @@ void Reset()
     system("cls");
     Player();
     MonsterA();
+    MonsterB();
 }
 
 void Player()
 {
-    //플레이어 출력 좌표
-    
-
+    //int attack = global::atk;
     //텍스트
     player.image = "Player";
 }
 
 void MonsterA()
 {
-    //플레이어 출력 좌표
-    
+
+    //텍스트
+    monsterA.image = "monsterA";
+
+}
+
+void MonsterB()
+{
 
     //텍스트
     monsterA.image = "monsterA";

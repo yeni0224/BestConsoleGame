@@ -6,11 +6,6 @@
 
 typedef struct
 {
-	int width;
-	int height;
-
-	int posX;
-	int posY;
 
 	const char* image;
 
@@ -18,15 +13,17 @@ typedef struct
 
 typedef struct
 {
-	int width;
-	int height;
-
-	int posX;
-	int posY;
 
 	const char* image;
 
 }MONSTERA;
+
+typedef struct
+{
+
+	const char* image;
+
+}MONSTERB;
 
 
 void Reset();
@@ -34,6 +31,7 @@ void BattleManager();
 
 void Player();
 void MonsterA();
+void MonsterB();
 void Battle1();
 void Battle2();
 void BattleText1();
