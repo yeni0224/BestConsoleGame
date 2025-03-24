@@ -1,10 +1,11 @@
 #include "Battle.h"
 #include "Utility.h"
-#include "InputSystem.h"
+#include "Input_Sys.h"
 #include "BestConsoleGame.h"
 #include <iostream>
 #include <cstdlib>
 #include <windows.h>
+#include <chrono>
 
 namespace global {
     namespace battle {
@@ -21,8 +22,8 @@ namespace global {
 
         void Player()
         {
-            
-            
+
+
             player.image = "Player";
         }
 
@@ -52,11 +53,14 @@ namespace global {
 
         void Battle1()
         {
-            GotoXY(1, 20);
-            printf(player.image);
+            GotoXY(1, 15);
+
+            int heart = global::hp;
+            int currentHeart = heart;
             int attack = global::atk;
-            printf("%d",attack);
-            
+            printf("[ %d / %d ] \n", currentHeart, heart);
+            printf(player.image);
+
         }
         void Battle2()
         {
@@ -70,73 +74,91 @@ namespace global {
             printf(" 방어");
             printf(" 도망");
         }
+
+
+
         void BattleText2()
         {
-            short newX = 79;
-            short prevX = newX;
+            bool WasLeftKeyPressed = false;
+            bool WasRightKeyPressed = false;
+            bool WasSpaceKeyPressed = false;
+            int x = 79;
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
-
-            bool isLeftPressed = false;  // 왼쪽 키가 눌렸는지 여부
-            bool isRightPressed = false; // 오른쪽 키가 눌렸는지 여부
+            char symbols[] = { '>', ' ' }; // 번갈아 출력할 문자
+            int index = 0;
 
             while (1)
             {
+                global::input::UpdateInput();
                 nowTick = GetTickCount64();
                 ULONGLONG elapsedTick = nowTick - prevTick;
 
-                GotoXY(prevX, 25);
-                printf(" ");
 
-                /* GotoXY(newX, 25);
-                 printf(">");*/
-
-                prevX = newX;
 
                 if (elapsedTick >= 500 && elapsedTick <= 999)
                 {
-                    GotoXY(newX, 25);
-                    printf(">");
-                }
-                if (elapsedTick >= 1000)
-                {
-                    GotoXY(newX, 25);
-                    printf(" ");
+                    GotoXY(x, 25);
+                    std::cout << symbols[index] << std::flush; // 화면 덮어쓰기
+                    index = 1 - index; // 0과 1을 번갈아가며 변경
                     prevTick = nowTick;
                 }
 
-                // 왼쪽 이동 (한 번만 감지)
-                if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+                if (global::input::IsLeftKeyOn())
                 {
-                    if (!isLeftPressed) // 이전 프레임에서 누른 적 없을 때만 실행
+                    if (!WasLeftKeyPressed) // 키를 처음 눌렀을 때만 실행
                     {
-                        isLeftPressed = true;
-                        if (newX > 79) newX -= 5;
+                        global::input::Set(global::input::LEFT_KEY_INDEX, false);
+                        WasLeftKeyPressed = true;
+                        GotoXY(x, 25);
+                        std::cout << symbols[1];
+
+                        if (x > 79) x -= 5;
                     }
                 }
                 else
                 {
-                    isLeftPressed = false; // 키를 떼면 다시 감지 가능하도록 초기화
+                    WasLeftKeyPressed = false;
                 }
 
-                // 오른쪽 이동 (한 번만 감지)
-                if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+                if (global::input::IsRightKeyOn())
                 {
-                    if (!isRightPressed)
+                    if (!WasRightKeyPressed) // 키를 처음 눌렀을 때만 실행
                     {
-                        isRightPressed = true;
-                        if (newX < 89) newX += 5;
+                        global::input::Set(global::input::RIGHT_KEY_INDEX, false);
+                        WasRightKeyPressed = true;
+                        GotoXY(x, 25);
+                        std::cout << symbols[1];
+
+                        if (x < 89) x += 5;
                     }
                 }
                 else
                 {
-                    isRightPressed = false;
+                    WasRightKeyPressed = false;
                 }
 
-                Sleep(50); // 너무 빠른 루프 실행 방지
+
+                if (global::input::IsSpaceKeyOn())
+                {
+                    if (!WasSpaceKeyPressed)
+                    {
+                        global::input::Set(global::input::Space_KEY_INDEX, false);
+                        WasSpaceKeyPressed = true;
+                        if (x == 89)
+                        {
+                            system("cls");
+                            startGame();
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    WasSpaceKeyPressed = false;
+                }
             }
         }
     }
 
 }
-
