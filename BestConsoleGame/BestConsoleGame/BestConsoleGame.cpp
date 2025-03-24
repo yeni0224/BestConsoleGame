@@ -18,16 +18,48 @@ void UpdateAttackUpgrade();
 void UpdateHpUpgrade();
 void DrawBed();
 
+
+struct zone_xy {
+    int x;
+    int y;
+    zone_xy(int _x, int _y) : x(_x), y(_y) {}
+};
+struct zone_awds {
+    int a;
+    int w;
+    int d;
+    int s;
+    zone_awds(int _a, int _w, int _d, int _s) : a(_a), w(_w), d(_d), s(_s) {}
+};
+
 namespace global
 {
-    int gold = 500;
+    zone_xy msg(7, 0);
+    zone_xy auto_money_buy_zone(37, 20);
+    zone_xy auto_money_word_zone(30, 20);
+    zone_xy atk_word_zone(46, 2);
+    zone_xy hp_word_zone(68, 2);
+    zone_xy gold_word_zone(46, 27);
+
+    zone_awds home_zone_up(30, 2, 40, 10);
+    zone_awds home_zone_down(30, 19, 40, 27);
+    zone_awds bed_zone(2, 24, 13, 27);
+    zone_awds atk_zone(44, 2, 62, 8);
+    zone_awds hp_zone(66, 2, 84, 8);
+    zone_awds gold_zone(44, 21, 79, 27);
+
+    int gold = 50;
     int hp = 10;
     int max_hp = 100;
     int atk = 10;
 
+    int up_atk = 5;
+    int up_hp = 50;
+    int heal_hp = 10;
+
     void setatk(int value) { atk = value; }
     int getatk() { return atk; }
-    
+
 
     namespace time
     {
@@ -68,7 +100,7 @@ namespace global
     const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
-    
+
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
     static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
 
@@ -86,7 +118,7 @@ namespace global
     SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
     SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역 30 20 39 27
     SMALL_RECT AutoMoneyBuyZone = { 30, 20, 39, 27 }; // 오토 머니 구매 영역
-    SMALL_RECT HealingZone = { 2, 19, 15, 27 }; // 침대 근처 체력 회복 존
+    SMALL_RECT HealingZone = { 2, 20, 20, 27 }; // 침대 근처 체력 회복 존
 
 };
 
@@ -121,20 +153,20 @@ void UpdateAttackUpgrade() {
 
 
         // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+        if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
             global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
 
             // 강화 진행
-            global::gold -= 1; // 골드 1 감소
+            global::gold -= 10; // 골드 10 감소
 
             int chance = rand() % 2; // 50% 확률 (0 또는 1)
             if (chance == 0) {
-                global::atk += 10; // 공격력 증가
-                GotoXY(7, 0);
-                printf("공격력 +10      "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                global::atk += global::up_atk; // 공격력 증가
+                GotoXY(global::msg.x, global::msg.y);
+                printf("공격력 +%d      ", global::up_atk); // 기존 메시지를 덮어쓰기 위해 공백 포함
             }
             else {
-                GotoXY(7, 0);
+                GotoXY(global::msg.x, global::msg.y);
                 printf("강화 실패...    ");
             }
 
@@ -155,21 +187,21 @@ void UpdateHpUpgrade() {
 
 
         // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+        if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
             global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
 
             // 강화 진행
-            global::gold -= 1; // 골드 1 감소
+            global::gold -= 10; // 골드 10 감소
 
             int chance = rand() % 2; // 50% 확률 (0 또는 1)
             if (chance == 0) {
-                global::max_hp += 100; // 체력 증가
-                global::hp += 100;
-                GotoXY(7, 0);
-                printf("체력 +100     "); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                global::max_hp += global::up_hp; // 체력 증가
+                global::hp += global::up_hp;
+                GotoXY(global::msg.x, global::msg.y);
+                printf("체력 +%d     ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
             }
             else {
-                GotoXY(7, 0);
+                GotoXY(global::msg.x, global::msg.y);
                 printf("강화 실패...      ");
             }
 
@@ -186,13 +218,13 @@ void UpdateHpUpgrade() {
 }
 
 void AutoMoneyBuy() {
-    
+
     const int maxPurchases = 3;    // 최대 구매 가능 횟수
 
     if (IsInsideZone(global::curPlayerPos, global::AutoMoneyBuyZone)) { // 구매 존 안에 있는지 확인
-        
+
         if (global::purchaseCount < maxPurchases) {
-            GotoXY(7, 0);
+            GotoXY(global::msg.x, global::msg.y);
             printf("구매하시겠습니까?    ");
         }
         // 스페이스바를 처음 눌렀을 때만 실행 & 구매 횟수 체크
@@ -200,19 +232,19 @@ void AutoMoneyBuy() {
             global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
 
             // 골드 차감
-            global::gold -= 50; 
+            global::gold -= 50;
             global::purchaseCount++;  // 구매 횟수 증가
-            GotoXY(37, 20);
+            GotoXY(global::auto_money_buy_zone.x, global::auto_money_buy_zone.y);
             setColor(6); //노란색
-            printf("(%d)",global::purchaseCount);
+            printf("(%d)", global::purchaseCount);
             setColor(15); // 기본색
 
-            
+
         }
 
         // 모든 구매를 완료하면 메시지 표시
         if (global::purchaseCount >= maxPurchases) {
-            GotoXY(7, 0);
+            GotoXY(global::msg.x, global::msg.y);
             printf("구매 한도 도달!     ");
         }
     }
@@ -241,7 +273,7 @@ void BattleStart() {
         if (global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
             global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
 
-            GotoXY(7, 0);
+            GotoXY(global::msg.x, global::msg.y);
             printf("배틀시작");
 
 
@@ -296,17 +328,17 @@ void HealingHP() {
 
         if (GetTickCount64() - healingTime >= 1000) { // 0.5초(500ms)마다 증가
             if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
-                global::hp += 10;
-                GotoXY(7, 0);
+                global::hp += global::heal_hp;
+                GotoXY(global::msg.x, global::msg.y);
                 printf("체력 회복중 ^~^  ");
             }
             else {
-                GotoXY(7, 0);
+                GotoXY(global::msg.x, global::msg.y);
                 printf("체력 회복 완료!!  ");
             }
             healingTime = GetTickCount64(); // 타이머 초기화
         }
-        
+
     }
 }
 
@@ -325,7 +357,7 @@ void UpdateGoldMining() {
         if (GetTickCount64() - miningTime >= 1000) { // 0.5초(500ms)마다 증가
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
-                GotoXY(7, 0);
+                GotoXY(global::msg.x, global::msg.y);
                 printf("골드 채굴 중: %d/10 ", global::goldCounter);
             }
             miningTime = GetTickCount64(); // 타이머 초기화
@@ -340,7 +372,7 @@ void UpdateGoldStorage() {
             global::goldCounter = 0; // 카운트 초기화
 
 
-            GotoXY(7, 0);
+            GotoXY(global::msg.x, global::msg.y);
             printf("골드 저장 완료!   ");
         }
     }
@@ -516,23 +548,23 @@ void DrawMovableRect() // 이동불가 영역 표시 = 벽
 void DrawHomeRect()
 {
     setColor(8); //회색
-    for (int i = 2; i <= 10; i++) {
-        GotoXY(40, i);
+    for (int i = global::home_zone_up.w; i <= global::home_zone_up.s; i++) {
+        GotoXY(global::home_zone_up.d, i);
         printf("■");
         //putchar('@');
     }
-    for (int i = 19; i <= 27; i++) {
-        GotoXY(40, i);
+    for (int i = global::home_zone_down.w; i <= global::home_zone_down.s; i++) {
+        GotoXY(global::home_zone_up.d, i);
         printf("■");
         //putchar('@');
     }
-    for (int i = 30; i < 40; i++) {
-        GotoXY(i, 10);
+    for (int i = global::home_zone_up.a; i < global::home_zone_up.d; i++) {
+        GotoXY(i, global::home_zone_up.s);
         printf("■");
         // putchar('@');
     }
-    for (int i = 30; i < 40; i++) {
-        GotoXY(i, 19);
+    for (int i = global::home_zone_down.a; i < global::home_zone_down.d; i++) {
+        GotoXY(i, global::home_zone_down.w);
         printf("■");
         // putchar('@');
     }
@@ -540,9 +572,9 @@ void DrawHomeRect()
 }
 
 void DrawBed() {
-    for (int i = 21; i < 28; i++) {
-        for (int j = 2; j < 8; j++) {
-            if (i == 27 || i==26) {
+    for (int i = global::bed_zone.w; i <= global::bed_zone.s; i++) {
+        for (int j = global::bed_zone.a; j <= global::bed_zone.d; j++) {
+            if (j == global::bed_zone.a || j == global::bed_zone.a + 1 || j == global::bed_zone.a + 2) {
                 GotoXY(j, i);
                 setColor(12);
                 printf("■");
@@ -560,7 +592,7 @@ void DrawBed() {
 
 
 void DrawAutoMoney() {
-    GotoXY(30,20);
+    GotoXY(global::auto_money_word_zone.x, global::auto_money_word_zone.y);
     setColor(6); //노란색
     printf("BUY 50G");
     setColor(15); // 기존색으로 복귀
@@ -568,15 +600,15 @@ void DrawAutoMoney() {
 
 void DrawAtkRect() {
     setColor(12); //빨간색
-    GotoXY(46,2);
+    GotoXY(global::atk_word_zone.x, global::atk_word_zone.y);
     printf("ATK UPGRADE 10G");
-    for (int i = 2; i <= 8; i++) {
-        GotoXY(44, i);
+    for (int i = global::atk_zone.w; i <= global::atk_zone.s; i++) {
+        GotoXY(global::atk_zone.a, i);
         printf("■");
         //putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
-        GotoXY(62, i);
+        GotoXY(global::atk_zone.d, i);
         printf("■");
         //putchar('@');
     }
@@ -585,15 +617,15 @@ void DrawAtkRect() {
 
 void DrawHpRect() {
     setColor(10); //초록색
-    GotoXY(68, 2);
+    GotoXY(global::hp_word_zone.x, global::hp_word_zone.y);
     printf("HP UPGRADE 10G");
-    for (int i = 2; i <= 8; i++) {
-        GotoXY(66, i);
+    for (int i = global::hp_zone.w; i <= global::hp_zone.s; i++) {
+        GotoXY(global::hp_zone.a, i);
         printf("■");
         //putchar('@');
     }
     for (int i = 2; i <= 8; i++) {
-        GotoXY(84, i);
+        GotoXY(global::hp_zone.d, i);
         printf("■");
         //putchar('@');
     }
@@ -602,15 +634,15 @@ void DrawHpRect() {
 
 void DrawGoldRect() {
     setColor(6); //노란색
-    GotoXY(46, 27);
+    GotoXY(global::gold_word_zone.x, global::gold_word_zone.y);
     printf("MINE 1G/S");
-    for (int i = 21; i <= 27; i++) {
-        GotoXY(44, i);
+    for (int i = global::gold_zone.w; i <= global::gold_zone.s; i++) {
+        GotoXY(global::gold_zone.a, i);
         printf("■");
         //putchar('@');
     }
     for (int i = 21; i <= 27; i++) {
-        GotoXY(79, i);
+        GotoXY(global::gold_zone.d, i);
         printf("■");
         //putchar('@');
     }
@@ -817,16 +849,15 @@ void startGame() {
     DrawBed(); // 침대 그리기
 
     global::prePlayerPos.X = 10;
-    global::prePlayerPos.Y = 26;
+    global::prePlayerPos.Y = 20;
     global::curPlayerPos.X = 10;
-    global::curPlayerPos.Y = 26; // 플레이어 시작 위치
+    global::curPlayerPos.Y = 20; // 플레이어 시작 위치
 
     DrawPlayer(false); // 플레이어 생성
 }
 int main()
 {
-    GotoXY(15, 10);
-    putchar('%');
+
     global::time::InitTime(); // 시간 초기화
 
     //===================================================================================================//
