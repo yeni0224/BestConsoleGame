@@ -4,35 +4,40 @@
 #include <Windows.h>
 #include <conio.h>
 
-typedef struct
-{
+namespace global {
+	namespace battle {
+		typedef struct
+		{
 
-	const char* image;
+			const char* image;
 
-}PLAYER;
+		}PLAYER;
 
-typedef struct
-{
+		typedef struct
+		{
 
-	const char* image;
+			const char* image;
 
-}MONSTERA;
+		}MONSTERA;
 
-typedef struct
-{
+		typedef struct
+		{
 
-	const char* image;
+			const char* image;
 
-}MONSTERB;
+		}MONSTERB;
 
 
-void Reset();
-void BattleManager();
+		void Reset();
+		void BattleManager();
 
-void Player();
-void MonsterA();
-void MonsterB();
-void Battle1();
-void Battle2();
-void BattleText1();
-void BattleText2();
+		void Player();
+		void MonsterA();
+		void MonsterB();
+		void Battle1();
+		void Battle2();
+		void BattleText1();
+		void BattleText2();
+	}
+	
+}

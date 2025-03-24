@@ -3,6 +3,7 @@
 #include "../BestConsoleGame/Input_Sys.h"
 #include "../BestConsoleGame/Utility.h"
 #include "../BestConsoleGame/Battle.h"
+#include "../BestConsoleGame/BestConsoleGame.h"
 
 
 bool IsGameRun();
@@ -18,6 +19,15 @@ void UpdateHpUpgrade();
 
 namespace global
 {
+    int gold = 0;
+    int hp = 100;
+    int max_hp = 100;
+    int atk = 10;
+
+    void setatk(int value) { atk = value; }
+    int getatk() { return atk; }
+    
+
     namespace time
     {
         ULONGLONG previousTime; //이전 시간
@@ -57,10 +67,7 @@ namespace global
     const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
-    int gold = 0;
-    int hp = 100;
-    int max_hp = 100;
-    int atk = 10;
+    
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
     static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
 
@@ -236,8 +243,8 @@ void BattleStart() {
 
 
             //  여기에 배틀 시작 관련 함수 넣으면 됨!
-            Reset();
-            BattleManager();
+            global::battle::Reset();
+            global::battle::BattleManager();
             //
             // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
             global::input::Set(global::input::IsSpaceKeyOn(), false);
@@ -369,8 +376,8 @@ void UpdatePlayerPosition()
             global::curPlayerPos.Y = newY;
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
-            Reset();
-            BattleManager();
+            global::battle::Reset();
+            global::battle::BattleManager();
         }
     }
 
@@ -383,8 +390,8 @@ void UpdatePlayerPosition()
             global::curPlayerPos.Y = newY;
         }
         if (getCharAtPosition(global::curPlayerPos.X, newY) == '%') {
-            Reset();
-            BattleManager();
+            global::battle::Reset();
+            global::battle::BattleManager();
         }
     }
 
@@ -398,8 +405,8 @@ void UpdatePlayerPosition()
             global::curPlayerPos.X = newX;
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
-            Reset();
-            BattleManager();
+            global::battle::Reset();
+            global::battle::BattleManager();
         }
 
     }
@@ -414,8 +421,8 @@ void UpdatePlayerPosition()
             global::curPlayerPos.X = newX;
         }
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == '%') {
-            Reset();
-            BattleManager();
+            global::battle::Reset();
+            global::battle::BattleManager();
         }
     }
 }
