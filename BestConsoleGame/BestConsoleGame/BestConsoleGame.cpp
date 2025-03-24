@@ -43,7 +43,7 @@ namespace global
 
     zone_awds home_zone_up(30, 2, 40, 10);
     zone_awds home_zone_down(30, 19, 40, 27);
-    zone_awds bed_zone(2, 24, 13, 27);
+    zone_awds bed_zone(2, 22, 7, 27);
     zone_awds atk_zone(44, 2, 62, 8);
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
@@ -574,7 +574,7 @@ void DrawHomeRect()
 void DrawBed() {
     for (int i = global::bed_zone.w; i <= global::bed_zone.s; i++) {
         for (int j = global::bed_zone.a; j <= global::bed_zone.d; j++) {
-            if (j == global::bed_zone.a || j == global::bed_zone.a + 1 || j == global::bed_zone.a + 2) {
+            if (i == global::bed_zone.s || i == global::bed_zone.s - 1) {
                 GotoXY(j, i);
                 setColor(12);
                 printf("■");
