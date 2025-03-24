@@ -46,6 +46,10 @@ namespace global
 		{
 			return inputKeyTable[Y_KEY_INDEX]; // 인덱스 6 (Y 키 입력 감지)
 		}
+		bool IsEnterKeyOn()
+		{
+			return inputKeyTable[Enter_KEY_INDEX]; // 인덱스 7 (Y 키 입력 감지)
+		}
 
 		// 입력 키값에 대해 알아 봅시다. 블러킹과 넌블러킹에 대해서만 이해하고 가기로 합니다!!
 		// * 비트 연산에 대해 학습합니다. & 와 && 은 달라요. 
@@ -122,6 +126,15 @@ namespace global
 			else
 			{
 				global::input::Set(Y_KEY_INDEX, false);
+			}
+			// Enter키 (키를 떼면 false로 초기화)
+			if (GetAsyncKeyState(0x0D) & 0x8000)
+			{
+				global::input::Set(Enter_KEY_INDEX, true);
+			}
+			else
+			{
+				global::input::Set(Enter_KEY_INDEX, false);
 			}
 		}
 

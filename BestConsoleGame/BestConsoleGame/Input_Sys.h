@@ -14,9 +14,10 @@ namespace global
 		constexpr int DOWN_KEY_INDEX = 4;// 아래쪽 키
 		constexpr int Space_KEY_INDEX = 5; // 스페이스 키
 		constexpr int Y_KEY_INDEX = 6;
+		constexpr int Enter_KEY_INDEX = 7;
 
 
-		const int MAX_KEY = 7;
+		const int MAX_KEY = 8;
 
 		void Set(const int keyIdx, bool bOn);
 
@@ -26,6 +27,7 @@ namespace global
 		bool IsDownKeyOn(); // 아래쪽 키가 눌렸는지 확인하는 함수
 		bool IsSpaceKeyOn(); // 스페이스 키가 눌렸는지 확인하는 함수
 		bool IsYKeyOn(); // Y키가 눌렸는지 확인하는 함수
+		bool IsEnterKeyOn(); // Y키가 눌렸는지 확인하는 함수
 
 		void UpdateInput();
 	};
