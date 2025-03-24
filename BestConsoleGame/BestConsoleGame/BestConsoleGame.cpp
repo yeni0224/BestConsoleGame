@@ -226,7 +226,7 @@ void AutoMoneyBuy() {
 void AutoMoney() {
     static ULONGLONG autoGoldTime = GetTickCount64();
 
-    if (GetTickCount64() - autoGoldTime >= 1000) { // 0.5초(500ms)마다 증가
+    if (GetTickCount64() - autoGoldTime >= 2000) { // 2초(2000ms)마다 증가
         global::gold += global::purchaseCount * 1;
         autoGoldTime = GetTickCount64(); // 타이머 초기화
     }
@@ -298,10 +298,15 @@ void HealingHP() {
             if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
                 global::hp += 10;
                 GotoXY(7, 0);
-                printf("체력 회복중 ^~^");
+                printf("체력 회복중 ^~^  ");
+            }
+            else {
+                GotoXY(7, 0);
+                printf("체력 회복 완료!!  ");
             }
             healingTime = GetTickCount64(); // 타이머 초기화
         }
+        
     }
 }
 
@@ -768,53 +773,53 @@ void DrawDungeonRect() {
 //}
 ////===================================================================================================//
 
+void setConsoleSize(int width, int height) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // 콘솔 창 크기 조정
+    SMALL_RECT windowSize = { 0, 0, width - 1, height - 1 };
+    SetConsoleWindowInfo(hConsole, TRUE, &windowSize);
+
+    // 콘솔 버퍼 크기 조정
+    COORD bufferSize = { width, height };
+    SetConsoleScreenBufferSize(hConsole, bufferSize);
+}
+
 void startGame() {
+    // 콘솔 크기를 120x30으로 설정
+    setConsoleSize(120, 30);
+
     CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
     cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
     cursorInfo.dwSize = 1; // 커서 크기 1~100
-    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 핸들 불러서 커서 
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 커서 설정
 
     CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    /*COORD dwSize;                // 콘솔 버퍼의 크기 (가로, 세로)
-    COORD dwCursorPosition;     // 현재 커서 위치 (X, Y)
-    WORD  wAttributes;           // 현재 문자 색상 속성
-    SMALL_RECT srWindow;        // 콘솔 창의 크기 (왼쪽, 위, 오른쪽, 아래)
-    COORD dwMaximumWindowSize;  // 콘솔 창의 최대 크기 (가로, 세로)  << 구조체 멤버들임*/
-    global::consoleScreenSize.Left = csbi.srWindow.Left; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
-    global::consoleScreenSize.Right = csbi.srWindow.Right; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
-    global::consoleScreenSize.Bottom = csbi.srWindow.Bottom; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 169
-    global::consoleScreenSize.Top = csbi.srWindow.Top; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 50
-    /*printf("콘솔 창의 위치:\n");
-    printf("왼쪽: %d\n", csbi.srWindow.Left);
-    printf("위쪽: %d\n", csbi.srWindow.Top);
-    printf("오른쪽: %d\n", csbi.srWindow.Right);
-    printf("아래쪽: %d\n", csbi.srWindow.Bottom);  // 콘솔창 및 버퍼 크기 확인 둘이 동일함  */
-    global::playerMovableRect.Left = global::consoleScreenSize.Left + 2; // 플레이어 이동 범위 제한
-    global::playerMovableRect.Right = global::consoleScreenSize.Right - 2; // 플레이어 이동 범위 제한
-    global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2; // 플레이어 이동 범위 제한
-    global::playerMovableRect.Top = global::consoleScreenSize.Top + 2; // 플레이어 이동 범위 제한
-    /*printf("왼쪽: %d\n", global::playerMovableRect.Left);
-    printf("위쪽: %d\n", global::playerMovableRect.Top);
-    printf("오른쪽: %d\n", global::playerMovableRect.Right);
-    printf("아래쪽: %d\n", global::playerMovableRect.Bottom);*/
 
+    global::consoleScreenSize.Left = csbi.srWindow.Left;
+    global::consoleScreenSize.Right = csbi.srWindow.Right;
+    global::consoleScreenSize.Bottom = csbi.srWindow.Bottom;
+    global::consoleScreenSize.Top = csbi.srWindow.Top;
 
+    global::playerMovableRect.Left = global::consoleScreenSize.Left + 2;
+    global::playerMovableRect.Right = global::consoleScreenSize.Right - 2;
+    global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2;
+    global::playerMovableRect.Top = global::consoleScreenSize.Top + 2;
 
     DrawMovableRect(); // 테두리 벽 생성
     DrawHomeRect(); // 집 벽 생성
-    DrawAtkRect(); //  공격력 강화소 벽 생성
+    DrawAtkRect(); // 공격력 강화소 벽 생성
     DrawHpRect(); // 체력 강화소 벽 생성
-    DrawGoldRect(); //광산 벽 생성 
-    //DrawpoltalRect(); // 던전 입구 벽 생성
-    DrawDungeonRect();
-    DrawAutoMoney();
-    DrawBed();
+    DrawGoldRect(); // 광산 벽 생성 
+    DrawDungeonRect(); // 던전 입구 벽 생성
+    DrawAutoMoney(); // 자동 골드 구매 표시
+    DrawBed(); // 침대 그리기
 
     global::prePlayerPos.X = 10;
-    global::prePlayerPos.Y = 10;
+    global::prePlayerPos.Y = 26;
     global::curPlayerPos.X = 10;
-    global::curPlayerPos.Y = 10; // 플레이어 시작 위치
+    global::curPlayerPos.Y = 26; // 플레이어 시작 위치
 
     DrawPlayer(false); // 플레이어 생성
 }
