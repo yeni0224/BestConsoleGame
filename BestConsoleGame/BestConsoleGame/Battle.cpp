@@ -92,14 +92,14 @@ namespace global {
         }
         void Battle2()
         {
-            if (monsterA.currentHeart != 0)
+            if (monsterA.currentHeart > 0)
             {
                 GotoXY(80, 1);
                 printf("[ %d / %d ] \n", monsterA.currentHeart, monsterA.heart);
                 GotoXY(80, 2);
                 printf(monsterA.image);
             }
-            else if (monsterB.currentHeart != 0)
+            else if (monsterB.currentHeart > 0)
             {
                 GotoXY(80, 1);
                 printf("[ %d / %d ] \n", monsterB.currentHeart, monsterB.heart);
