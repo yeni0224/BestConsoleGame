@@ -27,8 +27,8 @@ namespace global {
 
         void Player()
         {
-            player.heart = global::hp;
-            player.currentHeart = player.heart;
+            player.heart = global::max_hp;
+            player.currentHeart = global::hp;
             player.attack = global::atk;
             player.image = "Player";
         }
@@ -37,13 +37,13 @@ namespace global {
         {
             monsterA.heart = 100;
             monsterA.currentHeart = monsterA.heart;
-            monsterA.attack = 10;
+            monsterA.attack = 5;
             monsterA.image = "monsterA";
         }
 
         void MonsterB()
         {
-            monsterB.heart = 10;
+            monsterB.heart = 100;
             monsterB.currentHeart = monsterB.heart;
             monsterB.attack = 10;
             monsterB.image = "monsterB";
@@ -54,6 +54,12 @@ namespace global {
             BattleText1();
             while (1)
             {
+                if (player.currentHeart <= 0)
+                {
+                    system("cls");
+                    startGame();
+                    break;
+                }
                 Battle1();
                 Battle2();
                 BattleText2();
@@ -62,9 +68,9 @@ namespace global {
                     flag = false;
                     break;
                 }
-                
+
             }
-            
+
         }
         void BattleText1()
         {
@@ -76,6 +82,8 @@ namespace global {
 
         void Battle1()
         {
+
+
             GotoXY(1, 15);
             printf("[ %d / %d ] \n", player.currentHeart, player.heart);
             GotoXY(1, 16);
@@ -102,7 +110,7 @@ namespace global {
         }
         void BattleText2()
         {
-            
+
             int x = 79;
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
@@ -175,8 +183,19 @@ namespace global {
                         }
                         if (x == 79)
                         {
+                            if (monsterA.currentHeart > 0)
+                            {
+                                monsterA.currentHeart -= player.attack;
+                                Sleep(100);
+                                player.currentHeart -= monsterA.attack;
+                            }
+                            else if (monsterB.currentHeart > 0)
+                            {
+                                monsterB.currentHeart -= player.attack;
+                                Sleep(100);
+                                player.currentHeart -= monsterB.attack;
+                            }
 
-                            monsterA.currentHeart -= player.attack;
 
                             break;
                         }
