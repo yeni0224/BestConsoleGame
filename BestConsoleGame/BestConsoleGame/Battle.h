@@ -34,6 +34,15 @@ namespace global {
 
 		}MONSTERB;
 
+		typedef struct
+		{
+			int heart;
+			int currentHeart;
+			int attack;
+			const char* image;
+
+		}MONSTERC;
+
 
 		void Reset();
 		void BattleManager();
@@ -41,6 +50,7 @@ namespace global {
 		void Player();
 		void MonsterA();
 		void MonsterB();
+		void MonsterC();
 		void Battle1();
 		void Battle2();
 		void BattleText1();

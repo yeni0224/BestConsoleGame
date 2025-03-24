@@ -12,6 +12,7 @@ namespace global {
         PLAYER player;
         MONSTERA monsterA;
         MONSTERB monsterB;
+        MONSTERC monsterC;
         bool flag = false;
         bool WasLeftKeyPressed = false;
         bool WasRightKeyPressed = false;
@@ -23,6 +24,7 @@ namespace global {
             Player();
             MonsterA();
             MonsterB();
+            MonsterC();
         }
 
         void Player()
@@ -47,6 +49,14 @@ namespace global {
             monsterB.currentHeart = monsterB.heart;
             monsterB.attack = 10;
             monsterB.image = "monsterB";
+        }
+
+        void MonsterC()
+        {
+            monsterC.heart = 100;
+            monsterC.currentHeart = monsterC.heart;
+            monsterC.attack = 10;
+            monsterC.image = "monsterC";
         }
 
         void BattleManager()
@@ -105,6 +115,18 @@ namespace global {
                 printf("[ %d / %d ] \n", monsterB.currentHeart, monsterB.heart);
                 GotoXY(80, 2);
                 printf(monsterB.image);
+            }
+            else if (monsterC.currentHeart > 0)
+            {
+                GotoXY(80, 1);
+                printf("[ %d / %d ] \n", monsterC.currentHeart, monsterC.heart);
+                GotoXY(80, 2);
+                printf(monsterC.image);
+            }
+            else
+            {
+                GotoXY(80, 2);
+                printf("clear");
             }
 
         }
@@ -194,6 +216,12 @@ namespace global {
                                 monsterB.currentHeart -= player.attack;
                                 Sleep(100);
                                 player.currentHeart -= monsterB.attack;
+                            }
+                            else if (monsterC.currentHeart > 0)
+                            {
+                                monsterC.currentHeart -= player.attack;
+                                Sleep(100);
+                                player.currentHeart -= monsterC.attack;
                             }
 
 
