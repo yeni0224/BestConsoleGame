@@ -16,11 +16,12 @@ void UpdateGoldMining();
 bool IsInsideZone(COORD pos, SMALL_RECT zone);
 void UpdateAttackUpgrade();
 void UpdateHpUpgrade();
+void DrawBed();
 
 namespace global
 {
     int gold = 0;
-    int hp = 100;
+    int hp = 10;
     int max_hp = 100;
     int atk = 10;
 
@@ -75,6 +76,7 @@ namespace global
     bool isMining = false;    // 채굴 상태 여부
     bool isUpgrading = false; // 강화 진행 여부
     bool isReady = false;     // 배틀 시작 여부
+    bool isHealing = false;   // 체력 회복 여부
     bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
 
 
@@ -84,6 +86,7 @@ namespace global
     SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
     SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역 30 20 39 27
     SMALL_RECT AutoMoneyBuyZone = { 30, 20, 39, 27 }; // 오토 머니 구매 영역
+    SMALL_RECT HealingZone = { 2, 20, 8, 27 }; // 침대 근처 체력 회복 존
 
 };
 
@@ -279,6 +282,30 @@ bool IsInsideZone(COORD pos, SMALL_RECT zone) {
         pos.Y >= zone.Top && pos.Y <= zone.Bottom);
 }
 
+void HealingHP() {
+    if (IsInsideZone(global::curPlayerPos, global::HealingZone)) { // 힐링존 내부 확인
+        global::isHealing = true; // 힐링 상태 활성화
+    }
+    else {
+        global::isHealing = false; // 힐링존 벗어나면 힐 중지
+
+    }
+
+    if (global::isHealing) { // 힐링존 내부에서만 실행
+        static ULONGLONG healingTime = GetTickCount64();
+
+        if (GetTickCount64() - healingTime >= 1000) { // 0.5초(500ms)마다 증가
+            if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
+                global::hp += 10;
+                GotoXY(7, 0);
+                printf("체력 회복중 ^~^");
+            }
+            healingTime = GetTickCount64(); // 타이머 초기화
+        }
+    }
+}
+
+
 void UpdateGoldMining() {
     if (IsInsideZone(global::curPlayerPos, global::goldZone)) { // 골드존 내부 확인
         global::isMining = true; // 채굴 상태 활성화
@@ -327,6 +354,7 @@ void Update()
     BattleStart();
     AutoMoneyBuy();
     AutoMoney();
+    HealingHP();
 
 }
 
@@ -506,6 +534,26 @@ void DrawHomeRect()
     setColor(15); // 기존색으로 복귀
 }
 
+void DrawBed() {
+    for (int i = 23; i < 28; i++) {
+        for (int j = 2; j < 6; j++) {
+            if (i == 27) {
+                GotoXY(j, i);
+                setColor(12);
+                printf("■");
+                setColor(15);
+            }
+            else {
+                GotoXY(j, i);
+                setColor(7);
+                printf("■");
+                setColor(15);
+            }
+        }
+    }
+}
+
+
 void DrawAutoMoney() {
     GotoXY(30,20);
     setColor(6); //노란색
@@ -558,16 +606,6 @@ void DrawGoldRect() {
     setColor(15); // 기존색으로 복귀
 }
 
-//void DrawpoltalRect() {
-//    for (int i = 21; i <= 27; i++) {
-//        GotoXY(71, i);
-//        putchar('@');
-//    }
-//    for (int i = 21; i <= 27; i++) {
-//        GotoXY(84, i);
-//        putchar('@');
-//    }
-//}
 
 void DrawDungeonRect() {
     setColor(8);
@@ -765,6 +803,7 @@ void startGame() {
     //DrawpoltalRect(); // 던전 입구 벽 생성
     DrawDungeonRect();
     DrawAutoMoney();
+    DrawBed();
 
     global::prePlayerPos.X = 10;
     global::prePlayerPos.Y = 10;

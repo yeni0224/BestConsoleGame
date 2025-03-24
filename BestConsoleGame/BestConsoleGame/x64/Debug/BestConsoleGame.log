@@ -1,11 +1,6 @@
-﻿  Battle.cpp
-  BestConsoleGame.cpp
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(355,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(355,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(355,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(355,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  Utility.cpp
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  코드를 생성하고 있습니다...
-  BestConsoleGame.vcxproj -> C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
+﻿  BestConsoleGame.cpp
+D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(383,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(383,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(383,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(383,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  BestConsoleGame.vcxproj -> D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
