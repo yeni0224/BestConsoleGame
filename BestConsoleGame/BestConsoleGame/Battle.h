@@ -8,6 +8,9 @@ namespace global {
 	namespace battle {
 		typedef struct
 		{
+			int heart;
+			int currentHeart;
+			int attack;
 
 			const char* image;
 
@@ -15,14 +18,18 @@ namespace global {
 
 		typedef struct
 		{
-
+			int heart;
+			int currentHeart;
+			int attack;
 			const char* image;
 
 		}MONSTERA;
 
 		typedef struct
 		{
-
+			int heart;
+			int currentHeart;
+			int attack;
 			const char* image;
 
 		}MONSTERB;

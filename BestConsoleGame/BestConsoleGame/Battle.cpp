@@ -11,6 +11,11 @@ namespace global {
     namespace battle {
         PLAYER player;
         MONSTERA monsterA;
+        MONSTERB monsterB;
+        bool flag = false;
+        bool WasLeftKeyPressed = false;
+        bool WasRightKeyPressed = false;
+        bool WasSpaceKeyPressed = false;
 
         void Reset()
         {
@@ -22,50 +27,44 @@ namespace global {
 
         void Player()
         {
-
-
+            player.heart = global::hp;
+            player.currentHeart = player.heart;
+            player.attack = global::atk;
             player.image = "Player";
         }
 
         void MonsterA()
         {
-
-            //텍스트
+            monsterA.heart = 100;
+            monsterA.currentHeart = monsterA.heart;
+            monsterA.attack = 10;
             monsterA.image = "monsterA";
-
         }
 
         void MonsterB()
         {
-
-            //텍스트
-            monsterA.image = "monsterA";
-
+            monsterB.heart = 10;
+            monsterB.currentHeart = monsterB.heart;
+            monsterB.attack = 10;
+            monsterB.image = "monsterB";
         }
 
         void BattleManager()
         {
-            Battle1();
-            Battle2();
             BattleText1();
-            BattleText2();
-        }
-
-        void Battle1()
-        {
-            GotoXY(1, 15);
-
-            int heart = global::hp;
-            int currentHeart = heart;
-            int attack = global::atk;
-            printf("[ %d / %d ] \n", currentHeart, heart);
-            printf(player.image);
-
-        }
-        void Battle2()
-        {
-            GotoXY(80, 1);
-            printf(monsterA.image);
+            while (1)
+            {
+                Battle1();
+                Battle2();
+                BattleText2();
+                if (flag)
+                {
+                    flag = false;
+                    break;
+                }
+                
+            }
+            
         }
         void BattleText1()
         {
@@ -75,13 +74,35 @@ namespace global {
             printf(" 도망");
         }
 
+        void Battle1()
+        {
+            GotoXY(1, 15);
+            printf("[ %d / %d ] \n", player.currentHeart, player.heart);
+            GotoXY(1, 16);
+            printf(player.image);
 
+        }
+        void Battle2()
+        {
+            if (monsterA.currentHeart != 0)
+            {
+                GotoXY(80, 1);
+                printf("[ %d / %d ] \n", monsterA.currentHeart, monsterA.heart);
+                GotoXY(80, 2);
+                printf(monsterA.image);
+            }
+            else if (monsterB.currentHeart != 0)
+            {
+                GotoXY(80, 1);
+                printf("[ %d / %d ] \n", monsterB.currentHeart, monsterB.heart);
+                GotoXY(80, 2);
+                printf(monsterB.image);
+            }
 
+        }
         void BattleText2()
         {
-            bool WasLeftKeyPressed = false;
-            bool WasRightKeyPressed = false;
-            bool WasSpaceKeyPressed = false;
+            
             int x = 79;
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
@@ -93,7 +114,7 @@ namespace global {
                 global::input::UpdateInput();
                 nowTick = GetTickCount64();
                 ULONGLONG elapsedTick = nowTick - prevTick;
-
+                GotoXY(x, 25);
 
 
                 if (elapsedTick >= 500 && elapsedTick <= 999)
@@ -149,6 +170,14 @@ namespace global {
                         {
                             system("cls");
                             startGame();
+                            flag = true;
+                            break;
+                        }
+                        if (x == 79)
+                        {
+
+                            monsterA.currentHeart -= player.attack;
+
                             break;
                         }
                     }
