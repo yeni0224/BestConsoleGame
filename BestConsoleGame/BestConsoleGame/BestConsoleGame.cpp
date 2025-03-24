@@ -48,7 +48,7 @@ namespace global
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
 
-    int gold = 50;
+    int gold = 500;
     int hp = 10;
     int max_hp = 100;
     int atk = 10;
@@ -110,6 +110,7 @@ namespace global
     bool isReady = false;     // 배틀 시작 여부
     bool isHealing = false;   // 체력 회복 여부
     bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
+    bool WasYKeyPressed = false; // Y 눌렸는지 체크
 
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
@@ -267,28 +268,26 @@ void AutoMoney() {
 
 void BattleStart() {
     if (IsInsideZone(global::curPlayerPos, global::battleZone)) { // 배틀존 안에 있는지 확인
+        GotoXY(global::msg.x, global::msg.y);
+        printf("전투 시작 : Y      ");
 
-
-        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
-            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
-
-            GotoXY(global::msg.x, global::msg.y);
-            printf("배틀시작");
+        // Y를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+        if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
+            global::WasYKeyPressed = true; // 키가 눌렸음을 기록
 
 
             //  여기에 배틀 시작 관련 함수 넣으면 됨!
             global::battle::Reset();
             global::battle::BattleManager();
             //
-            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
-            global::input::Set(global::input::IsSpaceKeyOn(), false);
+            // 키 입력 초기화 
+            global::input::Set(global::input::IsYKeyOn(), false);
         }
     }
 
-    // 키를 떼었을 때 다시 강화 가능하게 만듦
-    if (!global::input::IsSpaceKeyOn()) {
-        global::WasSpaceKeyPressed = false; // 키를 떼었을 때 다시 강화 가능
+
+    if (!global::input::IsYKeyOn()) {
+        global::WasYKeyPressed = false;
     }
 
 
