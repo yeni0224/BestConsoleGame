@@ -20,7 +20,7 @@ void DrawBed();
 
 namespace global
 {
-    int gold = 0;
+    int gold = 500;
     int hp = 10;
     int max_hp = 100;
     int atk = 10;
@@ -86,7 +86,7 @@ namespace global
     SMALL_RECT HpZone = { 67, 2, 83, 8 }; // 공격력 강화소 영역
     SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역 30 20 39 27
     SMALL_RECT AutoMoneyBuyZone = { 30, 20, 39, 27 }; // 오토 머니 구매 영역
-    SMALL_RECT HealingZone = { 2, 20, 8, 27 }; // 침대 근처 체력 회복 존
+    SMALL_RECT HealingZone = { 2, 19, 15, 27 }; // 침대 근처 체력 회복 존
 
 };
 
@@ -196,11 +196,11 @@ void AutoMoneyBuy() {
             printf("구매하시겠습니까?    ");
         }
         // 스페이스바를 처음 눌렀을 때만 실행 & 구매 횟수 체크
-        if (global::gold >= 1 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed && global::purchaseCount < maxPurchases) {
+        if (global::gold >= 50 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed && global::purchaseCount < maxPurchases) {
             global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
 
             // 골드 차감
-            global::gold -= 1; 
+            global::gold -= 50; 
             global::purchaseCount++;  // 구매 횟수 증가
             GotoXY(37, 20);
             setColor(6); //노란색
@@ -317,7 +317,7 @@ void UpdateGoldMining() {
     if (global::isMining) { // 골드존 내부에서만 실행
         static ULONGLONG miningTime = GetTickCount64();
 
-        if (GetTickCount64() - miningTime >= 500) { // 0.5초(500ms)마다 증가
+        if (GetTickCount64() - miningTime >= 1000) { // 0.5초(500ms)마다 증가
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
                 GotoXY(7, 0);
@@ -535,9 +535,9 @@ void DrawHomeRect()
 }
 
 void DrawBed() {
-    for (int i = 23; i < 28; i++) {
-        for (int j = 2; j < 6; j++) {
-            if (i == 27) {
+    for (int i = 21; i < 28; i++) {
+        for (int j = 2; j < 8; j++) {
+            if (i == 27 || i==26) {
                 GotoXY(j, i);
                 setColor(12);
                 printf("■");
@@ -563,6 +563,8 @@ void DrawAutoMoney() {
 
 void DrawAtkRect() {
     setColor(12); //빨간색
+    GotoXY(46,2);
+    printf("ATK UPGRADE 10G");
     for (int i = 2; i <= 8; i++) {
         GotoXY(44, i);
         printf("■");
@@ -578,6 +580,8 @@ void DrawAtkRect() {
 
 void DrawHpRect() {
     setColor(10); //초록색
+    GotoXY(68, 2);
+    printf("HP UPGRADE 10G");
     for (int i = 2; i <= 8; i++) {
         GotoXY(66, i);
         printf("■");
@@ -593,6 +597,8 @@ void DrawHpRect() {
 
 void DrawGoldRect() {
     setColor(6); //노란색
+    GotoXY(46, 27);
+    printf("MINE 1G/S");
     for (int i = 21; i <= 27; i++) {
         GotoXY(44, i);
         printf("■");
