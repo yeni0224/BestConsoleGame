@@ -105,6 +105,8 @@ namespace global
     static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
 
     int goldCounter = 0;      // 골드 카운트 (0~10)
+    int atkCounter = 0;       // 공격력 업그레이드 카운터 (0~10)
+    int hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
     bool isMining = false;    // 채굴 상태 여부
     bool isUpgrading = false; // 강화 진행 여부
     bool isReady = false;     // 배틀 시작 여부
@@ -152,29 +154,37 @@ void Render()
 void UpdateAttackUpgrade() {
     if (IsInsideZone(global::curPlayerPos, global::atkZone)) { // 공격력 강화소 안에 있는지 확인
 
-
-        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
-            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
-
-            // 강화 진행
-            global::gold -= 10; // 골드 10 감소
-
-            int chance = rand() % 2; // 50% 확률 (0 또는 1)
-            if (chance == 0) {
-                global::atk += global::up_atk; // 공격력 증가
-                GotoXY(global::msg.x, global::msg.y);
-                printf("공격력 +%d      ", global::up_atk); // 기존 메시지를 덮어쓰기 위해 공백 포함
-            }
-            else {
-                GotoXY(global::msg.x, global::msg.y);
-                printf("강화 실패...    ");
-            }
-
-
-            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
-            global::input::Set(global::input::IsSpaceKeyOn(), false);
+        if (global::atkCounter > 9) {
+            GotoXY(7, 0);
+            printf("MAX 강화 상태입니다.");
         }
+        else {
+            // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+            if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+                global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+                // 강화 진행
+                global::gold -= 10; // 골드 10 감소
+
+                int chance = rand() % 2; // 50% 확률 (0 또는 1)
+                if (chance == 0) {
+                    global::atk += global::up_atk; // 공격력 증가
+                    GotoXY(global::msg.x, global::msg.y);
+                    global::atkCounter++;
+                    printf("공격력 +%d      ", global::up_atk); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                }
+                else {
+                    GotoXY(global::msg.x, global::msg.y);
+                    printf("강화 실패...    ");
+                }
+
+
+                // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
+                global::input::Set(global::input::IsSpaceKeyOn(), false);
+            }
+        }
+
+        
     }
 
     // 키를 떼었을 때 다시 강화 가능하게 만듦
@@ -185,31 +195,37 @@ void UpdateAttackUpgrade() {
 
 void UpdateHpUpgrade() {
     if (IsInsideZone(global::curPlayerPos, global::HpZone)) { // 체력 강화소 안에 있는지 확인
+        if (global::hpCounter > 9) {
+            GotoXY(7, 0);
+            printf("MAX 상태입니다.");
+        }else {
+            // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
+            if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
+                global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+                // 강화 진행
+                global::gold -= 10; // 골드 10 감소
+
+                int chance = rand() % 2; // 50% 확률 (0 또는 1)
+                if (chance == 0) {
+                    global::max_hp += global::up_hp; // 체력 증가
+                    global::hp += global::up_hp;
+                    GotoXY(global::msg.x, global::msg.y);
+                    global::hpCounter++;
+                    printf("체력 +%d      ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                }
+                else {
+                    GotoXY(global::msg.x, global::msg.y);
+                    printf("강화 실패...       ");
+                }
 
 
-        // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
-        if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
-            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
-
-            // 강화 진행
-            global::gold -= 10; // 골드 10 감소
-
-            int chance = rand() % 2; // 50% 확률 (0 또는 1)
-            if (chance == 0) {
-                global::max_hp += global::up_hp; // 체력 증가
-                global::hp += global::up_hp;
-                GotoXY(global::msg.x, global::msg.y);
-                printf("체력 +%d     ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
+                // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
+                global::input::Set(global::input::IsSpaceKeyOn(), false);
             }
-            else {
-                GotoXY(global::msg.x, global::msg.y);
-                printf("강화 실패...      ");
-            }
-
-
-            // 키 입력 초기화 (강화 실행 후 다시 키 입력 받을 수 있도록 설정)
-            global::input::Set(global::input::IsSpaceKeyOn(), false);
         }
+
+        
     }
 
     // 키를 떼었을 때 다시 강화 가능하게 만듦
@@ -226,7 +242,7 @@ void AutoMoneyBuy() {
 
         if (global::purchaseCount < maxPurchases) {
             GotoXY(global::msg.x, global::msg.y);
-            printf("구매하시겠습니까?    ");
+            printf("구매하시겠습니까?     ");
         }
         // 스페이스바를 처음 눌렀을 때만 실행 & 구매 횟수 체크
         if (global::gold >= 50 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed && global::purchaseCount < maxPurchases) {
@@ -234,7 +250,7 @@ void AutoMoneyBuy() {
 
             // 골드 차감
             global::gold -= 50;
-            global::purchaseCount++;  // 구매 횟수 증가
+            global::purchaseCount++;  // 구매 횟수 증가   
             GotoXY(global::auto_money_buy_zone.x, global::auto_money_buy_zone.y);
             setColor(6); //노란색
             printf("(%d)", global::purchaseCount);
@@ -246,7 +262,7 @@ void AutoMoneyBuy() {
         // 모든 구매를 완료하면 메시지 표시
         if (global::purchaseCount >= maxPurchases) {
             GotoXY(global::msg.x, global::msg.y);
-            printf("구매 한도 도달!     ");
+            printf("구매 한도 도달!      ");
         }
     }
 
@@ -269,7 +285,7 @@ void AutoMoney() {
 void BattleStart() {
     if (IsInsideZone(global::curPlayerPos, global::battleZone)) { // 배틀존 안에 있는지 확인
         GotoXY(global::msg.x, global::msg.y);
-        printf("전투 시작 : Y      ");
+        printf("전투 시작 : Y       ");
 
         // Y를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
         if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
@@ -328,6 +344,9 @@ void HealingHP() {
         if (GetTickCount64() - healingTime >= 1000) { // 0.5초(500ms)마다 증가
             if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
                 global::hp += global::heal_hp;
+                if (global::hp > global::max_hp) {
+                    global::hp = global::max_hp;
+                }
                 GotoXY(global::msg.x, global::msg.y);
                 printf("체력 회복중 ^~^  ");
             }
