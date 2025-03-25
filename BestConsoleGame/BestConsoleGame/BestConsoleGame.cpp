@@ -8,6 +8,7 @@
 #include "../BestConsoleGame/BestConsoleGame.h"
 
 
+
 bool IsGameRun();
 void UpdatePlayerPosition();
 void UpdatePlayer();
@@ -22,6 +23,8 @@ void DrawBed();
 void DrawQuestBoard();
 void DrawQuestCheck();
 void ShowQuestMessage(const std::string& msg);
+void UpdateQuestProgress_atkupgrade();
+void UpdateQuestProgress_hpupgrade();
 
 struct zone_xy { // X,Y좌표 구조체
     int x;
@@ -67,9 +70,9 @@ namespace global
 
 
     std::vector<Quest> questList = {
-    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 },
-    { "강화 연습", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "HP 강화", "체력 강화 3회", Quest::LOCKED, 0, 3 }
+    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
+    { "ATK 강화", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
+    { "HP 강화", "체력 3회 강화", Quest::LOCKED, 0, 3 }
     };
     std::string questMessage = "";
 
@@ -226,7 +229,9 @@ void UpdateAttackUpgrade() {
                 if (chance == 0) {
                     global::atk += global::up_atk; // 공격력 증가
                     GotoXY(global::msg.x, global::msg.y);
+
                     global::atkCounter++;
+                    UpdateQuestProgress_atkupgrade();
                     printf("공격력 +%d      ", global::up_atk); // 기존 메시지를 덮어쓰기 위해 공백 포함
                 }
                 else {
@@ -269,6 +274,7 @@ void UpdateHpUpgrade() {
                     global::hp += global::up_hp;
                     GotoXY(global::msg.x, global::msg.y);
                     global::hpCounter++;
+                    UpdateQuestProgress_hpupgrade();
                     printf("체력 +%d      ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
                 }
                 else {
@@ -377,16 +383,21 @@ void QuestAccept() {
         if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
             global::WasYKeyPressed = true;
 
-            Quest& q = global::questList[global::selectedQuestIndex];
-
-            if (q.state == Quest::LOCKED) {
-                q.state = Quest::IN_PROGRESS;
-                ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.    ");
+            // ✅ 유효한 인덱스인지 먼저 체크
+            if (global::selectedQuestIndex >= global::questList.size()) {
+                ShowQuestMessage("더 이상 수락할 퀘스트가 없습니다.");
             }
             else {
-                ShowQuestMessage("이미 수락한 퀘스트입니다.         ");
-            }
+                Quest& q = global::questList[global::selectedQuestIndex];
 
+                if (q.state == Quest::LOCKED) {
+                    q.state = Quest::IN_PROGRESS;
+                    ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.    ");
+                }
+                else {
+                    ShowQuestMessage("이미 수락한 퀘스트입니다.         ");
+                }
+            }
 
             global::input::Set(global::input::IsYKeyOn(), false);
         }
@@ -400,6 +411,7 @@ void QuestAccept() {
     }
 }
 
+
 void CheckAcceptedQuest() {
     if (IsInsideZone(global::curPlayerPos, global::QuestCheckZone)) {
         GotoXY(global::msg.x, global::msg.y);
@@ -411,7 +423,7 @@ void CheckAcceptedQuest() {
             bool found = false;
             for (const auto& q : global::questList) {
                 if (q.state == Quest::IN_PROGRESS) {
-                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")              ";
+                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")             ";
                     ShowQuestMessage(msg); // 3초간 중앙 출력
                     found = true;
                     break;
@@ -419,7 +431,7 @@ void CheckAcceptedQuest() {
             }
 
             if (!found) {
-                ShowQuestMessage("진행 중인 퀘스트가 없습니다.");
+                ShowQuestMessage("진행 중인 퀘스트가 없습니다.         ");
             }
 
             global::input::Set(global::input::IsYKeyOn(), false);
@@ -441,13 +453,53 @@ void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트
             q.current += global::goldCounter;
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name);
-                ShowQuestMessage("(보상 : 30G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
+
                 global::gold += 30;
+                global::selectedQuestIndex++;
             }
         }
     }
 }
+
+void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "ATK 강화" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current += 1; // 공격력 강화 1회 성공 → 진행도 1 증가
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_hpupgrade() // 공격력 강화 성공 시 진행
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "HP 강화" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current += 1; // 공격력 강화 1회 성공 → 진행도 1 증가
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
 
 
 
@@ -554,8 +606,7 @@ void Update()
     AutoMoneyBuy();
     AutoMoney();
     HealingHP();
-    DrawQuestBoard();
-    DrawQuestCheck();
+    
 
     QuestAccept();
     CheckAcceptedQuest();
@@ -1026,6 +1077,8 @@ void startGame() {
     DrawDungeonRect(); // 던전 입구 벽 생성
     DrawAutoMoney(); // 자동 골드 구매 표시
     DrawBed(); // 침대 그리기
+    DrawQuestBoard(); // 퀘스트 보드 그리기
+    DrawQuestCheck(); // 퀘스트 리스트 그리기
 
     global::prePlayerPos.X = 10;
     global::prePlayerPos.Y = 20;
