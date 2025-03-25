@@ -96,6 +96,9 @@ namespace global
     bool bDownKeyPressed = false;
     bool bSpaceKeyPressedInMenu = false;
 
+    const char player_sharp = '#';
+    const char player_div = '>';
+
     namespace time
     {
         ULONGLONG previousTime; //이전 시간
@@ -617,7 +620,7 @@ void Update()
     AutoMoneyBuy();
     AutoMoney();
     HealingHP();
-    
+
 
     QuestAccept();
     CheckAcceptedQuest();
@@ -739,20 +742,20 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
     }
 
     GotoXY(global::curPlayerPos.X, global::curPlayerPos.Y); // 이동 후 위치
-    printf("&"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
+    printf(">"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
 }
 
-void DrawTitleRect() 
+void DrawTitleRect()
 {
-    for (int i = 18; i <= 29;i++) {
+    for (int i = 18; i <= 29; i++) {
         GotoXY(i, 14);
         printf("@");
     }
-    for (int i = 15;i < 18;i++) {
+    for (int i = 15; i < 18; i++) {
         GotoXY(18, i);
         printf("@");
     }
-    for (int i = 18; i <= 29;i++) {
+    for (int i = 18; i <= 29; i++) {
         GotoXY(i, 18);
         printf("@");
     }
@@ -945,7 +948,7 @@ void DrawDungeonRect() {
 /// </summary>
 void TutorialPage() //타이틀 이중배열 들고오기
 {
-    
+
     //system("cls");
 
     int x = 10;
@@ -981,6 +984,7 @@ void InitSelectMenu()
 /// </summary>
 void MoveSelectMenu()
 {
+    DrawPlayer(false);
     static bool bSpaceKeyPressedInMenu = false;
     static bool bUpKeyPressedInMenu = false;
     static bool bDownKeyPressedInMenu = false;
@@ -1139,6 +1143,7 @@ void OpeningTitle()
     global::prePlayerPos.Y = 15;
     global::curPlayerPos.X = 19;
     global::curPlayerPos.Y = 15;
+
 }
 void setConsoleSize(int width, int height)
 {
@@ -1153,7 +1158,7 @@ void setConsoleSize(int width, int height)
     SetConsoleScreenBufferSize(hConsole, bufferSize);
 }
 
-void startGame() 
+void startGame()
 {
     // 콘솔 크기를 120x30으로 설정
     setConsoleSize(120, 30);
@@ -1210,7 +1215,7 @@ int main()
         //Title_Update();
         MoveSelectMenu();
         RenderOpening();
-        if (global::gamestartflag == true) 
+        if (global::gamestartflag == true)
         {
             break;
         }
