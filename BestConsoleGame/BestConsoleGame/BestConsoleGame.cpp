@@ -156,6 +156,7 @@ namespace global
     bool isQuestMessageShown = false; // 퀘스트 메시지 1번만 출력됐는지 확인
     bool isQuestMessageVisible = false; // 메시지 보이는지 체크
     bool gamestartflag = false;
+    bool gametutorialflag = false;
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
@@ -944,22 +945,89 @@ void DrawDungeonRect() {
 }
 
 /// <summary>
+/// 게임 설명 창 그리기
+/// </summary>
+void RenderTutorial()
+{
+    int x = 10;
+    int y = 5;
+    for (int i = 7; i < 19; i++)
+    {
+        GotoXY(48, i);
+        std::cout << "|" << std::endl;
+    }
+    GotoXY(50, y + 3);
+    std::cout << "<< 조작 방법 >>" << std::endl;
+
+    GotoXY(50, y + 6);
+    std::cout << "1. Mine 영역에서 골드 캐기 ! " << std::endl;
+    GotoXY(50, y + 7);
+    std::cout << "2. 침대 옆 Auto Money로 이동하여 골드 모으기 ! " << std::endl;
+    GotoXY(50, y + 8);
+    std::cout << "3. '공격 강화 구역' '체력 강화 구역' 에서 골드로 캐릭터 강화하기!" << std::endl;
+    GotoXY(50, y + 9);
+    std::cout << "4. 왼쪽 상단에서 퀘스트 수락하여 미션 수행하기 !" << std::endl;
+    GotoXY(50, y + 10);
+    std::cout << "5. 퀘스트 목록에서 퀘스트 내용 확인하기 !" << std::endl;
+    GotoXY(50, y + 11);
+    std::cout << "6. 보스 방으로 입장하여 몬스터와 전투하기 !" << std::endl;
+    GotoXY(50, y + 12);
+    std::cout << "7. 침대로 이동하여 HP 회복하기 ! " << std::endl;
+
+    GotoXY(13, y + 3);
+    std::cout << " << 조작 키 >>" << std::endl;
+    GotoXY(13, y + 6);
+    std::cout << " [↑] [↓] [←] [→]   플레이어 이동" << std::endl;
+    GotoXY(13, y + 8);
+    std::cout << " [Space Bar]   강화, 입장" << std::endl;
+    GotoXY(13, y + 10);
+    std::cout << " [Y]   확인" << std::endl;
+
+    GotoXY(40, y + 16);
+    std::cout << "<< [Y] 누르면 첫화면으로 >>" << std::endl;
+}
+
+/// <summary>
 /// 게임 설명 창
 /// </summary>
-void TutorialPage() //타이틀 이중배열 들고오기
+void TutorialPage()
 {
+    CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
+    cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
+    cursorInfo.dwSize = 1; // 커서 크기 1~100
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 핸들 불러서 커서 
 
-    //system("cls");
+    CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    global::consoleScreenSize.Left = csbi.srWindow.Left; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
+    global::consoleScreenSize.Right = csbi.srWindow.Right; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
+    global::consoleScreenSize.Bottom = csbi.srWindow.Bottom; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 169
+    global::consoleScreenSize.Top = csbi.srWindow.Top; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 50
 
-    int x = 10;
-    int y = 10;
-    GotoXY(x, y + 10);
-    std::cout << "<< 조작 방법 >>" << std::endl;
-    GotoXY(x, y + 11);
-    std::cout << "<< >>" << std::endl;
-    GotoXY(x, y + 12);
-    std::cout << "<<  >>" << std::endl;
+    global::playerMovableRect.Left = global::consoleScreenSize.Left + 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Right = global::consoleScreenSize.Right - 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Top = global::consoleScreenSize.Top + 2; // 플레이어 이동 범위 제한
+
+    DrawMovableRect(); // 테두리 벽 생성
+
+    system("cls");
+    DrawMovableRect(); // 테두리 벽 생성
+    while (IsGameRun())
+    {
+        global::time::UpdateTime();
+        ProcessInput();
+        FixedUpdate();
+        RenderTutorial();
+        if (global::gametutorialflag == true) break;
+        if (global::input::IsYKeyOn())
+        {
+            system("cls");
+            break;
+        }
+    }
 }
+
 
 /// <summary>
 /// 콘솔창 종료
@@ -968,15 +1036,6 @@ void QuitGame()
 {
     system("cls");
     exit(EXIT_FAILURE);
-}
-
-/// <summary>
-/// 메뉴 선택 키 위치 초기화
-/// </summary>
-void InitSelectMenu()
-{
-    GotoXY(19, 15);
-    std::cout << ">";
 }
 
 /// <summary>
