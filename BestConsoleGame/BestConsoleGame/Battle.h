@@ -21,7 +21,8 @@ namespace global {
 			int heart;
 			int currentHeart;
 			int attack;
-			const char* image;
+			const char* image1;
+			const char* image2;
 
 		}MONSTERA;
 

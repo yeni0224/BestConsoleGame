@@ -7,3 +7,4 @@ namespace global {
 }
 
 void startGame();
+void setColor(int color);
