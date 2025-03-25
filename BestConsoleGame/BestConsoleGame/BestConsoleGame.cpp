@@ -64,10 +64,10 @@ namespace global
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
 
- 
+
 
     std::vector<Quest> questList = {
-    { "초보 광부", "금 채굴 5회", Quest::LOCKED, 0, 5 },
+    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 },
     { "강화 연습", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
     { "HP 강화", "체력 강화 3회", Quest::LOCKED, 0, 3 }
     };
@@ -240,7 +240,7 @@ void UpdateAttackUpgrade() {
             }
         }
 
-        
+
     }
 
     // 키를 떼었을 때 다시 강화 가능하게 만듦
@@ -254,7 +254,8 @@ void UpdateHpUpgrade() {
         if (global::hpCounter > 9) {
             GotoXY(7, 0);
             printf("MAX 상태입니다.");
-        }else {
+        }
+        else {
             // 스페이스바를 처음 눌렀을 때만 실행 (한 번 실행 후 기다림)
             if (global::gold >= 10 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed) {
                 global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
@@ -281,7 +282,7 @@ void UpdateHpUpgrade() {
             }
         }
 
-        
+
     }
 
     // 키를 떼었을 때 다시 강화 가능하게 만듦
@@ -369,7 +370,7 @@ void QuestAccept() {
     if (IsInsideZone(global::curPlayerPos, global::QuestZone)) {
         if (!global::isQuestMessageShown) {
             GotoXY(global::msg.x, global::msg.y);
-            printf("퀘스트 수락 = Y");
+            printf("퀘스트 수락 = Y   ");
             global::isQuestMessageShown = true;
         }
 
@@ -380,10 +381,10 @@ void QuestAccept() {
 
             if (q.state == Quest::LOCKED) {
                 q.state = Quest::IN_PROGRESS;
-                ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.");
+                ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.    ");
             }
             else {
-                ShowQuestMessage("이미 수락한 퀘스트입니다.");
+                ShowQuestMessage("이미 수락한 퀘스트입니다.         ");
             }
 
 
@@ -401,6 +402,8 @@ void QuestAccept() {
 
 void CheckAcceptedQuest() {
     if (IsInsideZone(global::curPlayerPos, global::QuestCheckZone)) {
+        GotoXY(global::msg.x, global::msg.y);
+        printf("퀘스트 확인 = Y");
         if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
             global::WasYKeyPressed = true;
 
@@ -408,7 +411,7 @@ void CheckAcceptedQuest() {
             bool found = false;
             for (const auto& q : global::questList) {
                 if (q.state == Quest::IN_PROGRESS) {
-                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")";
+                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")              ";
                     ShowQuestMessage(msg); // 3초간 중앙 출력
                     found = true;
                     break;
@@ -425,6 +428,24 @@ void CheckAcceptedQuest() {
 
     if (!global::input::IsYKeyOn()) {
         global::WasYKeyPressed = false;
+    }
+}
+
+void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "초보 광부" && q.state == Quest::IN_PROGRESS)
+        {
+            // 골드 채굴 1회 = 진행도 1 증가
+            q.current += global::goldCounter;
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name);
+                ShowQuestMessage("(보상 : 30G)");
+                global::gold += 30;
+            }
+        }
     }
 }
 
@@ -496,6 +517,8 @@ void UpdateGoldMining() {
                 global::goldCounter++;
                 GotoXY(global::msg.x, global::msg.y);
                 printf("골드 채굴 중: %d/10 ", global::goldCounter);
+
+
             }
             miningTime = GetTickCount64(); // 타이머 초기화
         }
@@ -506,11 +529,13 @@ void UpdateGoldStorage() {
     if (IsInsideZone(global::curPlayerPos, global::homeZone)) { // 집 영역 확인
         if (global::goldCounter > 0) { // 채굴한 골드가 있을 때 저장
             global::gold += global::goldCounter;
+            UpdateQuestProgress_GoldMined();
             global::goldCounter = 0; // 카운트 초기화
 
 
             GotoXY(global::msg.x, global::msg.y);
             printf("골드 저장 완료!   ");
+
         }
     }
 }
