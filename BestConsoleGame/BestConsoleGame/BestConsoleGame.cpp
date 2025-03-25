@@ -20,6 +20,7 @@ bool IsInsideZone(COORD pos, SMALL_RECT zone);
 void UpdateAttackUpgrade();
 void UpdateHpUpgrade();
 void DrawBed();
+void DrawTitleRect();
 void DrawQuestBoard();
 void DrawQuestCheck();
 void ShowQuestMessage(const std::string& msg);
@@ -88,6 +89,12 @@ namespace global
     void setatk(int value) { atk = value; }
     int getatk() { return atk; }
 
+    short newY = 0;
+    int x = 19;
+    int y = 15;
+    bool bUpKeyPressed = false;
+    bool bDownKeyPressed = false;
+    bool bSpaceKeyPressedInMenu = false;
 
     namespace time
     {
@@ -145,6 +152,7 @@ namespace global
     bool WasYKeyPressed = false; // Y 눌렸는지 체크
     bool isQuestMessageShown = false; // 퀘스트 메시지 1번만 출력됐는지 확인
     bool isQuestMessageVisible = false; // 메시지 보이는지 체크
+    bool gamestartflag = false;
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
@@ -155,6 +163,9 @@ namespace global
     SMALL_RECT HealingZone = { 2, 20, 20, 27 }; // 침대 근처 체력 회복 존
     SMALL_RECT QuestZone = { 2, 2, 20, 5 }; // 퀘스트 수락 존
     SMALL_RECT QuestCheckZone = { 30, 2, 39, 9 }; // 퀘스트 수락 존
+    SMALL_RECT GameStartZone = { 20, 20, 15, 15 }; // 게임시작 커서 위치
+    SMALL_RECT TutorialZone = { 20, 20, 16, 16 }; // 게임 설명 커서 위치
+    SMALL_RECT GameQuitZone = { 20, 20, 17, 17 }; // 게임 종료 설명 위치
 
 };
 
@@ -731,6 +742,22 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
     printf("&"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
 }
 
+void DrawTitleRect() 
+{
+    for (int i = 18; i <= 29;i++) {
+        GotoXY(i, 14);
+        printf("@");
+    }
+    for (int i = 15;i < 18;i++) {
+        GotoXY(18, i);
+        printf("@");
+    }
+    for (int i = 18; i <= 29;i++) {
+        GotoXY(i, 18);
+        printf("@");
+    }
+}
+
 void DrawMovableRect() // 이동불가 영역 표시 = 벽
 {
     setColor(8);
@@ -913,129 +940,208 @@ void DrawDungeonRect() {
     setColor(15);
 }
 
-////===================================================================================================//
-//
-///// <summary>
-///// 게임 시작 호출
-///// </summary>
-//void OnStartGame()
-//{
-//    //화면 테두리 외의 텍스트 모두 지우기
-//
-//
-//    if (global::input::IsSpaceKeyOn())
-//    {
-//        startGame();
-//    }
-//}
-//
-///// <summary>
-///// 게임 설명 창
-///// </summary>
-//void TutorialPage() //타이틀 이중배열 들고오기
-//{
-//    //시작 화면의 텍스트 모두 지우기
-//    for (int i = 0; i < 8; i++)
-//    {
-//        // x 지우기
-//        // y 지우기
-//    }
-//
-//    int x = 10;
-//    int y = 10;
-//    GotoXY(x, y + 10);
-//    std::cout << "<< 조작 방법 >>" << std::endl;
-//    GotoXY(x, y + 11);
-//    std::cout << "<< >>" << std::endl;
-//    GotoXY(x, y + 12);
-//    std::cout << "<< 게임 종료 >>" << std::endl;
-//}
-//
-///// <summary>
-///// 콘솔창 종료
-///// </summary>
-//void QuitGame()
-//{
-//    system("cls");
-//    exit(EXIT_FAILURE);
-//}
-//
-///// <summary>
-///// 오프닝 메세지, 메뉴
-///// </summary>
-//void RenderOpening()
-//{
-//    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-//    if (!handle) return;
-//
-//    int x = 20;
-//    int y = 5;
-//    GotoXY(x, y);
-//    std::cout << "...@@@@@@@@..@@......@@........@@........@@.......@@......@@.......@@....." << std::endl;
-//    GotoXY(x, y + 1);
-//    std::cout << "...@@....@@..@@......@@......@@@@.......@@@@......@@......@@.......@@@@..." << std::endl;
-//    GotoXY(x, y + 2);
-//    std::cout << "...@@....@@..@@@@....@@........@@......@@..@@.....@@@@....@@.......@@....." << std::endl;
-//    GotoXY(x, y + 3);
-//    std::cout << "...@@....@@..@@@@....@@......@@@@.....@@....@@....@@@@....@@@@@@@..@@@@..." << std::endl;
-//    GotoXY(x, y + 4);
-//    std::cout << "...@@....@@..@@......@@........@@....@@......@@...@@...............@@....." << std::endl;
-//    GotoXY(x, y + 5);
-//    std::cout << "...@@@@@@@@..@@......@@@@@@@@..@@...@@........@@..@@............@@........" << std::endl;
-//    GotoXY(x, y + 6);
-//    std::cout << ".............@@................@@.................@@..........@@..@@......" << std::endl;
-//    GotoXY(x, y + 7);
-//    std::cout << ".............@@................@@.................@@............@@........" << std::endl;
-//
-//    GotoXY(x, y + 10);
-//    std::cout << "게임 시작" << std::endl;
-//    GotoXY(x, y + 11);
-//    std::cout << "게임 설명" << std::endl;
-//    GotoXY(x, y + 12);
-//    std::cout << "게임 종료" << std::endl;
-//}
-//
-///// <summary>
-///// </summary>게임 플레이 전 오프닝 화면
-///// <returns></returns>
-//void OpeningTitle()
-//{
-//    CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
-//    cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
-//    cursorInfo.dwSize = 1; // 커서 크기 1~100
-//    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 핸들 불러서 커서 
-//
-//    CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
-//    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-//    /*COORD dwSize;                // 콘솔 버퍼의 크기 (가로, 세로)
-//    COORD dwCursorPosition;     // 현재 커서 위치 (X, Y)
-//    WORD  wAttributes;           // 현재 문자 색상 속성
-//    SMALL_RECT srWindow;        // 콘솔 창의 크기 (왼쪽, 위, 오른쪽, 아래)
-//    COORD dwMaximumWindowSize;  // 콘솔 창의 최대 크기 (가로, 세로)  << 구조체 멤버들임*/
-//    global::consoleScreenSize.Left = csbi.srWindow.Left; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
-//    global::consoleScreenSize.Right = csbi.srWindow.Right; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
-//    global::consoleScreenSize.Bottom = csbi.srWindow.Bottom; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 169
-//    global::consoleScreenSize.Top = csbi.srWindow.Top; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 50
-//    /*printf("콘솔 창의 위치:\n");
-//    printf("왼쪽: %d\n", csbi.srWindow.Left);
-//    printf("위쪽: %d\n", csbi.srWindow.Top);
-//    printf("오른쪽: %d\n", csbi.srWindow.Right);
-//    printf("아래쪽: %d\n", csbi.srWindow.Bottom);  // 콘솔창 및 버퍼 크기 확인 둘이 동일함  */
-//    global::playerMovableRect.Left = global::consoleScreenSize.Left + 2; // 플레이어 이동 범위 제한
-//    global::playerMovableRect.Right = global::consoleScreenSize.Right - 2; // 플레이어 이동 범위 제한
-//    global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2; // 플레이어 이동 범위 제한
-//    global::playerMovableRect.Top = global::consoleScreenSize.Top + 2; // 플레이어 이동 범위 제한
-//    /*printf("왼쪽: %d\n", global::playerMovableRect.Left);
-//    printf("위쪽: %d\n", global::playerMovableRect.Top);
-//    printf("오른쪽: %d\n", global::playerMovableRect.Right);
-//    printf("아래쪽: %d\n", global::playerMovableRect.Bottom);*/
-//
-//    DrawMovableRect(); // 테두리 벽 생성
-//
-//}
-////===================================================================================================//
+/// <summary>
+/// 게임 설명 창
+/// </summary>
+void TutorialPage() //타이틀 이중배열 들고오기
+{
+    
+    //system("cls");
 
-void setConsoleSize(int width, int height) {
+    int x = 10;
+    int y = 10;
+    GotoXY(x, y + 10);
+    std::cout << "<< 조작 방법 >>" << std::endl;
+    GotoXY(x, y + 11);
+    std::cout << "<< >>" << std::endl;
+    GotoXY(x, y + 12);
+    std::cout << "<<  >>" << std::endl;
+}
+
+/// <summary>
+/// 콘솔창 종료
+/// </summary>
+void QuitGame()
+{
+    system("cls");
+    exit(EXIT_FAILURE);
+}
+
+/// <summary>
+/// 메뉴 선택 키 위치 초기화
+/// </summary>
+void InitSelectMenu()
+{
+    GotoXY(19, 15);
+    std::cout << ">";
+}
+
+/// <summary>
+/// 방향키 움직이기, 화살표 출력, clamp 함수 넣어 테스트 해보아야함
+/// </summary>
+void MoveSelectMenu()
+{
+    static bool bSpaceKeyPressedInMenu = false;
+    static bool bUpKeyPressedInMenu = false;
+    static bool bDownKeyPressedInMenu = false;
+
+    static ULONGLONG lastMoveTime = 0;
+    ULONGLONG now = GetTickCount64();
+
+    const int moveCooldown = 150;
+
+    // ↓ 방향키 입력
+    if (global::input::IsDownKeyOn())
+    {
+        if (!bDownKeyPressedInMenu && now - lastMoveTime >= moveCooldown)
+        {
+            bDownKeyPressedInMenu = true;
+            global::input::Set(global::input::DOWN_KEY_INDEX, false); // ✅ 추가됨!
+
+            if (global::curPlayerPos.Y < 17)
+            {
+                global::prePlayerPos = global::curPlayerPos;
+                global::curPlayerPos.Y++;
+                lastMoveTime = now;
+
+                DrawPlayer(true);  // ✅ 이동 후 화면 갱신
+            }
+        }
+    }
+    else
+    {
+        bDownKeyPressedInMenu = false;
+    }
+
+    // ↑ 방향키 입력
+    if (global::input::IsUpKeyOn())
+    {
+        if (!bUpKeyPressedInMenu && now - lastMoveTime >= moveCooldown)
+        {
+            bUpKeyPressedInMenu = true;
+            global::input::Set(global::input::UP_KEY_INDEX, false); // ✅ 추가됨!
+
+            if (global::curPlayerPos.Y > 15)
+            {
+                global::prePlayerPos = global::curPlayerPos;
+                global::curPlayerPos.Y--;
+                lastMoveTime = now;
+
+                DrawPlayer(true);  // ✅ 위로 이동 출력
+            }
+        }
+    }
+    else
+    {
+        bUpKeyPressedInMenu = false;
+    }
+
+    // Space 키 처리
+    if (global::input::IsSpaceKeyOn())
+    {
+        if (!bSpaceKeyPressedInMenu)
+        {
+            bSpaceKeyPressedInMenu = true;
+
+            if (global::curPlayerPos.Y == 15) {
+                global::gamestartflag = true;
+
+            }
+            else if (global::curPlayerPos.Y == 16) {
+                TutorialPage();
+            }
+            else if (global::curPlayerPos.Y == 17) {
+                QuitGame();
+            }
+        }
+    }
+    else
+    {
+        bSpaceKeyPressedInMenu = false;
+    }
+}
+
+/// <summary>
+/// 오프닝 메세지, 메뉴
+/// </summary>
+void RenderOpening()
+{
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (!handle) return;
+
+    int x = 20;
+    int y = 5;
+    GotoXY(global::msg.x, global::msg.y);
+    printf("x: %d, y: %d", global::curPlayerPos.X, global::curPlayerPos.Y);
+    GotoXY(x, y);
+    std::cout << "...@@@@@@@@..@@......@@........@@........@@.......@@......@@.......@@....." << std::endl;
+    GotoXY(x, y + 1);
+    std::cout << "...@@....@@..@@......@@......@@@@.......@@@@......@@......@@.......@@@@..." << std::endl;
+    GotoXY(x, y + 2);
+    std::cout << "...@@....@@..@@......@@........@@......@@..@@.....@@@@....@@.......@@....." << std::endl;
+    GotoXY(x, y + 3);
+    std::cout << "...@@....@@..@@@@....@@......@@@@.....@@....@@....@@@@....@@@@@@@..@@@@..." << std::endl;
+    GotoXY(x, y + 4);
+    std::cout << "...@@....@@..@@......@@........@@....@@......@@...@@...............@@....." << std::endl;
+    GotoXY(x, y + 5);
+    std::cout << "...@@@@@@@@..@@......@@@@@@@@..@@...@@........@@..@@............@@........" << std::endl;
+    GotoXY(x, y + 6);
+    std::cout << ".............@@................@@.................@@..........@@..@@......" << std::endl;
+    GotoXY(x, y + 7);
+    std::cout << ".............@@................@@.................@@............@@........" << std::endl;
+
+    GotoXY(x, y + 10);
+    std::cout << "게임 시작" << std::endl;
+    GotoXY(x, y + 11);
+    std::cout << "게임 설명" << std::endl;
+    GotoXY(x, y + 12);
+    std::cout << "게임 종료" << std::endl;
+}
+
+/// <summary>
+/// </summary>게임 플레이 전 오프닝 화면
+/// <returns></returns>
+void OpeningTitle()
+{
+    CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
+    cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
+    cursorInfo.dwSize = 1; // 커서 크기 1~100
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo); // 핸들 불러서 커서 
+
+    CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    /*COORD dwSize;                // 콘솔 버퍼의 크기 (가로, 세로)
+    COORD dwCursorPosition;     // 현재 커서 위치 (X, Y)
+    WORD  wAttributes;           // 현재 문자 색상 속성
+    SMALL_RECT srWindow;        // 콘솔 창의 크기 (왼쪽, 위, 오른쪽, 아래)
+    COORD dwMaximumWindowSize;  // 콘솔 창의 최대 크기 (가로, 세로)  << 구조체 멤버들임*/
+    global::consoleScreenSize.Left = csbi.srWindow.Left; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
+    global::consoleScreenSize.Right = csbi.srWindow.Right; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
+    global::consoleScreenSize.Bottom = csbi.srWindow.Bottom; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 169
+    global::consoleScreenSize.Top = csbi.srWindow.Top; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 50
+    /*printf("콘솔 창의 위치:\n");
+    printf("왼쪽: %d\n", csbi.srWindow.Left);
+    printf("위쪽: %d\n", csbi.srWindow.Top);
+    printf("오른쪽: %d\n", csbi.srWindow.Right);
+    printf("아래쪽: %d\n", csbi.srWindow.Bottom);  // 콘솔창 및 버퍼 크기 확인 둘이 동일함  */
+    global::playerMovableRect.Left = global::consoleScreenSize.Left + 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Right = global::consoleScreenSize.Right - 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2; // 플레이어 이동 범위 제한
+    global::playerMovableRect.Top = global::consoleScreenSize.Top + 2; // 플레이어 이동 범위 제한
+    /*printf("왼쪽: %d\n", global::playerMovableRect.Left);
+    printf("위쪽: %d\n", global::playerMovableRect.Top);
+    printf("오른쪽: %d\n", global::playerMovableRect.Right);
+    printf("아래쪽: %d\n", global::playerMovableRect.Bottom);*/
+
+    DrawMovableRect(); // 테두리 벽 생성
+
+    global::prePlayerPos.X = 19;
+    global::prePlayerPos.Y = 15;
+    global::curPlayerPos.X = 19;
+    global::curPlayerPos.Y = 15;
+}
+void setConsoleSize(int width, int height)
+{
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // 콘솔 창 크기 조정
@@ -1047,7 +1153,8 @@ void setConsoleSize(int width, int height) {
     SetConsoleScreenBufferSize(hConsole, bufferSize);
 }
 
-void startGame() {
+void startGame() 
+{
     // 콘솔 크기를 120x30으로 설정
     setConsoleSize(120, 30);
 
@@ -1087,26 +1194,29 @@ void startGame() {
 
     DrawPlayer(false); // 플레이어 생성
 }
+
 int main()
 {
 
     global::time::InitTime(); // 시간 초기화
 
-    //===================================================================================================//
-/*   DrawPlayer(false); // 플레이어 가리기
-   OpeningTitle();//오프닝 화면
-   //오프닝 루프
-   while (IsGameRun())
-   {
-       global::time::UpdateTime();
-       ProcessInput();
-       FixedUpdate();
-       RenderOpening();
-   }*/
-   //===================================================================================================//
-
+    OpeningTitle();//오프닝 화면
+    //오프닝 루프
+    while (IsGameRun())
+    {
+        global::time::UpdateTime();
+        ProcessInput();
+        FixedUpdate();
+        //Title_Update();
+        MoveSelectMenu();
+        RenderOpening();
+        if (global::gamestartflag == true) 
+        {
+            break;
+        }
+    }
+    system("cls");
     startGame(); //게임 시작, 기본 화면 구성
-
 
     while (IsGameRun()) // 게임 루프
     {
@@ -1116,9 +1226,7 @@ int main()
         FixedUpdate();
         Update();
         Render();
-
     }
-
 
     return 0;
 }
