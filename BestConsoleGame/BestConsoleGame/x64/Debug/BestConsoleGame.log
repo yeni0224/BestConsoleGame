@@ -1,12 +1,2 @@
 ﻿  Battle.cpp
-  BestConsoleGame.cpp
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(649,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(649,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(649,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(649,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1148,43): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1148,55): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1152,26): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1152,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-  코드를 생성하고 있습니다...
   BestConsoleGame.vcxproj -> C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
