@@ -20,6 +20,7 @@ namespace global {
         bool WasSpaceKeyPressed = false;
         bool WasEnterKeyPressed = false;
 
+
         void Reset()
         {
             system("cls");
@@ -41,7 +42,7 @@ namespace global {
         {
             monsterA.heart = 100;
             monsterA.currentHeart = monsterA.heart;
-            monsterA.attack = 5;
+            monsterA.attack = 10;
             monsterA.image = "monsterA";
         }
 
@@ -151,16 +152,20 @@ namespace global {
                 std::cout << "::::::::::::%@@@+:::::::::%@+::::::*@@#+-----=+*::::::::@@=::::::::+%@%+-----+#@@+::::::*@#:::::::-%@*:::::::+@%::::::::\n";
                 std::cout << "::::::::::::-%%#::::::::::#%+::::::::+#%@@@@%%#+::::::::#%=::::::::::=#%@@@@%%#=::::::::+%*::::::::-%%+::::::=%#::::::::\n";
                 std::cout << ":::::::::::::::::::::::::::::::::::::::::--:::::::::::::::::::::::::::::::-:::::::::::::::::::::::::::::::::::::::::::::\n";
-                std::cout << "                                                 엔터 입력 시 다시시작                                                 "; 
+                std::cout << "                                                 엔터 입력 시 다시시작                                                 ";
                 clearflag = true;
-             
-                
+
+
             }
 
         }
+        void patternAttack(int playerRand, int monsterRand, int& charging);
+        void patternRecovery(int playerRand, int monsterRand, int& charging);
+        int charging = 1;
+
         void BattleText2()
         {
-            int playerCritical = rand() % 2; // 50% 확률 (0 또는 1)
+
             int x = 79;
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
@@ -169,6 +174,8 @@ namespace global {
 
             while (1)
             {
+                int playerRand = rand() % 4; // 50% 확률 (0 ~ 3)
+                int monsterRand = rand() % 7; // 50% 확률 (0 ~ 6)
                 if (clearflag)
                 {
                     if (global::input::IsEnterKeyOn())
@@ -245,58 +252,25 @@ namespace global {
                         WasSpaceKeyPressed = true;
                         if (x == 89)
                         {
-                            global::hp = player.currentHeart;
-                            system("cls");
-                            startGame();
-                            flag = true;
+                            global::hp = player.currentHeart;//도망 시 현재hp가져가도록
+                            system("cls");//화면 초기화
+                            startGame();//로비화면 출력
+                            flag = true;//전체 반복문 나가는 flag
                             break;
                         }
                         if (x == 79)
                         {
-                            if (monsterA.currentHeart > 0)
-                            {
-                                monsterA.currentHeart -= player.attack;
-                                Sleep(100);
-                                player.currentHeart -= monsterA.attack;
-                            }
-                            else if (monsterB.currentHeart > 0)
-                            {
-                                monsterB.currentHeart -= player.attack;
-                                Sleep(100);
-                                player.currentHeart -= monsterB.attack;
-                            }
-                            else if (monsterC.currentHeart > 0)
-                            {
-                                monsterC.currentHeart -= player.attack;
-                                Sleep(100);
-                                player.currentHeart -= monsterC.attack;
-                            }
-
-
+                            patternAttack(playerRand, monsterRand, charging);
+                            GotoXY(5, 5);
+                            printf("%d", charging);
                             break;
                         }
                         global::input::Set(global::input::Space_KEY_INDEX, false);
                         WasSpaceKeyPressed = true;
                         if (x == 84)
                         {
-                            if (monsterA.currentHeart > 0)
-                            {
-                                player.currentHeart += 10;
-                                Sleep(100);
-                                player.currentHeart -= monsterA.attack;
-                            }
-                            else if (monsterB.currentHeart > 0)
-                            {
-                                player.currentHeart += 10;
-                                Sleep(100);
-                                player.currentHeart -= monsterB.attack;
-                            }
-                            else if (monsterC.currentHeart > 0)
-                            {
-                                player.currentHeart += 10;
-                                Sleep(100);
-                                player.currentHeart -= monsterC.attack;
-                            }
+                            patternRecovery(playerRand, monsterRand, charging);
+                            break;
                         }
                     }
                 }
@@ -306,6 +280,267 @@ namespace global {
                 }
             }
         }
+        void patternAttack(int playerRand, int monsterRand, int& charging)
+        {
+            if (monsterA.currentHeart > 0)
+            {
+                if (playerRand == 0) {//플레이어 크리티컬
+                    monsterA.currentHeart -= player.attack * 2; // 몬스터 hp 감소
+                    GotoXY(5, 14);
+                    printf("Critical hit!!");
+                    Sleep(100);
+                    GotoXY(5, 14);
+                    printf("              ");
+                }
+                else {
+                    monsterA.currentHeart -= player.attack;
+                }
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("차징Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterA.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterA.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("차징샷             ");
+                    }
+                    else {
+                        player.currentHeart -= monsterA.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+
+            }
+
+            else if (monsterB.currentHeart > 0)
+            {
+                if (playerRand == 0) {//플레이어 크리티컬
+                    monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
+                    GotoXY(5, 14);
+                    printf("Critical hit!!");
+                    Sleep(100);
+                    GotoXY(5, 14);
+                    printf("              ");
+                }
+                else {
+                    monsterB.currentHeart -= player.attack;
+                }
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        printf("차징Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterB.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterB.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("차징샷             ");
+                    }
+                    else {
+                        player.currentHeart -= monsterB.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+            }
+
+            else if (monsterC.currentHeart > 0)
+            {
+                if (playerRand == 0) {//플레이어 크리티컬
+                    monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
+                    GotoXY(5, 14);
+                    printf("Critical hit!!");
+                    Sleep(100);
+                    GotoXY(5, 14);
+                    printf("              ");
+                }
+                else {
+                    monsterC.currentHeart -= player.attack;
+                }
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("차징Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("차징샷             ");
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+            }
+        }
+        void patternRecovery(int playerRand, int monsterRand, int& charging)
+        {
+            if (monsterA.currentHeart > 0)
+            {
+                player.currentHeart += 10;
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterA.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterA.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                    else {
+                        player.currentHeart -= monsterA.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+            }
+            else if (monsterB.currentHeart > 0)
+            {
+                player.currentHeart += 10;
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterB.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterB.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                    else {
+                        player.currentHeart -= monsterB.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+            }
+            else if (monsterC.currentHeart > 0)
+            {
+                player.currentHeart += 10;
+                Sleep(100);
+                if (monsterRand == 0) {//몬스터 크리티컬
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack * 2;
+                        GotoXY(60, 2);
+                        printf("Critical hit");
+                    }
+
+                }
+                else if (monsterRand < 5) {
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * charging;
+                        charging = 1;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack;
+                        GotoXY(60, 2);
+                        printf("                ");
+                    }
+                }
+                else {
+                    charging += 1;
+                    GotoXY(60, 2);;
+                    printf("~기를 모으는 중~");
+                }
+            }
+        }
     }
 
 }
+
