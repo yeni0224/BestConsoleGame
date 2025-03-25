@@ -93,7 +93,7 @@ namespace global {
         {
             GotoXY(80, 25);
             printf("공격");
-            printf(" 방어");
+            printf(" 회복");
             printf(" 도망");
         }
 
@@ -160,7 +160,7 @@ namespace global {
         }
         void BattleText2()
         {
-
+            int playerCritical = rand() % 2; // 50% 확률 (0 또는 1)
             int x = 79;
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
@@ -176,7 +176,6 @@ namespace global {
                         if (!WasEnterKeyPressed)
                         {
                             GotoXY(7, 0);
-                            printf("aaaaaa");
                             global::input::Set(global::input::Enter_KEY_INDEX, false);
                             WasEnterKeyPressed = true;
                             system("cls");
@@ -275,6 +274,29 @@ namespace global {
 
 
                             break;
+                        }
+                        global::input::Set(global::input::Space_KEY_INDEX, false);
+                        WasSpaceKeyPressed = true;
+                        if (x == 84)
+                        {
+                            if (monsterA.currentHeart > 0)
+                            {
+                                player.currentHeart += 10;
+                                Sleep(100);
+                                player.currentHeart -= monsterA.attack;
+                            }
+                            else if (monsterB.currentHeart > 0)
+                            {
+                                player.currentHeart += 10;
+                                Sleep(100);
+                                player.currentHeart -= monsterB.attack;
+                            }
+                            else if (monsterC.currentHeart > 0)
+                            {
+                                player.currentHeart += 10;
+                                Sleep(100);
+                                player.currentHeart -= monsterC.attack;
+                            }
                         }
                     }
                 }
