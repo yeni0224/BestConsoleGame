@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <vector>
+#include <string>
 #include <windows.h>
 #include "../BestConsoleGame/Input_Sys.h"
 #include "../BestConsoleGame/Utility.h"
@@ -17,19 +19,33 @@ bool IsInsideZone(COORD pos, SMALL_RECT zone);
 void UpdateAttackUpgrade();
 void UpdateHpUpgrade();
 void DrawBed();
+void DrawQuestBoard();
+void DrawQuestCheck();
+void ShowQuestMessage(const std::string& msg);
 
-
-struct zone_xy {
+struct zone_xy { // X,Y좌표 구조체
     int x;
     int y;
     zone_xy(int _x, int _y) : x(_x), y(_y) {}
 };
-struct zone_awds {
+struct zone_awds { // 좌 상 우 하 구조체
     int a;
     int w;
     int d;
     int s;
     zone_awds(int _a, int _w, int _d, int _s) : a(_a), w(_w), d(_d), s(_s) {}
+};
+
+struct Quest { // 퀘스트 구조체
+    std::string name;
+    std::string description;
+    enum State { LOCKED, IN_PROGRESS, COMPLETE } state;
+    int current;
+    int goal;
+
+    bool IsComplete() const {
+        return current >= goal;
+    }
 };
 
 namespace global
@@ -47,6 +63,15 @@ namespace global
     zone_awds atk_zone(44, 2, 62, 8);
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
+
+ 
+
+    std::vector<Quest> questList = {
+    { "초보 광부", "금 채굴 5회", Quest::LOCKED, 0, 5 },
+    { "강화 연습", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
+    { "HP 강화", "체력 강화 3회", Quest::LOCKED, 0, 3 }
+    };
+    std::string questMessage = "";
 
     int gold = 500;
     int hp = 10;
@@ -100,20 +125,23 @@ namespace global
     const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
-
+    ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
     static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
 
     int goldCounter = 0;      // 골드 카운트 (0~10)
     int atkCounter = 0;       // 공격력 업그레이드 카운터 (0~10)
     int hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
+    int selectedQuestIndex = 0; // 0번 퀘스트 수락 예정
+
     bool isMining = false;    // 채굴 상태 여부
     bool isUpgrading = false; // 강화 진행 여부
     bool isReady = false;     // 배틀 시작 여부
     bool isHealing = false;   // 체력 회복 여부
     bool WasSpaceKeyPressed = false; // 스페이스바 눌렸는지 체크
     bool WasYKeyPressed = false; // Y 눌렸는지 체크
-
+    bool isQuestMessageShown = false; // 퀘스트 메시지 1번만 출력됐는지 확인
+    bool isQuestMessageVisible = false; // 메시지 보이는지 체크
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
@@ -122,8 +150,36 @@ namespace global
     SMALL_RECT battleZone = { 97, 13, 111, 16 }; // 배틀 영역 30 20 39 27
     SMALL_RECT AutoMoneyBuyZone = { 30, 20, 39, 27 }; // 오토 머니 구매 영역
     SMALL_RECT HealingZone = { 2, 20, 20, 27 }; // 침대 근처 체력 회복 존
+    SMALL_RECT QuestZone = { 2, 2, 20, 5 }; // 퀘스트 수락 존
+    SMALL_RECT QuestCheckZone = { 30, 2, 39, 9 }; // 퀘스트 수락 존
 
 };
+
+void ShowQuestMessage(const std::string& msg) // 메시지 출력 시간 조절 함수
+{
+    global::questMessage = msg;
+    global::isQuestMessageVisible = true;
+    global::questMessageStartTime = GetTickCount64();
+}
+
+void UpdateQuestMessage() // 퀘스트 메시지 삭제 함수
+{
+    if (!global::isQuestMessageVisible) return;
+
+    ULONGLONG now = GetTickCount64();
+    if (now - global::questMessageStartTime >= 3000) {
+        // 메시지 삭제
+        GotoXY(50, 14);
+        for (int i = 0; i < global::questMessage.length(); ++i) putchar(' ');
+        global::isQuestMessageVisible = false;
+        global::questMessage = "";
+    }
+    else {
+        // 메시지 출력 (계속 덮어쓰기)
+        GotoXY(50, 14);
+        printf("%s", global::questMessage.c_str());
+    }
+}
 
 void setColor(int color) { // 컬러 변경
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
@@ -309,6 +365,69 @@ void BattleStart() {
 
 }
 
+void QuestAccept() {
+    if (IsInsideZone(global::curPlayerPos, global::QuestZone)) {
+        if (!global::isQuestMessageShown) {
+            GotoXY(global::msg.x, global::msg.y);
+            printf("퀘스트 수락 = Y");
+            global::isQuestMessageShown = true;
+        }
+
+        if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
+            global::WasYKeyPressed = true;
+
+            Quest& q = global::questList[global::selectedQuestIndex];
+
+            if (q.state == Quest::LOCKED) {
+                q.state = Quest::IN_PROGRESS;
+                ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.");
+            }
+            else {
+                ShowQuestMessage("이미 수락한 퀘스트입니다.");
+            }
+
+
+            global::input::Set(global::input::IsYKeyOn(), false);
+        }
+    }
+    else {
+        global::isQuestMessageShown = false;
+    }
+
+    if (!global::input::IsYKeyOn()) {
+        global::WasYKeyPressed = false;
+    }
+}
+
+void CheckAcceptedQuest() {
+    if (IsInsideZone(global::curPlayerPos, global::QuestCheckZone)) {
+        if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
+            global::WasYKeyPressed = true;
+
+            // 진행 중인 퀘스트 찾기
+            bool found = false;
+            for (const auto& q : global::questList) {
+                if (q.state == Quest::IN_PROGRESS) {
+                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")";
+                    ShowQuestMessage(msg); // 3초간 중앙 출력
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                ShowQuestMessage("진행 중인 퀘스트가 없습니다.");
+            }
+
+            global::input::Set(global::input::IsYKeyOn(), false);
+        }
+    }
+
+    if (!global::input::IsYKeyOn()) {
+        global::WasYKeyPressed = false;
+    }
+}
+
 
 
 
@@ -410,7 +529,12 @@ void Update()
     AutoMoneyBuy();
     AutoMoney();
     HealingHP();
+    DrawQuestBoard();
+    DrawQuestCheck();
 
+    QuestAccept();
+    CheckAcceptedQuest();
+    UpdateQuestMessage();
 }
 
 // 플레이어 갱신
@@ -587,6 +711,18 @@ void DrawHomeRect()
         // putchar('@');
     }
     setColor(15); // 기존색으로 복귀
+}
+
+void DrawQuestBoard() {
+    GotoXY(2, 2);
+    printf("▩ QUEST BOARD▩");
+    GotoXY(2, 3);
+    printf("▩▩▩▩▩▩▩▩▩▩▩▩▩▩");
+}
+
+void DrawQuestCheck() {
+    GotoXY(30, 2);
+    printf("QUEST LIST");
 }
 
 void DrawBed() {
