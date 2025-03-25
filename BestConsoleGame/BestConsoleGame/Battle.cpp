@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <windows.h>
-#include <chrono>
 
 namespace global {
     namespace battle {
@@ -262,7 +261,6 @@ namespace global {
                         {
                             patternAttack(playerRand, monsterRand, charging);
                             GotoXY(5, 5);
-                            printf("%d", charging);
                             break;
                         }
                         global::input::Set(global::input::Space_KEY_INDEX, false);
@@ -282,20 +280,26 @@ namespace global {
         }
         void patternAttack(int playerRand, int monsterRand, int& charging)
         {
+            DWORD startTick = GetTickCount();
+            
             if (monsterA.currentHeart > 0)
             {
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterA.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(5, 14);
                     printf("Critical hit!!");
-                    Sleep(100);
+                    startTick = GetTickCount();
+                    while (GetTickCount() - startTick < 500) {
+                        // 게임 루프가 멈추지 않도록 적절한 작업 수행 가능
+                    }
                     GotoXY(5, 14);
                     printf("              ");
                 }
                 else {
                     monsterA.currentHeart -= player.attack;
                 }
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
@@ -337,14 +341,16 @@ namespace global {
                     monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(5, 14);
                     printf("Critical hit!!");
-                    Sleep(100);
+                    startTick = GetTickCount();
+                    while (GetTickCount() - startTick < 500) {}
                     GotoXY(5, 14);
                     printf("              ");
                 }
                 else {
                     monsterB.currentHeart -= player.attack;
                 }
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
@@ -384,14 +390,16 @@ namespace global {
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(5, 14);
                     printf("Critical hit!!");
-                    Sleep(100);
+                    startTick = GetTickCount();
+                    while (GetTickCount() - startTick < 500) {}
                     GotoXY(5, 14);
                     printf("              ");
                 }
                 else {
                     monsterC.currentHeart -= player.attack;
                 }
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
@@ -428,10 +436,13 @@ namespace global {
         }
         void patternRecovery(int playerRand, int monsterRand, int& charging)
         {
+            DWORD startTick = GetTickCount();
+
             if (monsterA.currentHeart > 0)
             {
                 player.currentHeart += 10;
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
@@ -468,7 +479,8 @@ namespace global {
             else if (monsterB.currentHeart > 0)
             {
                 player.currentHeart += 10;
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
@@ -505,7 +517,8 @@ namespace global {
             else if (monsterC.currentHeart > 0)
             {
                 player.currentHeart += 10;
-                Sleep(100);
+                startTick = GetTickCount();
+                while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
