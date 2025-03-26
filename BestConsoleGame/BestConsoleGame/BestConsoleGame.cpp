@@ -1168,7 +1168,6 @@ void TutorialPage()
     }
 }
 
-
 /// <summary>
 /// 콘솔창 종료
 /// </summary>
@@ -1272,7 +1271,7 @@ void RenderOpening()
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     if (!handle) return;
 
-    int x = 20;
+    int x = 23;
     int y = 5;
     GotoXY(global::msg.x, global::msg.y);
     printf("x: %d, y: %d", global::curPlayerPos.X, global::curPlayerPos.Y);
@@ -1293,22 +1292,24 @@ void RenderOpening()
     GotoXY(x, y + 7);
     std::cout << ".............@@................@@.................@@............@@........" << std::endl;
 
-    GotoXY(x, y + 10);
+    GotoXY(x + 29, y + 10);
     std::cout << "게임 시작" << std::endl;
-    GotoXY(x, y + 11);
+    GotoXY(x + 29, y + 11);
     std::cout << "게임 설명" << std::endl;
-    GotoXY(x, y + 12);
+    GotoXY(x + 29, y + 12);
     std::cout << "게임 종료" << std::endl;
+
+    GotoXY(x + 72, y + 19);
+    std::cout << "<< 제작 >> " << std::endl;
+    GotoXY(x + 63, y + 21);
+    std::cout << "[ 박준혁   윤동민   김예은 ]" << std::endl;
 }
 
 /// <summary>
 /// </summary>게임 플레이 전 오프닝 화면
 /// <returns></returns>
 void OpeningTitle()
-
 {
-    setConsoleSize(120, 30);
-
     CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
     cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
     cursorInfo.dwSize = 1; // 커서 크기 1~100
@@ -1316,37 +1317,26 @@ void OpeningTitle()
 
     CONSOLE_SCREEN_BUFFER_INFO csbi; // 콘솔 화면 버퍼 정보 구조체
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    /*COORD dwSize;                // 콘솔 버퍼의 크기 (가로, 세로)
-    COORD dwCursorPosition;     // 현재 커서 위치 (X, Y)
-    WORD  wAttributes;           // 현재 문자 색상 속성
-    SMALL_RECT srWindow;        // 콘솔 창의 크기 (왼쪽, 위, 오른쪽, 아래)
-    COORD dwMaximumWindowSize;  // 콘솔 창의 최대 크기 (가로, 세로)  << 구조체 멤버들임*/
+
     global::consoleScreenSize.Left = csbi.srWindow.Left; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
     global::consoleScreenSize.Right = csbi.srWindow.Right; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 0
     global::consoleScreenSize.Bottom = csbi.srWindow.Bottom; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 169
     global::consoleScreenSize.Top = csbi.srWindow.Top; // 버퍼의 크기로 콘솔 화면의 크기 설정 >> 50
-    /*printf("콘솔 창의 위치:\n");
-    printf("왼쪽: %d\n", csbi.srWindow.Left);
-    printf("위쪽: %d\n", csbi.srWindow.Top);
-    printf("오른쪽: %d\n", csbi.srWindow.Right);
-    printf("아래쪽: %d\n", csbi.srWindow.Bottom);  // 콘솔창 및 버퍼 크기 확인 둘이 동일함  */
+
     global::playerMovableRect.Left = global::consoleScreenSize.Left + 2; // 플레이어 이동 범위 제한
     global::playerMovableRect.Right = global::consoleScreenSize.Right - 2; // 플레이어 이동 범위 제한
     global::playerMovableRect.Bottom = global::consoleScreenSize.Bottom - 2; // 플레이어 이동 범위 제한
     global::playerMovableRect.Top = global::consoleScreenSize.Top + 2; // 플레이어 이동 범위 제한
-    /*printf("왼쪽: %d\n", global::playerMovableRect.Left);
-    printf("위쪽: %d\n", global::playerMovableRect.Top);
-    printf("오른쪽: %d\n", global::playerMovableRect.Right);
-    printf("아래쪽: %d\n", global::playerMovableRect.Bottom);*/
 
     DrawMovableRect(); // 테두리 벽 생성
 
-    global::prePlayerPos.X = 19;
+    global::prePlayerPos.X = 50;
     global::prePlayerPos.Y = 15;
-    global::curPlayerPos.X = 19;
+    global::curPlayerPos.X = 50;
     global::curPlayerPos.Y = 15;
 
 }
+
 void setConsoleSize(int width, int height)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

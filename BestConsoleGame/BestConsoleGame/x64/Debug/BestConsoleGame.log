@@ -1,2 +1,17 @@
-﻿  Battle.cpp
-  BestConsoleGame.vcxproj -> D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
+﻿  BestConsoleGame.cpp
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1066,64): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1345,43): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1345,55): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1349,26): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1349,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  input_Sys.cpp
+  Utility.cpp
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  코드를 생성하고 있습니다...
+  LINK : C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+  BestConsoleGame.vcxproj -> C:\Yeni\TeamProject\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
