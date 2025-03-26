@@ -75,10 +75,15 @@ namespace global
 
 
     std::vector<Quest> questList = {
-    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
-    { "ATK 강화", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "HP 강화", "체력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "몬스터 처치", "몬스터 1회 처치", Quest::LOCKED, 0,  1}
+   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
+   { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
+   { "몬스터 처치", "몬스터A 처치", Quest::LOCKED, 0,  true},
+   { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
+   { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 0, 5 },
+   { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 0, 5 },
+   { "몬스터 처치2", "몬스터B 처치", Quest::LOCKED, 0,  true},
+   { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 0, 8 },
+   { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 0, 8 }
     };
     std::string questMessage = "";
 
@@ -194,16 +199,16 @@ void UpdateQuestMessage() // 퀘스트 메시지 삭제 함수
     if (!global::isQuestMessageVisible) return;
 
     ULONGLONG now = GetTickCount64();
-    if (now - global::questMessageStartTime >= 3000) {
+    if (now - global::questMessageStartTime >= 1500) {
         // 메시지 삭제
-        GotoXY(50, 14);
+        GotoXY(44, 14);
         for (int i = 0; i < global::questMessage.length(); ++i) putchar(' ');
         global::isQuestMessageVisible = false;
         global::questMessage = "";
     }
     else {
         // 메시지 출력 (계속 덮어쓰기)
-        GotoXY(50, 14);
+        GotoXY(44, 14);
         printf("%s", global::questMessage.c_str());
     }
 }
@@ -407,7 +412,7 @@ void QuestAccept() {
         if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
             global::WasYKeyPressed = true;
 
-            // ✅ 유효한 인덱스인지 먼저 체크
+            //  유효한 인덱스인지 먼저 체크
             if (global::selectedQuestIndex >= global::questList.size()) {
                 ShowQuestMessage("더 이상 수락할 퀘스트가 없습니다.");
             }
@@ -416,10 +421,10 @@ void QuestAccept() {
 
                 if (q.state == Quest::LOCKED) {
                     q.state = Quest::IN_PROGRESS;
-                    ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.    ");
+                    ShowQuestMessage("'" + q.description + "' 퀘스트를 수락했습니다.");
                 }
                 else {
-                    ShowQuestMessage("이미 수락한 퀘스트입니다.         ");
+                    ShowQuestMessage("이미 수락한 퀘스트입니다.                  ");
                 }
             }
 
