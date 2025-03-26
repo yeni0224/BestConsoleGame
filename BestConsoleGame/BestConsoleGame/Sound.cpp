@@ -1,58 +1,90 @@
 #include "Sound.h"
-
-namespace sound
-{
-	enum Sounds
-	{
-		SD_GleeClub = 0,
-		SD_Size
-	};
-
-	System* gSystem;
-	Sound* gSound[SD_Size];
-	Channel* gChannel;
-	FMOD_RESULT result;
-
-	void SoundSetUp()
-	{
-		result = System_Create(&gSystem);
-		result = gSystem->init(1, FMOD_INIT_NORMAL, 0);
-
-		char str[128];
-		for (int i = 0; i < SD_Size; i++)
-		{
-			sprintf_s(str, "Media/GleeClub.mp3");
-			gSystem->createSound(str, FMOD_LOOP_OFF, 0, &gSound[i]);
-		}
-	}
-
-	void Playsound(int soundNum)
-	{
-		gSystem->playSound(gSound[soundNum], 0, false, &gChannel);
-		gChannel->setVolume(0.5f);
-	}
-
-	void Pausesound()
-	{
-		gChannel->setPaused(true);
-	}
-
-	void Releasesound()
-	{
-		gSystem->release();
-	}
-
-	unsigned int GetPlayPosition()
-	{
-		unsigned int playPosition = 0;
-		gChannel->getPosition(&playPosition, FMOD_TIMEUNIT_MS);
-		return playPosition;
-	}
-
-	unsigned int GetLength(int num)
-	{
-		unsigned int length;
-		gSound[num]->getLength(&length, FMOD_TIMEUNIT_MS);
-		return length;
-	}
+ 
+FMOD_SYSTEM* CSound::g_sound_system;
+ 
+CSound::CSound(const char* path, bool loop) {
+    if (loop) {
+        FMOD_System_CreateSound(g_sound_system, path, FMOD_LOOP_NORMAL, 0, &m_sound);
+    }
+    else {
+        FMOD_System_CreateSound(g_sound_system, path, FMOD_DEFAULT, 0, &m_sound);
+    }
+ 
+    m_channel = nullptr;
+    m_volume = SOUND_DEFAULT;
+}
+ 
+CSound::~CSound() {
+    FMOD_Sound_Release(m_sound);
+}
+ 
+ 
+int CSound::Init() {
+    FMOD_System_Create(&g_sound_system,1); //상수값 확인 필요
+    FMOD_System_Init(g_sound_system, 32, FMOD_INIT_NORMAL, NULL);
+ 
+    return 0;
+}
+ 
+int CSound::Release() {
+    FMOD_System_Close(g_sound_system);
+    FMOD_System_Release(g_sound_system);
+ 
+    return 0;
+}
+ 
+ 
+int CSound::play() {
+    FMOD_System_PlaySound(g_sound_system, m_sound, NULL, false, &m_channel);
+ 
+    return 0;
+}
+ 
+int CSound::pause() {
+    FMOD_Channel_SetPaused(m_channel, true);
+ 
+    return 0;
+}
+ 
+int CSound::resume() {
+    FMOD_Channel_SetPaused(m_channel, false);
+ 
+    return 0;
+}
+ 
+int CSound::stop() {
+    FMOD_Channel_Stop(m_channel);
+ 
+    return 0;
+}
+ 
+int CSound::volumeUp() {
+    if (m_volume < SOUND_MAX) {
+        m_volume += SOUND_WEIGHT;
+    }
+ 
+    FMOD_Channel_SetVolume(m_channel, m_volume);
+ 
+    return 0;
+}
+ 
+int CSound::volumeDown() {
+    if (m_volume > SOUND_MIN) {
+        m_volume -= SOUND_WEIGHT;
+    }
+ 
+    FMOD_Channel_SetVolume(m_channel, m_volume);
+ 
+    return 0;
+}
+ 
+ 
+int CSound::Update() {
+    FMOD_Channel_IsPlaying(m_channel, &m_bool);
+ 
+    if (m_bool) {
+        FMOD_System_Update(g_sound_system);
+    }
+ 
+    return 0;
 }

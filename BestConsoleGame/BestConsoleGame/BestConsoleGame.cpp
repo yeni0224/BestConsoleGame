@@ -6,6 +6,7 @@
 #include "../BestConsoleGame/Utility.h"
 #include "../BestConsoleGame/Battle.h"
 #include "../BestConsoleGame/BestConsoleGame.h"
+#include "../BestConsoleGame/Sound.h"
 
 
 
@@ -1178,6 +1179,7 @@ void TutorialPage()
 /// </summary>
 void QuitGame()
 {
+    CSound::Release();
     system("cls");
     exit(EXIT_FAILURE);
 }
@@ -1403,6 +1405,10 @@ int main()
 
     global::time::InitTime(); // 시간 초기화
 
+    CSound::Init();// 사운드 재생
+
+    //재생할 사운드 객체 생성
+    CSound* sound = new CSound("SoundAssets/CoinDrop.wav", true);
     OpeningTitle();//오프닝 화면
     //오프닝 루프
     while (IsGameRun())
