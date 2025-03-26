@@ -1,11 +1,2 @@
-﻿  BestConsoleGame.cpp
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(688,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1066,64): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1355,43): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1355,55): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1359,26): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1359,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+﻿  Battle.cpp
   BestConsoleGame.vcxproj -> D:\VSFolder_Park\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
