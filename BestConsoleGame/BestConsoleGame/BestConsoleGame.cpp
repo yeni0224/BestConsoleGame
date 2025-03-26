@@ -26,6 +26,9 @@ void DrawQuestCheck();
 void ShowQuestMessage(const std::string& msg);
 void UpdateQuestProgress_atkupgrade();
 void UpdateQuestProgress_hpupgrade();
+void setConsoleSize(int width, int height);
+void DrawOptionRect();
+void RunCursorSelectionMenu();
 
 struct zone_xy { // X,Y좌표 구조체
     int x;
@@ -67,15 +70,20 @@ namespace global
     zone_awds atk_zone(44, 2, 62, 8);
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
+    zone_awds option_zone(2, 11, 6, 18);
 
 
 
     std::vector<Quest> questList = {
-    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
+    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
     { "ATK 강화", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "HP 강화", "체력 3회 강화", Quest::LOCKED, 0, 3 }
+    { "HP 강화", "체력 3회 강화", Quest::LOCKED, 0, 3 },
+    { "몬스터 처치", "몬스터 1회 처치", Quest::LOCKED, 0,  1}
     };
     std::string questMessage = "";
+
+    const std::vector<std::string> playerIconOptions = { ">", "★", "☆", "♀", "∵", "■", "д" };
+    std::string playerIcon = ">"; // 기본값도 string으로 바꿔줘야 함
 
     int gold = 500;
     int hp = 10;
@@ -96,8 +104,7 @@ namespace global
     bool bDownKeyPressed = false;
     bool bSpaceKeyPressedInMenu = false;
 
-    const char player_sharp = '#';
-    const char player_div = '>';
+
 
     namespace time
     {
@@ -170,6 +177,8 @@ namespace global
     SMALL_RECT GameStartZone = { 20, 20, 15, 15 }; // 게임시작 커서 위치
     SMALL_RECT TutorialZone = { 20, 20, 16, 16 }; // 게임 설명 커서 위치
     SMALL_RECT GameQuitZone = { 20, 20, 17, 17 }; // 게임 종료 설명 위치
+    SMALL_RECT OptionZone = { 2, 11, 6, 18 };
+
 
 };
 
@@ -320,7 +329,7 @@ void AutoMoneyBuy() {
 
         if (global::purchaseCount < maxPurchases) {
             GotoXY(global::msg.x, global::msg.y);
-            printf("구매하시겠습니까?     ");
+            printf("구매 = SPACE      ");
         }
         // 스페이스바를 처음 눌렀을 때만 실행 & 구매 횟수 체크
         if (global::gold >= 50 && global::input::IsSpaceKeyOn() && !global::WasSpaceKeyPressed && global::purchaseCount < maxPurchases) {
@@ -515,6 +524,31 @@ void UpdateQuestProgress_hpupgrade() // 공격력 강화 성공 시 진행
     }
 }
 
+void CheckOptionMenu()
+{
+    if (IsInsideZone(global::curPlayerPos, global::OptionZone))
+    {
+        GotoXY(global::msg.x, global::msg.y);
+        printf("커서 변경 = Y        ");
+        if (global::input::IsYKeyOn() && !global::WasYKeyPressed) {
+            global::WasSpaceKeyPressed = true; // 키가 눌렸음을 기록
+
+
+            //  여기에 배틀 시작 관련 함수 넣으면 됨!
+            RunCursorSelectionMenu(); // 중앙 커서 선택 UI 호출
+
+            // 키 입력 초기화 
+            global::input::Set(global::input::IsYKeyOn(), false);
+        }
+    }
+
+
+    if (!global::input::IsYKeyOn()) {
+        global::WasYKeyPressed = false;
+    }
+
+
+}
 
 
 
@@ -621,6 +655,7 @@ void Update()
     AutoMoneyBuy();
     AutoMoney();
     HealingHP();
+    CheckOptionMenu();
 
 
     QuestAccept();
@@ -742,8 +777,8 @@ void DrawPlayer(bool bClear) // 플레이어 출력 함수 매개변수로
         putchar(' '); // 이동했으니 공백 출력
     }
 
-    GotoXY(global::curPlayerPos.X, global::curPlayerPos.Y); // 이동 후 위치
-    printf(">"); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정
+    GotoXY(global::curPlayerPos.X, global::curPlayerPos.Y); // 이동 후 위치 
+    printf("%s", global::playerIcon.c_str()); // 플레이어 위치이므로 #  >> 추후 다른 문자로 바꿀 예정 // ★, ☆ , ♀ , ∵ , ■ , д
 }
 
 void DrawTitleRect()
@@ -816,6 +851,47 @@ void DrawHomeRect()
         GotoXY(i, global::home_zone_down.w);
         printf("■");
         // putchar('@');
+    }
+    setColor(15); // 기존색으로 복귀
+}
+
+void DrawOptionRect() {
+    setColor(8); // 회색
+    for (int i = global::option_zone.a; i < global::option_zone.a + 1; i++) {
+        GotoXY(i, global::option_zone.w);
+        printf("■");
+
+    }
+    setColor(15); // 기존색으로 복귀
+
+
+    GotoXY(2, 12);
+    printf("O");
+    GotoXY(2, 13);
+    printf("P");
+    GotoXY(2, 14);
+    printf("T");
+    GotoXY(2, 15);
+    printf("I");
+    GotoXY(2, 16);
+    printf("O");
+    GotoXY(2, 17);
+    printf("N");
+
+
+    setColor(8); // 회색
+    for (int i = global::option_zone.w; i <= global::option_zone.s; i++) {
+        GotoXY(global::option_zone.a + 1, i);
+        printf("■");
+
+    }
+
+
+    for (int i = global::option_zone.a; i <= global::option_zone.a + 1; i++) {
+        GotoXY(i, global::option_zone.s);
+        printf("■");
+        GotoXY(i, global::option_zone.s);
+        printf("■");
     }
     setColor(15); // 기존색으로 복귀
 }
@@ -943,6 +1019,70 @@ void DrawDungeonRect() {
     }
     setColor(15);
 }
+
+void RunCursorSelectionMenu()
+{
+
+    setConsoleSize(120, 30);
+    GotoXY(global::msg.x, global::msg.y);
+    printf("선택 = SPACE");
+
+
+
+    const std::vector<std::string>& options = global::playerIconOptions;
+    int currentIndex = 0;
+
+    const int centerX = 50;
+    const int centerY = 10;
+
+    while (true)
+    {
+
+
+        // UI 타이틀
+        GotoXY(centerX, centerY + 1);
+        std::cout << "플레이어 기호 선택";
+
+        // 기호 리스트 출력
+        for (int i = 0; i < options.size(); ++i)
+        {
+            GotoXY(centerX + 2, centerY + i + 2);
+            if (i == currentIndex)
+            {
+                setColor(11); // 밝은 파랑
+                std::cout << "▶ " << options[i];
+                setColor(15);
+            }
+            else
+            {
+                std::cout << "   " << options[i];
+            }
+        }
+
+        global::input::UpdateInput();
+
+        if (global::input::IsUpKeyOn())
+        {
+            currentIndex = (currentIndex - 1 + options.size()) % options.size();
+            Sleep(150);
+        }
+        else if (global::input::IsDownKeyOn())
+        {
+            currentIndex = (currentIndex + 1) % options.size();
+            Sleep(150);
+        }
+        else if (global::input::IsSpaceKeyOn())
+        {
+            global::playerIcon = options[currentIndex];
+            break;
+        }
+
+    }
+
+    system("cls");
+    startGame(); // 게임 화면 다시 그리기
+}
+
 
 /// <summary>
 /// 게임 설명 창 그리기
@@ -1165,7 +1305,10 @@ void RenderOpening()
 /// </summary>게임 플레이 전 오프닝 화면
 /// <returns></returns>
 void OpeningTitle()
+
 {
+    setConsoleSize(120, 30);
+
     CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
     cursorInfo.bVisible = 0; // 0 이면 커서 숨김, 1이면 커서 보임
     cursorInfo.dwSize = 1; // 커서 크기 1~100
@@ -1250,6 +1393,7 @@ void startGame()
     DrawBed(); // 침대 그리기
     DrawQuestBoard(); // 퀘스트 보드 그리기
     DrawQuestCheck(); // 퀘스트 리스트 그리기
+    DrawOptionRect(); //옵션 벽 생성
 
     global::prePlayerPos.X = 10;
     global::prePlayerPos.Y = 20;
