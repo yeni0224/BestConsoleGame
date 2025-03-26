@@ -75,10 +75,16 @@ namespace global
 
 
     std::vector<Quest> questList = {
-    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
-    { "ATK 강화", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "HP 강화", "체력 3회 강화", Quest::LOCKED, 0, 3 },
-    { "몬스터 처치", "몬스터 1회 처치", Quest::LOCKED, 0,  1}
+   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
+   { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
+   { "몬스터 처치", "몬스터A 처치", Quest::LOCKED, 0,  true},
+   { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
+   { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 0, 5 },
+   { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 0, 5 },
+   { "몬스터 처치2", "몬스터B 처치", Quest::LOCKED, 0,  true},
+   { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 0, 8 },
+   { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 0, 8 },
+
     };
     std::string questMessage = "";
 
