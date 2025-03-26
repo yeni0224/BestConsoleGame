@@ -18,6 +18,7 @@ namespace global {
         bool WasRightKeyPressed = false;
         bool WasSpaceKeyPressed = false;
         bool WasEnterKeyPressed = false;
+        int num = 0;
 
 
         void Reset()
@@ -42,7 +43,7 @@ namespace global {
             monsterA.heart = 100;
             monsterA.currentHeart = monsterA.heart;
             monsterA.attack = 10;
-            
+
             monsterA.image1 = "\033[4;65H          @@@@@@@@@@@@                     \n\033[5;65H      @@%%------------%%@                  \n\033[6;65H    @%=----::...::::-----#%                \n\033[7;65H   %+---===::....::::------*@              \n\033[8;65H  @=--======*##**=:::--------*@           \n\033[9;65H @@=%%%===%%%%######====------*@          \n\033[10;65H @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H @--===-#=#*==+*####==++===-------+@      \n\033[12;65H@--====##-+%+==========-==----------*@    \n\033[13;65H@---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n";
             monsterA.image2 = "\033[4;65H                  @@@@@@@@@@@@                     \n\033[5;65H             @@%%------------%%@                  \n\033[6;65H          @%=----::...::::-----#%                \n\033[7;65H        %+---===::....::::------*@              \n\033[8;65H       @=--======*##**=:::--------*@           \n\033[9;65H     @@=%%%===%%%%######====------*@          \n\033[10;65H    @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H    @--===-#=#*==+*####==++===-------+@      \n\033[12;65H  @--====##-+%+==========-==----------*@    \n\033[13;65H @---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n";
         }
@@ -62,29 +63,29 @@ namespace global {
             monsterC.currentHeart = monsterC.heart;
             monsterC.attack = 10;
             monsterC.image1 = "\033[4;67H   -%%-::-#@=.    .*:.        @@+++++*@@%=.\n"
-    "\033[5;67H .=@*-:::::*@+.             .@@+++++*+++*%@@+\n"
-    "\033[6;67H.+@*::::::::+@%.           .%@++++++%@#@@%*:.\n"
-    "\033[7;67H-@*::::::::::+@#          .#@++++++++@@=.\n"
-    "\033[8;67H#%-:::::::::::@@.        .*@*+++++++++@#:       ...\n"
-    "\033[9;67H%%::::::::::::@@.      ..=@#+%@@@@@@#+*@*.... ..*%:. \n"
-    "\033[10;67H*@=::::::::::-@%.     #@@@@@@@@:..+@@@@@@@@*..-@@@@*\n"
-    "\033[11;67H.%%=::::::::-%@.      #@*****@@-..+@%****#@*.  .+#:\n"
-    "\033[12;67H.:#@*-::::-+@@.       +@@@@@@@@@@@@@@@@@@@@#.\n"
-    "\033[13;67H.%@%%%%%%%%%%@@.   .-@@*++++++++++++++++++*@@+..\n"
-    "\033[14;67H.%#..........%@.  .#@@@@@@@@@@@@@@@@@@@@@@@@@@%-\n"
-    "\033[15;67H.%@@@@@@@@@@@@@.   .*@=....................-@%.\n"
-    "\033[16;67H .=@*::::::+@*.   .+@-............=*#@@@@@*:-@*.\n"
-    "\033[17;67H.+@+::::::::=@% .+@@%:.........:#@%+=---=%#:.#%- ==.\n"
-    "\033[18;67H.#@%%%%%%%%%%@@...-%=......:+#@@*-------=%#:.+@=-%*.\n"
-    "\033[19;67H...:::=**@#::..   -%-..@@@@@#=-----*@+--=%#:.+@@%-..\n"
-    "\033[20;67H     -%+*@*.      -%-..@%---------------=%#:.+@=\n"
-    "\033[21;67H     +@+*@*.   ..:+@-..-@#-----=--=-----+@+..+@=.\n"
-    "\033[22;67H     +@+*@*.   .=##@-..:#@+---+%%%%+---+@#:..+@@#:\n"
-    "\033[23;67H     +@+*@*.      -%-...:*@#+=-------+#@*:...+@=..\n"
-    "\033[24;67H     +@+*@*.      -%=::+#%@@@@%####%@@@@%#+-:-=: \n"
-    "\033[25;67H     +@+*@*.     .=@@@@%*++*@%=++++=%@*++*%@@%*-. \n"
-    "\033[26;67H     +@+*@*.   .-@@#++++++++#@%=--=%@#++++++++#@@*.\n"
-    "\033[27;67H     +@+*@*.  .#@*++++++++++++#@@@@#++++++++++++*@%:\n"
+                "\033[5;67H .=@*-:::::*@+.             .@@+++++*+++*%@@+\n"
+                "\033[6;67H.+@*::::::::+@%.           .%@++++++%@#@@%*:.\n"
+                "\033[7;67H-@*::::::::::+@#          .#@++++++++@@=.\n"
+                "\033[8;67H#%-:::::::::::@@.        .*@*+++++++++@#:       ...\n"
+                "\033[9;67H%%::::::::::::@@.      ..=@#+%@@@@@@#+*@*.... ..*%:. \n"
+                "\033[10;67H*@=::::::::::-@%.     #@@@@@@@@:..+@@@@@@@@*..-@@@@*\n"
+                "\033[11;67H.%%=::::::::-%@.      #@*****@@-..+@%****#@*.  .+#:\n"
+                "\033[12;67H.:#@*-::::-+@@.       +@@@@@@@@@@@@@@@@@@@@#.\n"
+                "\033[13;67H.%@%%%%%%%%%%@@.   .-@@*++++++++++++++++++*@@+..\n"
+                "\033[14;67H.%#..........%@.  .#@@@@@@@@@@@@@@@@@@@@@@@@@@%-\n"
+                "\033[15;67H.%@@@@@@@@@@@@@.   .*@=....................-@%.\n"
+                "\033[16;67H .=@*::::::+@*.   .+@-............=*#@@@@@*:-@*.\n"
+                "\033[17;67H.+@+::::::::=@% .+@@%:.........:#@%+=---=%#:.#%- ==.\n"
+                "\033[18;67H.#@%%%%%%%%%%@@...-%=......:+#@@*-------=%#:.+@=-%*.\n"
+                "\033[19;67H...:::=**@#::..   -%-..@@@@@#=-----*@+--=%#:.+@@%-..\n"
+                "\033[20;67H     -%+*@*.      -%-..@%---------------=%#:.+@=\n"
+                "\033[21;67H     +@+*@*.   ..:+@-..-@#-----=--=-----+@+..+@=.\n"
+                "\033[22;67H     +@+*@*.   .=##@-..:#@+---+%%%%+---+@#:..+@@#:\n"
+                "\033[23;67H     +@+*@*.      -%-...:*@#+=-------+#@*:...+@=..\n"
+                "\033[24;67H     +@+*@*.      -%=::+#%@@@@%####%@@@@%#+-:-=: \n"
+                "\033[25;67H     +@+*@*.     .=@@@@%*++*@%=++++=%@*++*%@@%*-. \n"
+                "\033[26;67H     +@+*@*.   .-@@#++++++++#@%=--=%@#++++++++#@@*.\n"
+                "\033[27;67H     +@+*@*.  .#@*++++++++++++#@@@@#++++++++++++*@%:\n"
                 "\033[28;67H     +@+*@*.  =@#+++++++++++++%@=+@#+++++++++++++*@*\n";
             monsterC.image2 = "monsterC";
         }
@@ -129,6 +130,7 @@ namespace global {
         {
             GotoXY(10, 7);
             printf("[ %d / %d ] \n", player.currentHeart, player.heart);
+
             std::cout << player.image;
 
         }
@@ -203,6 +205,30 @@ namespace global {
             {
                 int playerRand = rand() % 4; // 50% 확률 (0 ~ 3)
                 int monsterRand = rand() % 7; // 50% 확률 (0 ~ 6)
+                for (int x = 1; x < 49; x += 2) {
+                    GotoXY(x, 0);
+                    printf(" -");
+                }
+                for (int y = 1; y < 4; y++)
+                {
+                    for (int x = 0; x < 51; x += 50)
+                    {
+                        GotoXY(x, y);
+                        printf("|");
+                    }
+                }
+                for (int x = 1; x < 49; x += 2) {
+                    GotoXY(x, 4);
+                    printf(" -");
+                }
+                for (int y = 0; y < 5; y += 4)
+                {
+                    for (int x = 0; x < 51; x += 50)
+                    {
+                        GotoXY(x, y);
+                        printf("+");
+                    }
+                }
                 if (clearflag)
                 {
                     if (global::input::IsEnterKeyOn())
@@ -334,13 +360,19 @@ namespace global {
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("차징Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -348,13 +380,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("차징샷             ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
@@ -374,6 +412,7 @@ namespace global {
                 setColor(15);
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
+
                     GotoXY(20, 8);
                     printf("Critical hit!!");
                     startTick = GetTickCount();
@@ -388,12 +427,18 @@ namespace global {
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         printf("차징Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -401,13 +446,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("차징샷             ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
@@ -423,6 +474,7 @@ namespace global {
             {
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
+
                     GotoXY(20, 8);
                     printf("Critical hit!!");
                     startTick = GetTickCount();
@@ -437,13 +489,19 @@ namespace global {
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("차징Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -451,13 +509,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("차징샷             ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
@@ -475,18 +539,27 @@ namespace global {
 
             if (monsterA.currentHeart > 0)
             {
+                num = player.currentHeart;
                 player.currentHeart += 10;
+                GotoXY(25, 7);
+                printf("+%d \n", num - player.currentHeart);
                 startTick = GetTickCount();
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -494,13 +567,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("                ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterA.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
@@ -513,18 +592,27 @@ namespace global {
             }
             else if (monsterB.currentHeart > 0)
             {
+                num = player.currentHeart;
                 player.currentHeart += 10;
+                GotoXY(25, 7);
+                printf("+%d \n", num - player.currentHeart);
                 startTick = GetTickCount();
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -532,13 +620,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("                ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterB.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
@@ -551,18 +645,27 @@ namespace global {
             }
             else if (monsterC.currentHeart > 0)
             {
+                num = player.currentHeart;
                 player.currentHeart += 10;
+                GotoXY(25, 7);
+                printf("+%d \n", num - player.currentHeart);
                 startTick = GetTickCount();
                 while (GetTickCount() - startTick < 500) {}
                 if (monsterRand == 0) {//몬스터 크리티컬
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * 2;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("Critical hit");
                     }
@@ -570,13 +673,19 @@ namespace global {
                 }
                 else if (monsterRand < 5) {
                     if (charging > 1) {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack * charging;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         charging = 1;
                         GotoXY(60, 1);
                         printf("                ");
                     }
                     else {
+                        num = player.currentHeart;
                         player.currentHeart -= monsterC.attack;
+                        GotoXY(25, 7);
+                        printf("-%d \n", num - player.currentHeart);
                         GotoXY(60, 1);
                         printf("                ");
                     }
