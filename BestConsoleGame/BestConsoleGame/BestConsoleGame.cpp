@@ -6,8 +6,8 @@
 #include "../BestConsoleGame/Utility.h"
 #include "../BestConsoleGame/Battle.h"
 #include "../BestConsoleGame/BestConsoleGame.h"
-#include "../BestConsoleGame/Sound.h"
-
+#include "inc/fmod.hpp"
+#include "inc/fmod_errors.h"
 
 
 bool IsGameRun();
@@ -36,7 +36,6 @@ void UpdateQuestProgress_hpupgrade3();
 void setConsoleSize(int width, int height);
 void DrawOptionRect();
 void RunCursorSelectionMenu();
-void PrintMonsterStatus();
 void DrawMonster_info();
 
 struct zone_xy { // X,Y좌표 구조체
@@ -66,6 +65,78 @@ struct Quest { // 퀘스트 구조체
 
 namespace global
 {
+    namespace GameSound
+    {
+        FMOD_SYSTEM* system;
+        FMOD_SOUND* bgm[2];      // 배경음 1개
+        FMOD_SOUND* sfx[6];      // 효과음 2개
+        FMOD_CHANNEL* bgmChannel = nullptr;
+        FMOD_CHANNEL* sfxChannel = nullptr;
+
+        // 🔹 FMOD 시스템 초기화
+        void GameSoundInit()
+        {
+            FMOD_System_Create(&system, FMOD_VERSION);
+            FMOD_System_Init(system, 512, FMOD_INIT_NORMAL, nullptr);
+
+            // 배경음 로드 (반복 재생)
+            FMOD_System_CreateSound(system, "MainBGM.wav", FMOD_LOOP_NORMAL, 0, &bgm[0]); // 메인브금 (타이틀,메인)
+            FMOD_System_CreateSound(system, "FightBGM5", FMOD_LOOP_NORMAL, 0, &bgm[1]);
+
+
+
+            //// 효과음 로드 (한 번만 재생)
+            //FMOD_System_CreateSound(system, "shoot.mp3", FMOD_DEFAULT, 0, &sfx[0]);
+            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[1]);
+            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[2]);
+            //FMOD_System_CreateSound(system, "shoot.mp3", FMOD_DEFAULT, 0, &sfx[3]);
+            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[4]);
+            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[5]);
+
+        }
+
+        // 🔹 배경음 재생
+        void PlayBGM(int index)
+        {
+            if (index < 0 || index >= 2) return;
+            FMOD_System_PlaySound(system, bgm[index], 0, false, &bgmChannel);
+        }
+
+        // 🔹 효과음 재생
+        void PlaySFX(int index)
+        {
+            if (index < 0 || index >= 6) return;    // 유효성 검사
+            FMOD_System_PlaySound(system, sfx[index], 0, false, &sfxChannel);
+        }
+
+        // 🔹 배경음 정지
+        void StopBGM()
+        {
+            if (bgmChannel)
+            {
+                FMOD_Channel_Stop(bgmChannel);
+            }
+        }
+
+        // 🔹 FMOD 업데이트 (매 프레임 호출해야 함)
+        void SoundUpdate()
+        {
+            FMOD_System_Update(system);
+        }
+
+        // 🔹 FMOD 정리 (게임 종료 시 호출)
+        void Shutdown()
+        {
+
+            for (int i = 0; i < 2; i++)
+            {
+                FMOD_Sound_Release(bgm[i]);
+                FMOD_Sound_Release(sfx[i]);
+            }
+            FMOD_System_Close(system);
+            FMOD_System_Release(system);
+        }
+    }
     zone_xy msg(7, 0);
     zone_xy auto_money_buy_zone(37, 20);
     zone_xy auto_money_word_zone(30, 20);
@@ -189,23 +260,13 @@ namespace global
     SMALL_RECT HealingZone = { 2, 20, 20, 27 }; // 침대 근처 체력 회복 존
     SMALL_RECT QuestZone = { 2, 2, 20, 5 }; // 퀘스트 수락 존
     SMALL_RECT QuestCheckZone = { 30, 2, 39, 9 }; // 퀘스트 수락 존
-    SMALL_RECT GameStartZone = { 20, 20, 15, 15 }; // 게임시작 커서 위치
-    SMALL_RECT TutorialZone = { 20, 20, 16, 16 }; // 게임 설명 커서 위치
-    SMALL_RECT GameQuitZone = { 20, 20, 17, 17 }; // 게임 종료 설명 위치
+    //SMALL_RECT TutorialZone = { 20, 20, 16, 16 }; // 게임 설명 커서 위치
+    //SMALL_RECT GameStartZone = { 20, 20, 15, 15 }; // 게임시작 커서 위치
+    //SMALL_RECT GameQuitZone = { 20, 20, 17, 17 }; // 게임 종료 설명 위치
     SMALL_RECT OptionZone = { 2, 11, 6, 18 };
 
 
 };
-
-void PrintMonsterStatus()
-{
-
-
-    std::cout << "몬스터 A 체력: " << global::battle::monsterA.currentHeart << std::endl;
-    std::cout << "몬스터 B 체력: " << global::battle::monsterB.currentHeart << std::endl;
-    std::cout << "몬스터 C 체력: " << global::battle::monsterC.currentHeart << std::endl;
-}
-
 
 void ShowQuestMessage(const std::string& msg) // 메시지 출력 시간 조절 함수
 {
@@ -1405,7 +1466,6 @@ void TutorialPage()
 /// </summary>
 void QuitGame()
 {
-    CSound::Release();
     system("cls");
     exit(EXIT_FAILURE);
 }
@@ -1628,14 +1688,9 @@ void startGame()
 
 int main()
 {
-
+    global::GameSound::GameSoundInit();
     global::time::InitTime(); // 시간 초기화
-    
-
-    CSound::Init();// 사운드 재생
-
-    //재생할 사운드 객체 생성
-    CSound* sound = new CSound("SoundAssets/CoinDrop.wav", true);
+    global::GameSound::PlayBGM(0);
     OpeningTitle();//오프닝 화면
     //오프닝 루프
     while (IsGameRun())
@@ -1646,6 +1701,7 @@ int main()
         //Title_Update();
         MoveSelectMenu();
         RenderOpening();
+        global::GameSound::SoundUpdate();
         if (global::gamestartflag == true)
         {
             break;
@@ -1662,6 +1718,7 @@ int main()
         FixedUpdate();
         Update();
         Render();
+        global::GameSound::SoundUpdate();
     }
 
     return 0;
