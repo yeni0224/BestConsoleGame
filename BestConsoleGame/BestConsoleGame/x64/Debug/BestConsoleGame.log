@@ -1,3 +1,19 @@
 ﻿  Battle.cpp
-  BestConsoleGame.vcxproj -> C:\Users\yundo\OneDrive\Documents\GitHub\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
+  BestConsoleGame.cpp
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(694,25): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(694,28): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(694,31): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(694,34): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1072,64): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1352,43): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1352,55): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1356,26): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\BestConsoleGame.cpp(1356,33): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  input_Sys.cpp
+  Sound.cpp
+  Utility.cpp
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\BestConsoleGame\Utility.cpp(6,22): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  코드를 생성하고 있습니다...
+  BestConsoleGame.vcxproj -> C:\Users\User\Desktop\BestConsoleGame\BestConsoleGame\x64\Debug\BestConsoleGame.exe
   0개 파일이 복사되었습니다.

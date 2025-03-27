@@ -94,6 +94,9 @@ namespace global {
             {
                 if (player.currentHeart <= 0)
                 {
+                    monsterA.currentHeart = monsterA.heart;
+                    monsterB.currentHeart = monsterB.heart;
+                    monsterC.currentHeart = monsterC.heart;
                     system("cls");
                     startGame();
                     break;
@@ -235,9 +238,11 @@ namespace global {
                     {
                         if (!WasEnterKeyPressed)
                         {
-                            GotoXY(7, 0);
                             global::input::Set(global::input::Enter_KEY_INDEX, false);
                             WasEnterKeyPressed = true;
+                            monsterA.currentHeart = monsterA.heart;
+                            monsterB.currentHeart = monsterB.heart;
+                            monsterC.currentHeart = monsterC.heart;
                             system("cls");
                             startGame();
                             break;
@@ -313,6 +318,9 @@ namespace global {
                         if (x == 89)
                         {
                             global::hp = player.currentHeart;//도망 시 현재hp가져가도록
+                            monsterA.currentHeart = monsterA.heart;
+                            monsterB.currentHeart = monsterB.heart;
+                            monsterC.currentHeart = monsterC.heart;
                             system("cls");//화면 초기화
                             startGame();//로비화면 출력
                             flag = true;//전체 반복문 나가는 flag
