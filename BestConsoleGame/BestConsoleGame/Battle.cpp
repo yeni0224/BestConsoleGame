@@ -93,6 +93,7 @@ namespace global {
 
         void Reset()
         {
+            count = 0;
             x = 80;
             y = 27;
             system("cls");
@@ -603,6 +604,11 @@ namespace global {
             else if (!monsterC.hpFlag)
             {
                 count--;
+                if (count > 0)
+                {
+                    GotoXY(1, 3);
+                    printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count, player.heart / 25);
+                }                
                 if (poisonFlag)
                 {
                     player.currentHeart -= player.currentHeart / 25;
@@ -822,6 +828,13 @@ namespace global {
             }
             else if (!monsterC.hpFlag)
             {
+                count--;
+                if (count > 0)
+                {
+                    GotoXY(1, 3);
+                    printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count , player.heart / 25);
+                }
+                
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
