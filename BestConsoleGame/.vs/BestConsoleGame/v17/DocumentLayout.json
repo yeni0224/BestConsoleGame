@@ -1,38 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\",
+  "WorkspaceRootPath": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\BestConsoleGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Battle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Battle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Utility.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\BestConsoleGame.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Battle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Battle.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Utility.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Utility.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\input_Sys.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\input_Sys.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Input_Sys.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{21823986-0A3B-4FB1-BC63-493A251E67AE}|BestConsoleGame\\BestConsoleGame.vcxproj|solutionrelative:BestConsoleGame\\Input_Sys.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,13 +50,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Battle.cpp",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp",
               "RelativeDocumentMoniker": "BestConsoleGame\\Battle.cpp",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.cpp",
               "RelativeToolTip": "BestConsoleGame\\Battle.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACUAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIMDAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-27T03:41:59.261Z",
               "EditorCaption": ""
@@ -73,22 +65,22 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "BestConsoleGame.cpp",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
               "RelativeDocumentMoniker": "BestConsoleGame\\BestConsoleGame.cpp",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.cpp",
               "RelativeToolTip": "BestConsoleGame\\BestConsoleGame.cpp",
-              "ViewState": "AgIAANcDAAAAAAAAAAAswOoDAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAewCsAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-27T02:36:20.824Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Utility.h",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h",
               "RelativeDocumentMoniker": "BestConsoleGame\\Utility.h",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.h",
               "RelativeToolTip": "BestConsoleGame\\Utility.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
@@ -96,25 +88,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "BestConsoleGame.h",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h",
               "RelativeDocumentMoniker": "BestConsoleGame\\BestConsoleGame.h",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame.h",
               "RelativeToolTip": "BestConsoleGame\\BestConsoleGame.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-24T02:48:49.732Z"
+              "WhenOpened": "2025-03-24T02:48:49.732Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Battle.h",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h",
               "RelativeDocumentMoniker": "BestConsoleGame\\Battle.h",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Battle.h",
               "RelativeToolTip": "BestConsoleGame\\Battle.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-22T10:04:01.45Z"
             },
@@ -122,37 +115,13 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "Utility.cpp",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp",
+              "DocumentMoniker": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp",
               "RelativeDocumentMoniker": "BestConsoleGame\\Utility.cpp",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp",
+              "ToolTip": "C:\\Yeni\\TeamProject\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Utility.cpp",
               "RelativeToolTip": "BestConsoleGame\\Utility.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-22T10:03:40.958Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Input_Sys.h",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Input_Sys.h",
-              "RelativeDocumentMoniker": "BestConsoleGame\\Input_Sys.h",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\Input_Sys.h",
-              "RelativeToolTip": "BestConsoleGame\\Input_Sys.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-22T09:30:37.813Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "input_Sys.cpp",
-              "DocumentMoniker": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\input_Sys.cpp",
-              "RelativeDocumentMoniker": "BestConsoleGame\\input_Sys.cpp",
-              "ToolTip": "D:\\VSFolder_Park\\BestConsoleGame\\BestConsoleGame\\BestConsoleGame\\input_Sys.cpp",
-              "RelativeToolTip": "BestConsoleGame\\input_Sys.cpp",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAAAIQAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-22T09:30:12.423Z"
             }
           ]
         }

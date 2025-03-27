@@ -1136,22 +1136,20 @@ void DrawMonster_info() {
         GotoXY(95, 2);
         printf("MonsterB : 스켈레톤");
 
-        COORD start = { 93, 3 };
+        COORD start = { 91, 4 };
 
         std::string art[] = {
-            "       ▒▒▒▒▒▒▒▒▒▒▒      ",
-            "      ▒           ▒     ",
-            "     ▒   |\\   /|   ▒   ",
-            "     ▒   |_\\ /_|   ▒   ",
-            "      ▒           ▒     ",
-            "       ▒         ▒      ",
-            "       ▒|▒|▒|▒|▒|▒      ",
-            "        ▒▒▒▒▒▒▒▒▒       "
-
+            "          ▒▒▒▒▒▒          ",
+            "        ▒▒      ▒▒        ",
+            "      ▒▒          ▒▒      ",
+            "    ▒▒              ▒▒    ",
+            "  ▒▒   ●         ●    ▒▒  ",
+            "   ▒▒     ______     ▒▒   ",
+            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
         };
 
         setColor(8);
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 7; ++i) {
             COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
             SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
             std::wcout << art[i].c_str();
@@ -1164,21 +1162,20 @@ void DrawMonster_info() {
         GotoXY(100, 2);
         printf("BOSS : 마녀");
 
-        COORD start = { 91, 3 };
+        COORD start = { 91, 4 };
 
         std::string art[] = {
-            "            ▒▒            ",
-            "           ▒  ▒           ",
-            "          ▒    ▒        ",
-            "        ▒▒      ▒▒      ",
-            "       ▒          ▒    ",
-            "      ▒     ★      ▒  ",
-            "     ▒              ▒   ",
-            " ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒"
+            "          ▒▒▒▒▒▒          ",
+            "        ▒▒      ▒▒        ",
+            "      ▒▒          ▒▒      ",
+            "    ▒▒              ▒▒    ",
+            "  ▒▒   ●         ●    ▒▒  ",
+            "   ▒▒     ______     ▒▒   ",
+            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
         };
 
-        setColor(4);
-        for (int i = 0; i < 8; ++i) {
+        setColor(10);
+        for (int i = 0; i < 7; ++i) {
             COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
             SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
             std::wcout << art[i].c_str();
