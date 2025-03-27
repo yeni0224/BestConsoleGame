@@ -502,6 +502,7 @@ void QuestAccept() {
     if (IsInsideZone(global::curPlayerPos, global::QuestZone)) {
         if (!global::isQuestMessageShown) {
             GotoXY(global::msg.x, global::msg.y);
+
             printf("퀘스트 수락 = Y   ");
             global::isQuestMessageShown = true;
         }
@@ -512,6 +513,7 @@ void QuestAccept() {
             //  유효한 인덱스인지 먼저 체크
             if (global::selectedQuestIndex >= global::questList.size()) {
                 ShowQuestMessage("더 이상 수락할 퀘스트가 없습니다.");
+                global::GameSound::PlaySFX(2);
             }
             else {
                 Quest& q = global::questList[global::selectedQuestIndex];
@@ -519,9 +521,11 @@ void QuestAccept() {
                 if (q.state == Quest::LOCKED) {
                     q.state = Quest::IN_PROGRESS;
                     ShowQuestMessage("'" + q.description + "' 퀘스트를 수락했습니다.");
+                    global::GameSound::PlaySFX(2);
                 }
                 else {
                     ShowQuestMessage("이미 수락한 퀘스트입니다.                  ");
+                    global::GameSound::PlaySFX(2);
                 }
             }
 
@@ -538,6 +542,7 @@ void QuestAccept() {
 }
 
 
+
 void CheckAcceptedQuest() {
     if (IsInsideZone(global::curPlayerPos, global::QuestCheckZone)) {
         GotoXY(global::msg.x, global::msg.y);
@@ -550,6 +555,7 @@ void CheckAcceptedQuest() {
             for (const auto& q : global::questList) {
                 if (q.state == Quest::IN_PROGRESS) {
                     std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")             ";
+                    global::GameSound::PlaySFX(2);
                     ShowQuestMessage(msg); // 3초간 중앙 출력
                     found = true;
                     break;
@@ -558,6 +564,7 @@ void CheckAcceptedQuest() {
 
             if (!found) {
                 ShowQuestMessage("진행 중인 퀘스트가 없습니다.         ");
+                global::GameSound::PlaySFX(2);
             }
 
             global::input::Set(global::input::IsYKeyOn(), false);
@@ -568,6 +575,7 @@ void CheckAcceptedQuest() {
         global::WasYKeyPressed = false;
     }
 }
+
 
 void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트  // 1번 퀘스트 골드 수집
 {
@@ -807,10 +815,11 @@ void HealingHP() {
                     global::hp = global::max_hp;
                 }
                 GotoXY(global::msg.x, global::msg.y);
-                printf("체력 회복중 ^~^  ");
                 global::GameSound::PlaySFX(2);
+                printf("체력 회복중 ^~^  ");
             }
             else {
+
                 GotoXY(global::msg.x, global::msg.y);
                 printf("체력 회복 완료!!  ");
             }
@@ -819,6 +828,7 @@ void HealingHP() {
 
     }
 }
+
 
 
 void UpdateGoldMining() {
@@ -845,6 +855,7 @@ void UpdateGoldMining() {
         }
     }
 }
+
 
 void UpdateGoldStorage() {
     if (IsInsideZone(global::curPlayerPos, global::homeZone)) { // 집 영역 확인
@@ -1188,7 +1199,7 @@ void DrawMonster_info() {
             "          ▒    ▒        ",
             "        ▒▒      ▒▒      ",
             "       ▒          ▒    ",
-            "      ▒     ★      ▒  ",
+            "      ▒▒▒▒▒▒★ ▒▒▒▒▒▒  ",
             "     ▒              ▒   ",
             " ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒"
         };

@@ -178,7 +178,9 @@ namespace global {
                 {
                     system("cls");
                     ShowQuestMessage("플레이어가 사망했습니다."); // 메시지 출력 시간 조절 함수
-                    startGame();
+                    global::GameSound::StopBGM();
+                    startGame();//로비화면 출력
+                    global::GameSound::PlayBGM(0);
                     break;
                 }
 
@@ -380,7 +382,9 @@ namespace global {
                                 }
                             }
                             system("cls");
-                            startGame();
+                            global::GameSound::StopBGM();
+                            startGame();//로비화면 출력
+                            global::GameSound::PlayBGM(0);
                             break;
                         }
                     }
@@ -450,7 +454,9 @@ namespace global {
                         {
                             global::hp = player.currentHeart;//도망 시 현재hp가져가도록
                             system("cls");//화면 초기화
+                            global::GameSound::StopBGM();
                             startGame();//로비화면 출력
+                            global::GameSound::PlayBGM(0);
 
                             flag = true;//전체 반복문 나가는 flag
                             UpdateQuestProgress_monsterAclear();

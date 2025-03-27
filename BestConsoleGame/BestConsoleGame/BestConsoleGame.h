@@ -1,18 +1,23 @@
 #pragma once
 
 
-namespace global {
+namespace global 
+{
     extern int gold;
     extern int hp;
     extern int atk;
     extern int max_hp;
     extern bool gamestartflag;
 
-    namespace GameSound {
-        void PlaySFX(int x);
-        void SoundUpdate();;
+    namespace GameSound
+    {
+        void PlaySFX(int index);
+        void PlayBGM(int index);
+        void SoundUpdate();
+        void StopBGM();
     }
-    namespace time {
+    namespace time 
+    {
         void UpdateTime();
     }
 
@@ -24,7 +29,7 @@ void setColor(int color);
 void ShowQuestMessage(const std::string& msg);
 void UpdateQuestProgress_monsterAclear();
 void UpdateQuestProgress_monsterBclear();
-//int main();
+
 void OpeningTitle();
 void MoveSelectMenu();
 void FixedUpdate();
