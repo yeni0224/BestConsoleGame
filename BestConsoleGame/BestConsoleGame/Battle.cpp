@@ -8,8 +8,8 @@
 
 namespace global {
     namespace battle {
-        std::string battleMessage = "";
 
+        std::string battleMessage = "";
         PLAYER player{
         player.heart = global::max_hp ,
         player.currentHeart = global::hp ,
@@ -470,6 +470,7 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterA.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
+                    global::GameSound::PlaySFX(4);
                     monsterA.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1,  1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);
@@ -527,6 +528,7 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterB.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
+                    global::GameSound::PlaySFX(4);
                     monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);
@@ -590,6 +592,7 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
+                    global::GameSound::PlaySFX(4);
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);

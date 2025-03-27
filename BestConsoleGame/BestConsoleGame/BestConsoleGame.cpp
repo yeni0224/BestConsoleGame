@@ -68,12 +68,12 @@ namespace global
     namespace GameSound
     {
         FMOD_SYSTEM* system;
-        FMOD_SOUND* bgm[2];      // 배경음 1개
-        FMOD_SOUND* sfx[6];      // 효과음 2개
+        FMOD_SOUND* bgm[2];      // 배경음 2개
+        FMOD_SOUND* sfx[7];      // 효과음 7개
         FMOD_CHANNEL* bgmChannel = nullptr;
         FMOD_CHANNEL* sfxChannel = nullptr;
 
-        // 🔹 FMOD 시스템 초기화
+        // FMOD 시스템 초기화
         void GameSoundInit()
         {
             FMOD_System_Create(&system, FMOD_VERSION);
@@ -81,35 +81,35 @@ namespace global
 
             // 배경음 로드 (반복 재생)
             FMOD_System_CreateSound(system, "MainBGM.wav", FMOD_LOOP_NORMAL, 0, &bgm[0]); // 메인브금 (타이틀,메인)
-            FMOD_System_CreateSound(system, "FightBGM5", FMOD_LOOP_NORMAL, 0, &bgm[1]);
+            FMOD_System_CreateSound(system, "FightBGM5.mp3", FMOD_LOOP_NORMAL, 0, &bgm[1]);
 
 
 
-            //// 효과음 로드 (한 번만 재생)
-            //FMOD_System_CreateSound(system, "shoot.mp3", FMOD_DEFAULT, 0, &sfx[0]);
-            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[1]);
-            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[2]);
-            //FMOD_System_CreateSound(system, "shoot.mp3", FMOD_DEFAULT, 0, &sfx[3]);
-            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[4]);
-            //FMOD_System_CreateSound(system, "hit.mp3", FMOD_DEFAULT, 0, &sfx[5]);
-
+            // 효과음 로드 (한 번만 재생)
+            FMOD_System_CreateSound(system, "Buy50G.wav", FMOD_DEFAULT, 0, &sfx[0]);
+            FMOD_System_CreateSound(system, "CoinGet.wav", FMOD_DEFAULT, 0, &sfx[1]);
+            FMOD_System_CreateSound(system, "HealOnBed2.wav", FMOD_DEFAULT, 0, &sfx[2]);
+            FMOD_System_CreateSound(system, "Mining3.wav", FMOD_DEFAULT, 0, &sfx[3]);
+            FMOD_System_CreateSound(system, "PlayerAttack.mp3", FMOD_DEFAULT, 0, &sfx[4]);
+            FMOD_System_CreateSound(system, "StrengthFailed.wav", FMOD_DEFAULT, 0, &sfx[5]);
+            FMOD_System_CreateSound(system, "StrengthSuccess.wav", FMOD_DEFAULT, 0, &sfx[6]);
         }
 
-        // 🔹 배경음 재생
+        // 배경음 재생
         void PlayBGM(int index)
         {
             if (index < 0 || index >= 2) return;
             FMOD_System_PlaySound(system, bgm[index], 0, false, &bgmChannel);
         }
 
-        // 🔹 효과음 재생
+        // 효과음 재생
         void PlaySFX(int index)
         {
-            if (index < 0 || index >= 6) return;    // 유효성 검사
+            if (index < 0 || index >= 7) return;    // 유효성 검사
             FMOD_System_PlaySound(system, sfx[index], 0, false, &sfxChannel);
         }
 
-        // 🔹 배경음 정지
+        // 배경음 정지
         void StopBGM()
         {
             if (bgmChannel)
@@ -118,17 +118,16 @@ namespace global
             }
         }
 
-        // 🔹 FMOD 업데이트 (매 프레임 호출해야 함)
+        // FMOD 업데이트 (매 프레임 호출해야 함)
         void SoundUpdate()
         {
             FMOD_System_Update(system);
         }
 
-        // 🔹 FMOD 정리 (게임 종료 시 호출)
+        // FMOD 정리 (게임 종료 시 호출)
         void Shutdown()
         {
-
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 9; i++)
             {
                 FMOD_Sound_Release(bgm[i]);
                 FMOD_Sound_Release(sfx[i]);
@@ -172,7 +171,7 @@ namespace global
     std::string playerIcon = ">"; // 기본값도 string으로 바꿔줘야 함
 
     int gold = 500;
-    int hp = 100;
+    int hp = 10;
     int max_hp = 100;
     int atk = 10;
 
@@ -260,12 +259,7 @@ namespace global
     SMALL_RECT HealingZone = { 2, 20, 20, 27 }; // 침대 근처 체력 회복 존
     SMALL_RECT QuestZone = { 2, 2, 20, 5 }; // 퀘스트 수락 존
     SMALL_RECT QuestCheckZone = { 30, 2, 39, 9 }; // 퀘스트 수락 존
-    //SMALL_RECT TutorialZone = { 20, 20, 16, 16 }; // 게임 설명 커서 위치
-    //SMALL_RECT GameStartZone = { 20, 20, 15, 15 }; // 게임시작 커서 위치
-    //SMALL_RECT GameQuitZone = { 20, 20, 17, 17 }; // 게임 종료 설명 위치
     SMALL_RECT OptionZone = { 2, 11, 6, 18 };
-
-
 };
 
 void ShowQuestMessage(const std::string& msg) // 메시지 출력 시간 조절 함수
@@ -338,9 +332,11 @@ void UpdateAttackUpgrade() {
                 int chance = rand() % 2; // 50% 확률 (0 또는 1)
                 if (chance == 0) {
                     global::atk += global::up_atk; // 공격력 증가
+                    global::GameSound::PlaySFX(6);
                     GotoXY(global::msg.x, global::msg.y);
 
                     global::atkCounter++;
+                    
                     UpdateQuestProgress_atkupgrade();
                     UpdateQuestProgress_atkupgrade2();
                     UpdateQuestProgress_atkupgrade3();
@@ -348,6 +344,7 @@ void UpdateAttackUpgrade() {
                 }
                 else {
                     GotoXY(global::msg.x, global::msg.y);
+                    global::GameSound::PlaySFX(6);
                     printf("강화 실패...    ");
                 }
 
@@ -427,6 +424,7 @@ void AutoMoneyBuy() {
 
             // 골드 차감
             global::gold -= 50;
+            global::GameSound::PlaySFX(0);
             global::purchaseCount++;  // 구매 횟수 증가   
             GotoXY(global::auto_money_buy_zone.x, global::auto_money_buy_zone.y);
             setColor(6); //노란색
@@ -470,6 +468,8 @@ void BattleStart() {
 
 
             //  여기에 배틀 시작 관련 함수 넣으면 됨!
+            global::GameSound::StopBGM();
+            global::GameSound::PlayBGM(1);
             global::battle::Reset();
             global::battle::BattleManager();
             //
@@ -790,10 +790,12 @@ void HealingHP() {
             if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
                 global::hp += global::heal_hp;
                 if (global::hp > global::max_hp) {
+                    
                     global::hp = global::max_hp;
                 }
                 GotoXY(global::msg.x, global::msg.y);
-                printf("체력 회복중 ^~^  ");
+                printf("체력 회복중 ^~^  "); 
+                global::GameSound::PlaySFX(2);
             }
             else {
                 GotoXY(global::msg.x, global::msg.y);
@@ -821,6 +823,7 @@ void UpdateGoldMining() {
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
                 GotoXY(global::msg.x, global::msg.y);
+                global::GameSound::PlaySFX(3);
                 printf("골드 채굴 중: %d/10 ", global::goldCounter);
 
 
@@ -837,7 +840,7 @@ void UpdateGoldStorage() {
             UpdateQuestProgress_GoldMined();
             global::goldCounter = 0; // 카운트 초기화
 
-
+            global::GameSound::PlaySFX(1);
             GotoXY(global::msg.x, global::msg.y);
             printf("골드 저장 완료!   ");
 
