@@ -365,6 +365,7 @@ namespace global {
                             global::input::Set(global::input::Enter_KEY_INDEX, false);
                             WasEnterKeyPressed = true;
                             system("cls");
+                            resetCounter();
                             OpeningTitle();
                             while(true)
                             {
@@ -864,32 +865,32 @@ namespace global {
                 else if (bossRand < 8) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack / 2 * charging;
+                        count = 3;
                         GotoXY(1, 2);
                         printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2 * charging);
                         GotoXY(1, 3);
-                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.heart / 25);
+                        printf("독이 묻어 %d턴 %d 피해를 받습니다", count, player.heart / 25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
                         while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
-                        count = 3;
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack / 2;
+                        count = 3;
                         GotoXY(1, 2);
                         printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2);
                         GotoXY(1, 3);
-                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.heart / 25);
+                        printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count , player.heart / 25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
                         while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
-                        count = 3;
                     }
                 }
                 else {

@@ -15,6 +15,8 @@ namespace global {
     namespace time {
         void UpdateTime();
     }
+
+    void resetCounter();
 }
 
 void startGame();

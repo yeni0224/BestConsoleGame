@@ -225,12 +225,22 @@ namespace global
     // 골드 시스템 추가
     ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
-    static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
+  
 
+   
     int goldCounter = 0;      // 골드 카운트 (0~10)
     int atkCounter = 0;       // 공격력 업그레이드 카운터 (0~10)
     int hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
     int selectedQuestIndex = 0; // 0번 퀘스트 수락 예정
+    static int purchaseCount = 0;  // 구매 횟수 (최대 3회)
+
+    void resetCounter() {
+        goldCounter = 0;      // 골드 카운트 (0~10)
+        atkCounter = 0;       // 공격력 업그레이드 카운터 (0~10)
+        hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
+        selectedQuestIndex = 0; // 0번 퀘스트 수락 예정
+        purchaseCount = 0;  // 구매 횟수 (최대 3회)
+    }
 
     bool isMining = false;    // 채굴 상태 여부
     bool isUpgrading = false; // 강화 진행 여부
