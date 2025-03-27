@@ -356,7 +356,7 @@ void UpdateAttackUpgrade() {
                 }
                 else {
                     GotoXY(global::msg.x, global::msg.y);
-                    global::GameSound::PlaySFX(6);
+                    global::GameSound::PlaySFX(5);
                     printf("강화 실패...    ");
                 }
 
@@ -398,10 +398,12 @@ void UpdateHpUpgrade() {
                     UpdateQuestProgress_hpupgrade();
                     UpdateQuestProgress_hpupgrade2();
                     UpdateQuestProgress_hpupgrade3();
+                    global::GameSound::PlaySFX(6);
                     printf("체력 +%d      ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
                 }
                 else {
                     GotoXY(global::msg.x, global::msg.y);
+                    global::GameSound::PlaySFX(5);
                     printf("강화 실패...       ");
                 }
 
