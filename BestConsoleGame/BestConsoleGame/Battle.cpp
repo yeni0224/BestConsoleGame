@@ -463,8 +463,7 @@ namespace global {
         }
         void patternAttack(int playerRand, int monsterRand, int bossRand, int& charging)
         {
-
-            DWORD startTick = GetTickCount();
+            ULONGLONG nowTick = GetTickCount64();
 
             if (!monsterA.hpFlag)
             {
@@ -651,7 +650,7 @@ namespace global {
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
-                        while (GetTickCount() - startTick < 500) {}
+                        while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
                         count = 3;
@@ -666,14 +665,45 @@ namespace global {
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
-                        while (GetTickCount() - startTick < 500) {}
+                        while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
                         count = 3;
                     }
                 }
                 else {
-
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * 3 * charging;
+                        GotoXY(1, 2);
+                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
+                        for (int i = 1; i < 16; i++)
+                        {
+                            while (true) {
+                                if (GetTickCount64() - nowTick > 50) {
+                                    setColor(i);
+                                    std::cout << monsterC.image1;
+                                    nowTick = GetTickCount64();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack * 3;
+                        GotoXY(1, 2);
+                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3);
+                        for (int i = 1; i < 16; i++)
+                        {
+                            while (true) {
+                                if (GetTickCount64() - nowTick > 50) {
+                                    setColor(i);
+                                    std::cout << monsterC.image1;
+                                    nowTick = GetTickCount64();
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
             //startTick = GetTickCount();
@@ -683,8 +713,7 @@ namespace global {
         }
         void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging)
         {
-            DWORD startTick = GetTickCount();
-
+            ULONGLONG nowTick = GetTickCount64();
             if (!monsterA.hpFlag)
             {
                 pHp = player.currentHeart;
@@ -822,7 +851,7 @@ namespace global {
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
-                        while (GetTickCount() - startTick < 500) {}
+                        while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
                         count = 3;
@@ -837,14 +866,45 @@ namespace global {
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
-                        while (GetTickCount() - startTick < 500) {}
+                        while (GetTickCount64() - nowTick < 500) {}
                         imageClear2();
                         poisonFlag = true;
                         count = 3;
                     }
                 }
                 else {
-
+                    if (charging > 1) {
+                        player.currentHeart -= monsterC.attack * 3 * charging;
+                        GotoXY(1, 2);
+                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
+                        for (int i = 1; i < 16; i++)
+                        {
+                            while (true) {
+                                if (GetTickCount64() - nowTick > 50){
+                                    setColor(i);
+                                    std::cout << monsterC.image1;
+                                    nowTick = GetTickCount64();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        player.currentHeart -= monsterC.attack * 3;
+                        GotoXY(1, 2);
+                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3);
+                        for (int i = 1; i < 16; i++)
+                        {
+                            while (true) {
+                                if (GetTickCount64() - nowTick > 50) {
+                                    setColor(i);
+                                    std::cout << monsterC.image1;
+                                    nowTick = GetTickCount64();
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
