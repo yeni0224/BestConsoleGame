@@ -31,6 +31,7 @@ void setConsoleSize(int width, int height);
 void DrawOptionRect();
 void RunCursorSelectionMenu();
 void PrintMonsterStatus();
+void DrawMonster_info();
 
 struct zone_xy { // X,Y좌표 구조체
     int x;
@@ -73,6 +74,7 @@ namespace global
     zone_awds hp_zone(66, 2, 84, 8);
     zone_awds gold_zone(44, 21, 79, 27);
     zone_awds option_zone(2, 11, 6, 18);
+    zone_awds monster_info__zone(91, 2, 117, 11);
 
 
 
@@ -660,6 +662,7 @@ void UpdateGoldStorage() {
 
 
 
+
 void Update()
 {
     global::time::updateCount += 1;
@@ -673,6 +676,7 @@ void Update()
     AutoMoney();
     HealingHP();
     CheckOptionMenu();
+    DrawMonster_info();
 
 
     QuestAccept();
@@ -782,6 +786,8 @@ void ProcessInput() // InputSystem.cpp 코드 가져와서 사용
     global::input::UpdateInput(); // ESC,상,하,좌,우,스페이스바 입력 받기
 
 }
+
+
 
 
 
@@ -913,6 +919,91 @@ void DrawOptionRect() {
     setColor(15); // 기존색으로 복귀
 }
 
+
+void DrawMonster_info() {
+    if (global::battle::monsterA.hpFlag) {
+        GotoXY(95, 2);
+        printf("MonsterA : 슬라임");
+
+        COORD start = { 91, 4 };
+
+        std::string art[] = {
+            "          ▒▒▒▒▒▒          ",
+            "        ▒▒      ▒▒        ",
+            "      ▒▒          ▒▒      ",
+            "    ▒▒              ▒▒    ",
+            "  ▒▒   ●         ●    ▒▒  ",
+            "   ▒▒     ______     ▒▒   ",
+            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
+        };
+
+        setColor(10);
+        for (int i = 0; i < 7; ++i) {
+            COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+            std::wcout << art[i].c_str();
+        }
+        setColor(15);
+        GotoXY(95, 11);
+        printf("HP : %d , ATK : %d", global::battle::monsterA.heart, global::battle::monsterA.attack);
+    }
+    else if (global::battle::monsterB.hpFlag) {
+        GotoXY(95, 2);
+        printf("MonsterB : 스켈레톤");
+
+        COORD start = { 91, 4 };
+
+        std::string art[] = {
+            "          ▒▒▒▒▒▒          ",
+            "        ▒▒      ▒▒        ",
+            "      ▒▒          ▒▒      ",
+            "    ▒▒              ▒▒    ",
+            "  ▒▒   ●         ●    ▒▒  ",
+            "   ▒▒     ______     ▒▒   ",
+            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
+        };
+
+        setColor(8);
+        for (int i = 0; i < 7; ++i) {
+            COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+            std::wcout << art[i].c_str();
+        }
+        setColor(15);
+        GotoXY(95, 11);
+        printf("HP : %d , ATK : %d", global::battle::monsterB.heart, global::battle::monsterB.attack);
+    }
+    else if (global::battle::monsterC.hpFlag) {
+        GotoXY(100, 2);
+        printf("BOSS : 마녀");
+
+        COORD start = { 91, 4 };
+
+        std::string art[] = {
+            "          ▒▒▒▒▒▒          ",
+            "        ▒▒      ▒▒        ",
+            "      ▒▒          ▒▒      ",
+            "    ▒▒              ▒▒    ",
+            "  ▒▒   ●         ●    ▒▒  ",
+            "   ▒▒     ______     ▒▒   ",
+            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
+        };
+
+        setColor(10);
+        for (int i = 0; i < 7; ++i) {
+            COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+            std::wcout << art[i].c_str();
+        }
+        setColor(15);
+        GotoXY(95, 11);
+        printf("HP : %d , ATK : %d", global::battle::monsterC.heart, global::battle::monsterC.attack);
+    }
+}
+
+
+
+
 void DrawQuestBoard() {
     GotoXY(2, 2);
     printf("▩ QUEST BOARD▩");
@@ -1004,19 +1095,19 @@ void DrawGoldRect() {
 }
 
 
-void DrawDungeonRect() {
+void DrawDungeonRect() { //
     setColor(8);
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
+    for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) { // top- 1 에서 임시로 +1로 변경
         GotoXY(90, y);
         printf("■");
         //putchar('@');
     }
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
+    for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(89, y);
         printf("■");
         //putchar('@');
     }
-    for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom - 4; y++) {
+    for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(88, y);
         printf("■");
         //putchar('@');
