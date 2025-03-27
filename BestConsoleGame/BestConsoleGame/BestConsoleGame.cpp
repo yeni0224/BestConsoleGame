@@ -243,7 +243,7 @@ namespace global
     bool gamestartflag = false;
     bool gametutorialflag = false;
 
-    int gold = 0;
+    int gold = 500;
     int hp = 100;
     int max_hp = 100;
     int atk = 10;
@@ -1712,6 +1712,7 @@ int main()
         global::GameSound::SoundUpdate();
         if (global::gamestartflag == true)
         {
+
             break;
         }
     }
