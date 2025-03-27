@@ -8,6 +8,8 @@
 
 namespace global {
     namespace battle {
+        std::string battleMessage = "";
+
         PLAYER player{
         player.heart = global::max_hp ,
         player.currentHeart = global::hp ,
@@ -96,7 +98,7 @@ namespace global {
             {
                 if (monsterA.currentHeart <= 0 && player.currentHeart > 0) {
                     monsterA.hpFlag = true;
-                    UpdateQuestProgress_monsterAclear();
+                    
                 }
                 
                 if (monsterB.currentHeart <= 0 && player.currentHeart > 0) {
@@ -361,23 +363,27 @@ namespace global {
                                 printf(" ");
                             }
                         }
-                        if (x == 89)
+                        if (x == 89) // 도망
                         {
                             global::hp = player.currentHeart;//도망 시 현재hp가져가도록
                             system("cls");//화면 초기화
                             startGame();//로비화면 출력
+
                             flag = true;//전체 반복문 나가는 flag
+                            UpdateQuestProgress_monsterAclear();
+                            UpdateQuestProgress_monsterBclear();
+                            
                             break;
                         }
                         if (x == 79)
                         {
-                            patternAttack(playerRand, monsterRand, charging);
+                            patternAttack(playerRand, monsterRand, charging); // 공격
                             GotoXY(5, 5);
                             break;
                         }
                         global::input::Set(global::input::Space_KEY_INDEX, false);
                         WasSpaceKeyPressed = true;
-                        if (x == 84)
+                        if (x == 84) // 회복
                         {
                             patternRecovery(playerRand, monsterRand, charging);
                             break;

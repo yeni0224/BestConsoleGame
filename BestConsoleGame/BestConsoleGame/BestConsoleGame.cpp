@@ -27,6 +27,12 @@ void DrawQuestCheck();
 void ShowQuestMessage(const std::string& msg);
 void UpdateQuestProgress_atkupgrade();
 void UpdateQuestProgress_hpupgrade();
+void UpdateQuestProgress_monsterAclear();
+void UpdateQuestProgress_atkupgrade2();
+void UpdateQuestProgress_hpupgrade2();
+void UpdateQuestProgress_monsterBclear();
+void UpdateQuestProgress_atkupgrade3();
+void UpdateQuestProgress_hpupgrade3();
 void setConsoleSize(int width, int height);
 void DrawOptionRect();
 void RunCursorSelectionMenu();
@@ -79,15 +85,15 @@ namespace global
 
 
     std::vector<Quest> questList = {
-   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
+   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
    { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
    { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, false,  true},
    { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
-   { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 0, 5 },
-   { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 0, 5 },
-   { "몬스터B 처치", "몬스터B 처치", Quest::LOCKED, 0,  true},
-   { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 0, 8 },
-   { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 0, 8 }
+   { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 3, 5 },
+   { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 3, 5 },
+   { "몬스터B 처치", "몬스터B 처치", Quest::LOCKED, false,  true},
+   { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 5, 8 },
+   { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 5, 8 }
     };
     std::string questMessage = "";
 
@@ -95,7 +101,7 @@ namespace global
     std::string playerIcon = ">"; // 기본값도 string으로 바꿔줘야 함
 
     int gold = 500;
-    int hp = 10;
+    int hp = 100;
     int max_hp = 100;
     int atk = 10;
 
@@ -151,7 +157,7 @@ namespace global
     SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
     SMALL_RECT playerMovableRect = { 5, 5, 30, 30 }; // 플레이어 이동 가능 영역
 
-    const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
+    const int playerMoveSpeed = 50; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
     ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
@@ -213,7 +219,7 @@ void UpdateQuestMessage() // 퀘스트 메시지 삭제 함수
     if (!global::isQuestMessageVisible) return;
 
     ULONGLONG now = GetTickCount64();
-    if (now - global::questMessageStartTime >= 1500) {
+    if (now - global::questMessageStartTime >= 1000) {
         // 메시지 삭제
         GotoXY(44, 14);
         for (int i = 0; i < global::questMessage.length(); ++i) putchar(' ');
@@ -275,6 +281,8 @@ void UpdateAttackUpgrade() {
 
                     global::atkCounter++;
                     UpdateQuestProgress_atkupgrade();
+                    UpdateQuestProgress_atkupgrade2();
+                    UpdateQuestProgress_atkupgrade3();
                     printf("공격력 +%d      ", global::up_atk); // 기존 메시지를 덮어쓰기 위해 공백 포함
                 }
                 else {
@@ -318,6 +326,8 @@ void UpdateHpUpgrade() {
                     GotoXY(global::msg.x, global::msg.y);
                     global::hpCounter++;
                     UpdateQuestProgress_hpupgrade();
+                    UpdateQuestProgress_hpupgrade2();
+                    UpdateQuestProgress_hpupgrade3();
                     printf("체력 +%d      ", global::up_hp); // 기존 메시지를 덮어쓰기 위해 공백 포함
                 }
                 else {
@@ -548,6 +558,101 @@ void UpdateQuestProgress_hpupgrade() // 체력 강화 성공 시 진행 // 4번 
     for (auto& q : global::questList)
     {
         if (q.name == "HP 강화 1" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::hpCounter; // 체력 강화 1회 성공 → 진행도 1 증가
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_atkupgrade2() // 공격력 강화 성공 시 진행 // 5번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "ATK 강화 2" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::atkCounter; // 공격력 강화 1회 성공 = 현재 강화 정도 확인
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_hpupgrade2() // 체력 강화 성공 시 진행 // 6번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "HP 강화 2" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::hpCounter; // 체력 강화 1회 성공 → 진행도 1 증가
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_monsterBclear() // 몬스터 B처치 시 진행 // 7번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "몬스터B 처치" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::battle::monsterB.hpFlag; // 몬스터 B 처치 성공 
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_atkupgrade3() // 공격력 강화 성공 시 진행 // 5번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "ATK 강화 3" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::atkCounter; // 공격력 강화 1회 성공 = 현재 강화 정도 확인
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_hpupgrade3() // 체력 강화 성공 시 진행 // 6번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "HP 강화 3" && q.state == Quest::IN_PROGRESS)
         {
             q.current = global::hpCounter; // 체력 강화 1회 성공 → 진행도 1 증가
 
@@ -1525,7 +1630,7 @@ int main()
 {
 
     global::time::InitTime(); // 시간 초기화
-    PrintMonsterStatus();
+    
 
     CSound::Init();// 사운드 재생
 
