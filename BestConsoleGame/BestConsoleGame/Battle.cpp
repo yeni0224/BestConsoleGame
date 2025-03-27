@@ -93,6 +93,8 @@ namespace global {
 
         void Reset()
         {
+            x = 80;
+            y = 27;
             system("cls");
         }
 
