@@ -70,6 +70,8 @@ namespace global {
         bool WasSpaceKeyPressed = false;
         bool WasEnterKeyPressed = false;
         int x = 79;
+        int pHp = 0;
+        int mHp = 0;
 
 
         void Reset()
@@ -86,6 +88,8 @@ namespace global {
             monsterA.currentHeart = monsterA.heart;
             monsterB.currentHeart = monsterB.heart;
             monsterC.currentHeart = monsterC.heart;
+            pHp = player.currentHeart;
+            mHp = monsterA.currentHeart;
 
             BattleText1();
             while (1)
@@ -140,37 +144,63 @@ namespace global {
 
         void Battle1()// 플레이어 이미지 출력
         {
+            DWORD startTick = GetTickCount();
+
             GotoXY(10, 7);
             printf("[ %d / %d ] \n", player.currentHeart, player.heart);
 
+            if (pHp > player.currentHeart)
+            {
+                setColor(12); std::cout << player.image; setColor(15);
+            }
+            if (pHp < player.currentHeart)
+            {
+                setColor(11); std::cout << player.image; setColor(15);
+            }
+            while (GetTickCount() - startTick < 500) {}
             std::cout << player.image;
+            pHp = player.currentHeart;
+
 
         }
         void Battle2() // 몬스터 이미지 출력
         {
             global::input::UpdateInput();
+            DWORD startTick = GetTickCount();
 
             if (!monsterA.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterA.currentHeart, monsterA.heart);
-                setColor(10);
-                std::cout << monsterA.image1;
-                setColor(15);
+                if (mHp > monsterA.currentHeart)
+                {
+                    setColor(12); std::cout << monsterA.image2; setColor(15);
+                }
+                while (GetTickCount() - startTick < 500) {}
+                setColor(10); std::cout << monsterA.image1; setColor(15);
+
             }
             else if (!monsterB.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterB.currentHeart, monsterB.heart);
-                setColor(8);
-                std::cout << monsterB.image1;
-                setColor(15);
+                if (mHp > monsterB.currentHeart)
+                {
+                    setColor(12); std::cout << monsterB.image2; setColor(15);
+                }
+                while (GetTickCount() - startTick < 500) {}
+                setColor(8); std::cout << monsterB.image1; setColor(15);
             }
             else if (!monsterC.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterC.currentHeart, monsterC.heart);
-                std::cout << monsterC.image1;
+                if (mHp > monsterC.currentHeart)
+                {
+                    setColor(12); std::cout << monsterC.image1; setColor(15);
+                }
+                while (GetTickCount() - startTick < 500) {}
+                setColor(10); std::cout << monsterC.image1; setColor(15);
             }
             else
             {
@@ -367,9 +397,8 @@ namespace global {
 
             if (!monsterA.hpFlag)
             {
-                setColor(12);
-                std::cout << monsterA.image2;
-                setColor(15);
+                pHp = player.currentHeart;
+                mHp = monsterA.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterA.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1,  1);
@@ -425,9 +454,8 @@ namespace global {
 
             else if (!monsterB.hpFlag)
             {
-                setColor(12);
-                std::cout << monsterB.image2;
-                setColor(15);
+                pHp = player.currentHeart;
+                mHp = monsterB.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
@@ -484,6 +512,8 @@ namespace global {
 
             else if (!monsterC.hpFlag)
             {
+                pHp = player.currentHeart;
+                mHp = monsterC.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
@@ -545,10 +575,12 @@ namespace global {
         }
         void patternRecovery(int playerRand, int monsterRand, int& charging)
         {
-            DWORD startTick = GetTickCount();
+            //DWORD startTick = GetTickCount();
 
             if (!monsterA.hpFlag)
             {
+                pHp = player.currentHeart;
+                mHp = monsterA.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한
                 
@@ -590,6 +622,8 @@ namespace global {
             }
             else if (!monsterB.hpFlag)
             {
+                pHp = player.currentHeart;
+                mHp = monsterB.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한
                 GotoXY(1, 1);
@@ -630,6 +664,8 @@ namespace global {
             }
             else if (!monsterC.hpFlag)
             {
+                pHp = player.currentHeart;
+                mHp = monsterC.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한
                 GotoXY(1, 1);
