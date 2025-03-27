@@ -1,4 +1,4 @@
-#include "Battle.h"
+ï»¿#include "Battle.h"
 #include "Utility.h"
 #include "Input_Sys.h"
 #include "BestConsoleGame.h"
@@ -63,7 +63,19 @@ namespace global {
                 "\033[22;67H     +@+*@*.   .-@@#++++++++#@%=--=%@#++++++++#@@*.\n"
                 "\033[23;67H     +@+*@*.  .#@*++++++++++++#@@@@#++++++++++++*@%:\n"
                 "\033[24;67H     +@+*@*.  =@#+++++++++++++%@=+@#+++++++++++++*@*\n",
-            monsterC.image2 = "monsterC"
+            monsterC.image2 = 
+                "\033[12;45H     %%%%##%@@\n"
+                "\033[13;45H    @@#+++++@@\n"
+                "\033[14;45H    @@%%%%%%@@\n"
+                "\033[15;45H     @@   @@\n"
+                "\033[16;45H    @@@    @@@ *****\n"
+                "\033[17;45H  @@@@      @@@@   **\n"
+                "\033[18;45H @@@@         @@@@\n"
+                "\033[19;45H@@  @            @@@  *\n"
+                "\033[20;45H@@            @ @@@  **\n"
+                "\033[21;45H@@             @@@ ***\n"
+                "\033[22;45H @@@@@@@@@@@@@@\n"
+
         };
         bool flag = false;
         bool clearflag = false;
@@ -117,7 +129,7 @@ namespace global {
                 if (player.currentHeart <= 0)
                 {
                     system("cls");
-                    ShowQuestMessage("ÇÃ·¹ÀÌ¾î°¡ »ç¸ÁÇß½À´Ï´Ù."); // ¸Ş½ÃÁö Ãâ·Â ½Ã°£ Á¶Àı ÇÔ¼ö
+                    ShowQuestMessage("í”Œë ˆì´ì–´ê°€ ì‚¬ë§í–ˆìŠµë‹ˆë‹¤."); // ë©”ì‹œì§€ ì¶œë ¥ ì‹œê°„ ì¡°ì ˆ í•¨ìˆ˜
                     startGame();
                     break;
                 }
@@ -141,12 +153,12 @@ namespace global {
         void BattleText1()
         {
             GotoXY(80, 28);
-            printf("°ø°İ");
-            printf(" È¸º¹");
-            printf(" µµ¸Á");
+            printf("ê³µê²©");
+            printf(" íšŒë³µ");
+            printf(" ë„ë§");
         }
 
-        void Battle1()// ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö Ãâ·Â
+        void Battle1()// í”Œë ˆì´ì–´ ì´ë¯¸ì§€ ì¶œë ¥
         {
             DWORD startTick = GetTickCount();
 
@@ -175,7 +187,7 @@ namespace global {
             else std::cout << player.image;
 
         }
-        void Battle2() // ¸ó½ºÅÍ ÀÌ¹ÌÁö Ãâ·Â
+        void Battle2() // ëª¬ìŠ¤í„° ì´ë¯¸ì§€ ì¶œë ¥
         {
             global::input::UpdateInput();
             DWORD startTick = GetTickCount();
@@ -233,11 +245,14 @@ namespace global {
                 std::cout << "::::::::::::%@@@+:::::::::%@+::::::*@@#+-----=+*::::::::@@=::::::::+%@%+-----+#@@+::::::*@#:::::::-%@*:::::::+@%::::::::\n";
                 std::cout << "::::::::::::-%%#::::::::::#%+::::::::+#%@@@@%%#+::::::::#%=::::::::::=#%@@@@%%#=::::::::+%*::::::::-%%+::::::=%#::::::::\n";
                 std::cout << ":::::::::::::::::::::::::::::::::::::::::--:::::::::::::::::::::::::::::::-:::::::::::::::::::::::::::::::::::::::::::::\n";
-                std::cout << "                                                 ¿£ÅÍ ÀÔ·Â ½Ã ´Ù½Ã½ÃÀÛ                                                 ";
+                std::cout << "                                                 ì—”í„° ì…ë ¥ ì‹œ ë‹¤ì‹œì‹œì‘                                                 ";
                 clearflag = true;
-                monsterA.hpFlag = true;
-                monsterB.hpFlag = true;
-                monsterC.hpFlag = true;
+                monsterA.hpFlag = false;
+                monsterB.hpFlag = false;
+                monsterC.hpFlag = false;
+                monsterA.currentHeart = monsterA.heart;
+                monsterB.currentHeart = monsterB.heart;
+                monsterC.currentHeart = monsterC.heart;
             }
 
         }
@@ -247,11 +262,21 @@ namespace global {
         void imageClear()
         {
             for (int y = 4; y <= 25; ++y) {
-                // ½ÃÀÛ ÁÂÇ¥ (65, y)
-                std::cout << "\033[" << y << ";" << 65 << "H"; // ÀÌµ¿ÇÒ À§Ä¡·Î Ä¿¼­ ¼³Á¤
+                // ì‹œì‘ ì¢Œí‘œ (65, y)
+                std::cout << "\033[" << y << ";" << 65 << "H"; // ì´ë™í•  ìœ„ì¹˜ë¡œ ì»¤ì„œ ì„¤ì •
 
-                // 65ºÎÅÍ 100±îÁö °ø¹é Ãâ·Â (ÃÑ 36°³ÀÇ °ø¹é)
+                // 65ë¶€í„° 120ê¹Œì§€ ê³µë°± ì¶œë ¥
                 for (int x = 65; x <= 120; ++x) {
+                    std::cout << " ";
+                }
+            }
+        }
+        void imageClear2()
+        {
+            for (int y = 12; y <= 22; ++y) {
+                std::cout << "\033[" << y << ";" << 45 << "H"; // ì´ë™í•  ìœ„ì¹˜ë¡œ ì»¤ì„œ ì„¤ì •
+
+                for (int x = 45; x <= 66; ++x) {
                     std::cout << " ";
                 }
             }
@@ -262,7 +287,7 @@ namespace global {
         {
             ULONGLONG nowTick = GetTickCount64();
             ULONGLONG prevTick = nowTick;
-            char symbols[] = { '>', ' ' }; // ¹ø°¥¾Æ Ãâ·ÂÇÒ ¹®ÀÚ
+            char symbols[] = { '>', ' ' }; // ë²ˆê°ˆì•„ ì¶œë ¥í•  ë¬¸ì
             int index = 0;
 
             while (1)
@@ -321,14 +346,14 @@ namespace global {
                 if (elapsedTick >= 500 && elapsedTick <= 999)
                 {
                     GotoXY(x, 28);
-                    std::cout << symbols[index] << std::flush; // È­¸é µ¤¾î¾²±â
-                    index = 1 - index; // 0°ú 1À» ¹ø°¥¾Æ°¡¸ç º¯°æ
+                    std::cout << symbols[index] << std::flush; // í™”ë©´ ë®ì–´ì“°ê¸°
+                    index = 1 - index; // 0ê³¼ 1ì„ ë²ˆê°ˆì•„ê°€ë©° ë³€ê²½
                     prevTick = nowTick;
                 }
 
                 if (global::input::IsLeftKeyOn())
                 {
-                    if (!WasLeftKeyPressed) // Å°¸¦ Ã³À½ ´­·¶À» ¶§¸¸ ½ÇÇà
+                    if (!WasLeftKeyPressed) // í‚¤ë¥¼ ì²˜ìŒ ëˆŒë €ì„ ë•Œë§Œ ì‹¤í–‰
                     {
                         global::input::Set(global::input::LEFT_KEY_INDEX, false);
                         WasLeftKeyPressed = true;
@@ -345,7 +370,7 @@ namespace global {
 
                 if (global::input::IsRightKeyOn())
                 {
-                    if (!WasRightKeyPressed) // Å°¸¦ Ã³À½ ´­·¶À» ¶§¸¸ ½ÇÇà
+                    if (!WasRightKeyPressed) // í‚¤ë¥¼ ì²˜ìŒ ëˆŒë €ì„ ë•Œë§Œ ì‹¤í–‰
                     {
                         global::input::Set(global::input::RIGHT_KEY_INDEX, false);
                         WasRightKeyPressed = true;
@@ -374,13 +399,13 @@ namespace global {
                                 printf(" ");
                             }
                         }
-                        if (x == 89) // µµ¸Á
+                        if (x == 89) // ë„ë§
                         {
-                            global::hp = player.currentHeart;//µµ¸Á ½Ã ÇöÀçhp°¡Á®°¡µµ·Ï
-                            system("cls");//È­¸é ÃÊ±âÈ­
-                            startGame();//·ÎºñÈ­¸é Ãâ·Â
+                            global::hp = player.currentHeart;//ë„ë§ ì‹œ í˜„ì¬hpê°€ì ¸ê°€ë„ë¡
+                            system("cls");//í™”ë©´ ì´ˆê¸°í™”
+                            startGame();//ë¡œë¹„í™”ë©´ ì¶œë ¥
 
-                            flag = true;//ÀüÃ¼ ¹İº¹¹® ³ª°¡´Â flag
+                            flag = true;//ì „ì²´ ë°˜ë³µë¬¸ ë‚˜ê°€ëŠ” flag
                             UpdateQuestProgress_monsterAclear();
                             UpdateQuestProgress_monsterBclear();
                             
@@ -388,13 +413,13 @@ namespace global {
                         }
                         if (x == 79)
                         {
-                            patternAttack(playerRand, monsterRand, bossRand, charging); // °ø°İ
+                            patternAttack(playerRand, monsterRand, bossRand, charging); // ê³µê²©
                             GotoXY(5, 5);
                             break;
                         }
                         global::input::Set(global::input::Space_KEY_INDEX, false);
                         WasSpaceKeyPressed = true;
-                        if (x == 84) // È¸º¹
+                        if (x == 84) // íšŒë³µ
                         {
                             patternRecovery(playerRand, monsterRand, bossRand, charging);
                             break;
@@ -416,10 +441,10 @@ namespace global {
             {
                 pHp = player.currentHeart;
                 mHp = monsterA.currentHeart;
-                if (playerRand == 0) {//ÇÃ·¹ÀÌ¾î Å©¸®Æ¼ÄÃ
-                    monsterA.currentHeart -= player.attack * 2; // ¸ó½ºÅÍ hp °¨¼Ò
+                if (playerRand == 0) {//í”Œë ˆì´ì–´ í¬ë¦¬í‹°ì»¬
+                    monsterA.currentHeart -= player.attack * 2; // ëª¬ìŠ¤í„° hp ê°ì†Œ
                     GotoXY(1,  1);
-                    printf("Ä¡¸íÀûÀÎ °ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack * 2);
+                    printf("ì¹˜ëª…ì ì¸ ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack * 2);
                     if (monsterA.currentHeart <= 0)
                     {
                         imageClear();
@@ -428,24 +453,24 @@ namespace global {
                 else {
                     monsterA.currentHeart -= player.attack;
                     GotoXY(1, 1);
-                    printf("°ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack);
+                    printf("ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack);
                     if (monsterA.currentHeart <= 0)
                     {
                         imageClear();
                     }
                 }
 
-                if (monsterRand < 1) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (monsterRand < 1) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterA.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!" , monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!" , monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterA.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
@@ -453,19 +478,19 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterA.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterA.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
             }
 
@@ -473,10 +498,10 @@ namespace global {
             {
                 pHp = player.currentHeart;
                 mHp = monsterB.currentHeart;
-                if (playerRand == 0) {//ÇÃ·¹ÀÌ¾î Å©¸®Æ¼ÄÃ
-                    monsterB.currentHeart -= player.attack * 2; // ¸ó½ºÅÍ hp °¨¼Ò
+                if (playerRand == 0) {//í”Œë ˆì´ì–´ í¬ë¦¬í‹°ì»¬
+                    monsterB.currentHeart -= player.attack * 2; // ëª¬ìŠ¤í„° hp ê°ì†Œ
                     GotoXY(1, 1);
-                    printf("Ä¡¸íÀûÀÎ °ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack * 2);
+                    printf("ì¹˜ëª…ì ì¸ ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack * 2);
                     if (monsterB.currentHeart <= 0)
                     {
                         imageClear();
@@ -485,7 +510,7 @@ namespace global {
                 else {
                     monsterB.currentHeart -= player.attack;
                     GotoXY(1, 1);
-                    printf("°ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack);
+                    printf("ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack);
                     if (monsterB.currentHeart <= 0)
                     {
                         imageClear();
@@ -493,17 +518,17 @@ namespace global {
 
                 }
 
-                if (monsterRand < 1) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (monsterRand < 1) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterB.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
@@ -511,19 +536,19 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
             }
 
@@ -536,10 +561,10 @@ namespace global {
                 }
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
-                if (playerRand == 0) {//ÇÃ·¹ÀÌ¾î Å©¸®Æ¼ÄÃ
-                    monsterC.currentHeart -= player.attack * 2; // ¸ó½ºÅÍ hp °¨¼Ò
+                if (playerRand == 0) {//í”Œë ˆì´ì–´ í¬ë¦¬í‹°ì»¬
+                    monsterC.currentHeart -= player.attack * 2; // ëª¬ìŠ¤í„° hp ê°ì†Œ
                     GotoXY(1, 1);
-                    printf("Ä¡¸íÀûÀÎ °ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack * 2);
+                    printf("ì¹˜ëª…ì ì¸ ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack * 2);
                     if (monsterC.currentHeart <= 0)
                     {
                         imageClear();
@@ -548,24 +573,24 @@ namespace global {
                 else {
                     monsterC.currentHeart -= player.attack;
                     GotoXY(1, 1);
-                    printf("°ø°İ! ¸ó½ºÅÍ¿¡°Ô %d ÇÇÇØ¸¦ ÁÖ¾ú½À´Ï´Ù!", player.attack);
+                    printf("ê³µê²©! ëª¬ìŠ¤í„°ì—ê²Œ %d í”¼í•´ë¥¼ ì£¼ì—ˆìŠµë‹ˆë‹¤!", player.attack);
                     if (monsterC.currentHeart <= 0)
                     {
                         imageClear();
                     }
                 }
 
-                if (bossRand < 2) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (bossRand < 2) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterC.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
@@ -573,28 +598,32 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack* charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack* charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
                 else if(bossRand < 9){
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
                 else{
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack/2 * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack/2 * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack/2 * charging);
                         GotoXY(1, 3);
-                        printf("µ¶ÀÌ ¹¯¾î ¸ÅÅÏ %d ÇÇÇØ¸¦ ¹Ş½À´Ï´Ù", player.currentHeart/25);
-                        ShowQuestMessage("");
+                        printf("ë…ì´ ë¬»ì–´ ë§¤í„´ %d í”¼í•´ë¥¼ ë°›ìŠµë‹ˆë‹¤", player.currentHeart/25);
+                        setColor(13);
+                        std::cout << monsterC.image2;
+                        setColor(15);
+                        while (GetTickCount() - startTick < 500) {}
+                        imageClear2();
                         poisonFlag = true;
                         count = 3;
                         charging = 1;
@@ -602,10 +631,14 @@ namespace global {
                     else {
                         player.currentHeart -= monsterC.attack/2;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack/2);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack/2);
                         GotoXY(1, 3);
-                        printf("µ¶ÀÌ ¹¯¾î 3ÅÏ µ¿¾È %d ÇÇÇØ¸¦ ¹Ş½À´Ï´Ù", player.currentHeart / 25);
-                        ShowQuestMessage("");
+                        printf("ë…ì´ ë¬»ì–´ 3í„´ ë™ì•ˆ %d í”¼í•´ë¥¼ ë°›ìŠµë‹ˆë‹¤", player.currentHeart / 25);
+                        setColor(13);
+                        std::cout << monsterC.image2;
+                        setColor(15);
+                        while (GetTickCount() - startTick < 500) {}
+                        imageClear2();
                         poisonFlag = true;
                         count = 3;
                     }
@@ -613,34 +646,34 @@ namespace global {
             }
             //startTick = GetTickCount();
             //while (GetTickCount() - startTick < 500) {
-            //    // °ÔÀÓ ·çÇÁ°¡ ¸ØÃßÁö ¾Êµµ·Ï ÀûÀıÇÑ ÀÛ¾÷ ¼öÇà °¡´É
+            //    // ê²Œì„ ë£¨í”„ê°€ ë©ˆì¶”ì§€ ì•Šë„ë¡ ì ì ˆí•œ ì‘ì—… ìˆ˜í–‰ ê°€ëŠ¥
             //}
         }
         void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging)
         {
-            //DWORD startTick = GetTickCount();
+            DWORD startTick = GetTickCount();
 
             if (!monsterA.hpFlag)
             {
                 pHp = player.currentHeart;
                 mHp = monsterA.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
-                else player.currentHeart += player.heart / 5;//Ã¼·ÂÈ¸º¹·®À» ÃÖ´ëÃ¼·ÂÀ¸·Î Á¦ÇÑ
+                else player.currentHeart += player.heart / 5;//ì²´ë ¥íšŒë³µëŸ‰ì„ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ì œí•œ
                 
                 GotoXY(1, 1);
-                printf("È¸º¹! ÇÃ·¹ÀÌ¾î°¡ Ã¼·Â%d È¸º¹Çß½À´Ï´Ù!", player.heart / 5);
+                printf("íšŒë³µ! í”Œë ˆì´ì–´ê°€ ì²´ë ¥%d íšŒë³µí–ˆìŠµë‹ˆë‹¤!", player.heart / 5);
                 
-                if (monsterRand < 1) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (monsterRand < 1) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterA.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterA.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
@@ -648,19 +681,19 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterA.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterA.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
             }
             else if (!monsterB.hpFlag)
@@ -668,21 +701,21 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterB.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
-                else player.currentHeart += player.heart / 5;//Ã¼·ÂÈ¸º¹·®À» ÃÖ´ëÃ¼·ÂÀ¸·Î Á¦ÇÑ
+                else player.currentHeart += player.heart / 5;//ì²´ë ¥íšŒë³µëŸ‰ì„ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ì œí•œ
                 GotoXY(1, 1);
-                printf("È¸º¹! ÇÃ·¹ÀÌ¾î°¡ Ã¼·Â%d È¸º¹Çß½À´Ï´Ù!", player.heart / 5);
+                printf("íšŒë³µ! í”Œë ˆì´ì–´ê°€ ì²´ë ¥%d íšŒë³µí–ˆìŠµë‹ˆë‹¤!", player.heart / 5);
                 
-                if (monsterRand < 1) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (monsterRand < 1) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterB.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
@@ -690,19 +723,19 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
             }
             else if (!monsterC.hpFlag)
@@ -710,51 +743,55 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
-                else player.currentHeart += player.heart / 5;//Ã¼·ÂÈ¸º¹·®À» ÃÖ´ëÃ¼·ÂÀ¸·Î Á¦ÇÑ
+                else player.currentHeart += player.heart / 5;//ì²´ë ¥íšŒë³µëŸ‰ì„ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ì œí•œ
                 GotoXY(1, 1);
-                printf("È¸º¹! ÇÃ·¹ÀÌ¾î°¡ Ã¼·Â%d È¸º¹Çß½À´Ï´Ù!", player.heart / 5);
+                printf("íšŒë³µ! í”Œë ˆì´ì–´ê°€ ì²´ë ¥%d íšŒë³µí–ˆìŠµë‹ˆë‹¤!", player.heart / 5);
 
                 
-                if (bossRand < 2) {//¸ó½ºÅÍ Å©¸®Æ¼ÄÃ
+                if (bossRand < 2) {//ëª¬ìŠ¤í„° í¬ë¦¬í‹°ì»¬
                     if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 2 * charging;//Â÷Â¡ ¼ö ¸¸Å­ °ö
+                        player.currentHeart -= monsterC.attack * 2 * charging;//ì°¨ì§• ìˆ˜ ë§Œí¼ ê³±
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2 * charging);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack * 2;
                         GotoXY(1, 2);
-                        printf("Ä¡¸íÀûÀÎ ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * 2);
+                        printf("ì¹˜ëª…ì ì¸ í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * 2);
                     }
 
                 }
-                else if (bossRand < 7) {
+                else if (bossRand < 3) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack);
                     }
                 }
-                else if (bossRand < 9) {
+                else if (bossRand < 4) {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("¸ó½ºÅÍ°¡ ±â¸¦ ¸ğ¾Ò½À´Ï´Ù. ´ÙÀ½ ÇÇÇØ´Â µÎ¹èÀÔ´Ï´Ù!");
+                    printf("ëª¬ìŠ¤í„°ê°€ ê¸°ë¥¼ ëª¨ì•˜ìŠµë‹ˆë‹¤. ë‹¤ìŒ í”¼í•´ëŠ” ë‘ë°°ì…ë‹ˆë‹¤!");
                 }
                 else {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack / 2 * charging;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack / 2 * charging);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack / 2 * charging);
                         GotoXY(1, 3);
-                        printf("µ¶ÀÌ ¹¯¾î ¸ÅÅÏ %d ÇÇÇØ¸¦ ¹Ş½À´Ï´Ù", player.currentHeart / 25);
-                        ShowQuestMessage("");
+                        printf("ë…ì´ ë¬»ì–´ ë§¤í„´ %d í”¼í•´ë¥¼ ë°›ìŠµë‹ˆë‹¤", player.currentHeart / 25);
+                        setColor(13);
+                        std::cout << monsterC.image2;
+                        setColor(15);
+                        while (GetTickCount() - startTick < 500) {}
+                        imageClear2();
                         poisonFlag = true;
                         count = 3;
                         charging = 1;
@@ -762,10 +799,14 @@ namespace global {
                     else {
                         player.currentHeart -= monsterC.attack / 2;
                         GotoXY(1, 2);
-                        printf("ÇÇÇØ! ÇÃ·¹ÀÌ¾î°¡ %d ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù!", monsterA.attack / 2);
+                        printf("í”¼í•´! í”Œë ˆì´ì–´ê°€ %d í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤!", monsterA.attack / 2);
                         GotoXY(1, 3);
-                        printf("µ¶ÀÌ ¹¯¾î 3ÅÏ µ¿¾È %d ÇÇÇØ¸¦ ¹Ş½À´Ï´Ù", player.currentHeart / 25);
-                        ShowQuestMessage("");
+                        printf("ë…ì´ ë¬»ì–´ 3í„´ ë™ì•ˆ %d í”¼í•´ë¥¼ ë°›ìŠµë‹ˆë‹¤", player.currentHeart / 25);
+                        setColor(13);
+                        std::cout << monsterC.image2;
+                        setColor(15);
+                        while (GetTickCount() - startTick < 500) {}
+                        imageClear2();
                         poisonFlag = true;
                         count = 3;
                     }
