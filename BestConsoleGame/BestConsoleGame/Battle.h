@@ -37,10 +37,6 @@ namespace global {
 		void Reset();
 		void BattleManager();
 
-		void Player();
-		void MonsterA();
-		void MonsterB();
-		void MonsterC();
 		void Battle1();
 		void Battle2();
 		void BattleText1();
