@@ -30,6 +30,7 @@ void UpdateQuestProgress_hpupgrade();
 void setConsoleSize(int width, int height);
 void DrawOptionRect();
 void RunCursorSelectionMenu();
+void PrintMonsterStatus();
 
 struct zone_xy { // X,Y좌표 구조체
     int x;
@@ -187,6 +188,16 @@ namespace global
 
 
 };
+
+void PrintMonsterStatus()
+{
+
+
+    std::cout << "몬스터 A 체력: " << global::battle::monsterA.currentHeart << std::endl;
+    std::cout << "몬스터 B 체력: " << global::battle::monsterB.currentHeart << std::endl;
+    std::cout << "몬스터 C 체력: " << global::battle::monsterC.currentHeart << std::endl;
+}
+
 
 void ShowQuestMessage(const std::string& msg) // 메시지 출력 시간 조절 함수
 {
@@ -1404,6 +1415,7 @@ int main()
 {
 
     global::time::InitTime(); // 시간 초기화
+    PrintMonsterStatus();
 
     CSound::Init();// 사운드 재생
 

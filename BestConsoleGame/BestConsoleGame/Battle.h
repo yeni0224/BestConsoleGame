@@ -21,27 +21,30 @@ namespace global {
 			int heart;
 			int currentHeart;
 			int attack;
-			bool hpFlag;
+			bool hpFlag; // 죽으면 F 살아 있으면 T
 
 			const char* image1;
 			const char* image2;
 
 		}MONSTER;
+		extern PLAYER player;
+		extern MONSTER monsterA;
+		extern MONSTER monsterB;
+		extern MONSTER monsterC;
 
-		
 
 
 		void Reset();
 		void BattleManager();
 
-		/*void Player();
+		void Player();
 		void MonsterA();
 		void MonsterB();
-		void MonsterC();*/
+		void MonsterC();
 		void Battle1();
 		void Battle2();
 		void BattleText1();
 		void BattleText2();
 	}
-	
+
 }
