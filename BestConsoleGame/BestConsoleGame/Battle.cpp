@@ -19,7 +19,7 @@ namespace global {
             monsterA.heart = 100,
             monsterA.currentHeart = monsterA.heart,
             monsterA.attack = 10,
-            monsterA.hpFlag = true,
+            monsterA.hpFlag = false,
 
             monsterA.image1 = "\033[4;65H          @@@@@@@@@@@@                     \n\033[5;65H      @@%%------------%%@                  \n\033[6;65H    @%=----::...::::-----#%                \n\033[7;65H   %+---===::....::::------*@              \n\033[8;65H  @=--======*##**=:::--------*@           \n\033[9;65H @@=%%%===%%%%######====------*@          \n\033[10;65H @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H @--===-#=#*==+*####==++===-------+@      \n\033[12;65H@--====##-+%+==========-==----------*@    \n\033[13;65H@---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n",
             monsterA.image2 = "\033[4;65H                  @@@@@@@@@@@@                     \n\033[5;65H             @@%%------------%%@                  \n\033[6;65H          @%=----::...::::-----#%                \n\033[7;65H        %+---===::....::::------*@              \n\033[8;65H       @=--======*##**=:::--------*@           \n\033[9;65H     @@=%%%===%%%%######====------*@          \n\033[10;65H    @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H    @--===-#=#*==+*####==++===-------+@      \n\033[12;65H  @--====##-+%+==========-==----------*@    \n\033[13;65H @---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n"
@@ -28,7 +28,7 @@ namespace global {
             monsterB.heart = 200,
             monsterB.currentHeart = monsterB.heart,
             monsterB.attack = 20,
-            monsterB.hpFlag = true,
+            monsterB.hpFlag = false,
 
             monsterB.image1 = "\033[4;70H        -*+#*#@@#%##+==+==:       \n\033[5;70H    -=+=*#%%#%####%%%%@@#*#**=    \n\033[6;70H  -==%%=:                +*%%@+=  \n\033[7;70H:-@@%                      =@@*##:\n\033[8;70H==+=:=--:-:--::...:.-=---::.:-*###\n\033[9;70H=*+=...::-==:..=--...----:..-=+#%= \n\033[10;70H-=** %@@@@@@%+= **++@@@@@#%#:= :%=\n\033[11;70H:**=-%%@@@@@@@%  -=@@@@@@@@@*- -#:\n\033[12;70H:*+: %@@@@@@@%---+=@@@@@@@@@:: *= \n\033[13;70H.+:   #%@@@#-==@%%%-+@@@%#+-: =+  \n\033[14;70H:==-: --::==: @@#@@*= :-    :-=+  \n\033[15;70H  =+--= =:    @@@@@+++*===-::*+:  \n\033[16;70H   :#@%+ :    #@@@*+=--- *=#%:    \n\033[17;70H    :+ @@+=  :@@@*.++*+%@==       \n\033[18;70H     ==-*%*+-===--=++##*@+-=       \n\033[19;70H      += =#%*#-=-=*+**+@+:-=       \n\033[20;70H      :=-==#%%=#=+-*@@#:  +       \n\033[21;70H       :=-==-:::-+:     :+        \n\033[22;70H         =:--    :-:   ==         \n\033[23;70H          :+*=+++==+*#-           \n",
             monsterB.image2 = "\033[4;70H        -*+#*#@@#%##+==+==:       \n\033[5;70H    -=+=*#%%#%####%%%%@@#*#**=    \n\033[6;70H  -==%%=:                +*%%@+=  \n\033[7;70H:-@@%                      =@@*##:\n\033[8;70H==+=:=--:-:--::...:.-=---::.:-*###\n\033[9;70H=*+=...::-==:..=--...----:..-=+#%= \n\033[10;70H-=** %@@@@@@%+= **++@@@@@#%#:= :%=\n\033[11;70H:**=-%%@     @%  -=@      @@*- -#:\n\033[12;70H:*+: %@     @%---+=@@     @@:: *= \n\033[13;70H.+:   #%@@@#-==@%%%-+@@@%#+-: =+  \n\033[14;70H:==-: --::==: @@#@@*= :-    :-=+  \n\033[15;70H  =+--= =:    @@@@@+++*===-::*+:  \n\033[16;70H   :#@%+ :    #@@@*+=--- *=#%:    \n\033[17;70H    :+ @@+=  :@@@*.++*+%@==       \n\033[18;70H     ==-*%*+-===--=++##*@+-=       \n\033[19;70H      += =#%*#-=-=*+**+@+:-=       \n\033[20;70H      :=-==#%%=#=+-*@@#:  +       \n\033[21;70H       :=-==-:::-+:     :+        \n\033[22;70H         =:--    :-:   ==         \n\033[23;70H          :+*=+++==+*#-           \n"
@@ -37,7 +37,7 @@ namespace global {
             monsterC.heart = 300,
             monsterC.currentHeart = monsterC.heart,
             monsterC.attack = 30,
-            monsterC.hpFlag = true,
+            monsterC.hpFlag = false,
 
             monsterC.image1 =
                 "\033[4;67H   -%%-::-#@=.    .*:.        @@+++++*@@%=.\n"
@@ -90,9 +90,21 @@ namespace global {
             BattleText1();
             while (1)
             {
-                if (monsterA.currentHeart <= 0 && player.currentHeart > 0)monsterA.hpFlag = false;
-                if (monsterB.currentHeart <= 0 && player.currentHeart > 0)monsterB.hpFlag = false;
-                if (monsterC.currentHeart <= 0 && player.currentHeart > 0)monsterC.hpFlag = false;
+                if (monsterA.currentHeart <= 0 && player.currentHeart > 0) {
+                    monsterA.hpFlag = true;
+                    UpdateQuestProgress_monsterAclear();
+                }
+                
+                if (monsterB.currentHeart <= 0 && player.currentHeart > 0) {
+                    monsterB.hpFlag = true;
+                }
+                
+                    
+                if (monsterC.currentHeart <= 0 && player.currentHeart > 0){
+                        monsterC.hpFlag = true;
+                }
+            
+                    
 
                 if (player.currentHeart <= 0)
                 {
@@ -138,7 +150,7 @@ namespace global {
         {
             global::input::UpdateInput();
 
-            if (monsterA.hpFlag)
+            if (!monsterA.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterA.currentHeart, monsterA.heart);
@@ -146,7 +158,7 @@ namespace global {
                 std::cout << monsterA.image1;
                 setColor(15);
             }
-            else if (monsterB.hpFlag)
+            else if (!monsterB.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterB.currentHeart, monsterB.heart);
@@ -154,7 +166,7 @@ namespace global {
                 std::cout << monsterB.image1;
                 setColor(15);
             }
-            else if (monsterC.hpFlag)
+            else if (!monsterC.hpFlag)
             {
                 GotoXY(75, 0);
                 printf("[ %d / %d ] \n", monsterC.currentHeart, monsterC.heart);
@@ -353,7 +365,7 @@ namespace global {
 
             DWORD startTick = GetTickCount();
 
-            if (monsterA.hpFlag)
+            if (!monsterA.hpFlag)
             {
                 setColor(12);
                 std::cout << monsterA.image2;
@@ -411,7 +423,7 @@ namespace global {
                 }
             }
 
-            else if (monsterB.hpFlag)
+            else if (!monsterB.hpFlag)
             {
                 setColor(12);
                 std::cout << monsterB.image2;
@@ -470,7 +482,7 @@ namespace global {
                 }
             }
 
-            else if (monsterC.hpFlag)
+            else if (!monsterC.hpFlag)
             {
                 if (playerRand == 0) {//플레이어 크리티컬
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
@@ -535,7 +547,7 @@ namespace global {
         {
             DWORD startTick = GetTickCount();
 
-            if (monsterA.hpFlag)
+            if (!monsterA.hpFlag)
             {
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한
@@ -576,7 +588,7 @@ namespace global {
                     printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
                 }
             }
-            else if (monsterB.hpFlag)
+            else if (!monsterB.hpFlag)
             {
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한
@@ -616,7 +628,7 @@ namespace global {
                     printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
                 }
             }
-            else if (monsterC.hpFlag)
+            else if (!monsterC.hpFlag)
             {
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
                 else player.currentHeart += player.heart / 5;//체력회복량을 최대체력으로 제한

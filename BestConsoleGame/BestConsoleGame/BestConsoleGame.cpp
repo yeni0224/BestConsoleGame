@@ -81,7 +81,7 @@ namespace global
     std::vector<Quest> questList = {
    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
    { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-   { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, true,  false},
+   { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, false,  true},
    { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
    { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 0, 5 },
    { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 0, 5 },
@@ -940,7 +940,7 @@ void DrawOptionRect() {
 
 
 void DrawMonster_info() {
-    if (global::battle::monsterA.hpFlag) {
+    if (!global::battle::monsterA.hpFlag) {
         GotoXY(95, 2);
         printf("MonsterA : 슬라임");
 
@@ -966,7 +966,7 @@ void DrawMonster_info() {
         GotoXY(95, 11);
         printf("HP : %d , ATK : %d", global::battle::monsterA.heart, global::battle::monsterA.attack);
     }
-    else if (global::battle::monsterB.hpFlag) {
+    else if (!global::battle::monsterB.hpFlag) {
         GotoXY(95, 2);
         printf("MonsterB : 스켈레톤");
 
@@ -992,7 +992,7 @@ void DrawMonster_info() {
         GotoXY(95, 11);
         printf("HP : %d , ATK : %d", global::battle::monsterB.heart, global::battle::monsterB.attack);
     }
-    else if (global::battle::monsterC.hpFlag) {
+    else if (!global::battle::monsterC.hpFlag) {
         GotoXY(100, 2);
         printf("BOSS : 마녀");
 
