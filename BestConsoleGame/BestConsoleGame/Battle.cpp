@@ -79,6 +79,7 @@ namespace global {
 
         void BattleManager()
         {
+            //DWORD startTick = GetTickCount();
             player.heart = global::max_hp;
             player.currentHeart = global::hp;
             player.attack = global::atk;
@@ -96,6 +97,7 @@ namespace global {
                 if (player.currentHeart <= 0)
                 {
                     system("cls");
+                    ShowQuestMessage("플레이어가 사망했습니다."); // 메시지 출력 시간 조절 함수
                     startGame();
                     break;
                 }
