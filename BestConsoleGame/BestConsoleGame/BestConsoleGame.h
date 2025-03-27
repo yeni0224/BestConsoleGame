@@ -1,9 +1,10 @@
 #pragma once
 
 namespace global {
+    extern int gold;
     extern int hp;
     extern int atk;
-    extern int max_hp;
+    extern int max_hp;    
 }
 
 void startGame();

@@ -85,7 +85,8 @@ namespace global {
         bool WasEnterKeyPressed = false;
         bool poisonFlag = false;
         int count = 0;
-        int x = 79;
+        int x = 80;
+        int y = 27;
         int pHp = 0;
         int mHp = 0;
 
@@ -106,7 +107,51 @@ namespace global {
             monsterC.currentHeart = monsterC.heart;
             pHp = player.currentHeart;
             mHp = monsterA.currentHeart;
-
+            for (int x = 1; x < 49; x += 2) {
+                GotoXY(x, 0);
+                printf(" -");
+            }
+            for (int y = 1; y < 4; y++)
+            {
+                for (int x = 0; x < 51; x += 50)
+                {
+                    GotoXY(x, y);
+                    printf("|");
+                }
+            }
+            for (int x = 1; x < 49; x += 2) {
+                GotoXY(x, 4);
+                printf(" -");
+            }
+            for (int y = 0; y < 5; y += 4)
+            {
+                for (int x = 0; x < 51; x += 50)
+                {
+                    GotoXY(x, y);
+                    printf("+");
+                }
+            }
+            ///////////////////////////////////////
+            for (int x = 80; x < 96; x++) {
+                GotoXY(x, 26);
+                printf("-");
+            }
+            for (int x = 79; x < 97; x+=17) {
+                GotoXY(x, 27);
+                printf("|");
+            }
+            for (int x = 80; x < 96; x ++) {
+                GotoXY(x, 28);
+                printf("-");
+            }
+            for (int y = 26; y <= 28; y +=2)
+            {
+                for (int x = 79; x < 97; x += 17)
+                {
+                    GotoXY(x, y);
+                    printf("+");
+                }
+            }
             BattleText1();
             while (1)
             {
@@ -152,7 +197,7 @@ namespace global {
         }
         void BattleText1()
         {
-            GotoXY(80, 28);
+            GotoXY(81, 27);
             printf("공격");
             printf(" 회복");
             printf(" 도망");
@@ -247,12 +292,18 @@ namespace global {
                 std::cout << ":::::::::::::::::::::::::::::::::::::::::--:::::::::::::::::::::::::::::::-:::::::::::::::::::::::::::::::::::::::::::::\n";
                 std::cout << "                                                 엔터 입력 시 다시시작                                                 ";
                 clearflag = true;
+
                 monsterA.hpFlag = false;
                 monsterB.hpFlag = false;
                 monsterC.hpFlag = false;
                 monsterA.currentHeart = monsterA.heart;
                 monsterB.currentHeart = monsterB.heart;
                 monsterC.currentHeart = monsterC.heart;
+                global::gold = 0;
+                global::atk = 10;
+                global::hp = 100;
+                global::max_hp = 100;
+                
             }
 
         }
@@ -295,32 +346,15 @@ namespace global {
                 int playerRand = rand() % 4; // (0 ~ 3)
                 int monsterRand = rand() % 7; // (0 ~ 6)
                 int bossRand = rand() % 10; // (0 ~ 9)
-                for (int x = 1; x < 49; x += 2) {
-                    GotoXY(x, 0);
-                    printf(" -");
-                }
-                for (int y = 1; y < 4; y++)
-                {
-                    for (int x = 0; x < 51; x += 50)
-                    {
-                        GotoXY(x, y);
-                        printf("|");
-                    }
-                }
-                for (int x = 1; x < 49; x += 2) {
-                    GotoXY(x, 4);
-                    printf(" -");
-                }
-                for (int y = 0; y < 5; y += 4)
-                {
-                    for (int x = 0; x < 51; x += 50)
-                    {
-                        GotoXY(x, y);
-                        printf("+");
-                    }
-                }
+                GotoXY(x, y);
+                global::input::UpdateInput();
+                nowTick = GetTickCount64();
+                ULONGLONG elapsedTick = nowTick - prevTick;
+                
                 if (clearflag)
                 {
+                    x = 45;
+                    y = 20;
                     if (global::input::IsEnterKeyOn())
                     {
                         if (!WasEnterKeyPressed)
@@ -337,15 +371,10 @@ namespace global {
                         WasEnterKeyPressed = false;
                     }
                 }
-                global::input::UpdateInput();
-                nowTick = GetTickCount64();
-                ULONGLONG elapsedTick = nowTick - prevTick;
-                GotoXY(x, 28);
-
 
                 if (elapsedTick >= 500 && elapsedTick <= 999)
                 {
-                    GotoXY(x, 28);
+                    GotoXY(x, y);
                     std::cout << symbols[index] << std::flush; // 화면 덮어쓰기
                     index = 1 - index; // 0과 1을 번갈아가며 변경
                     prevTick = nowTick;
@@ -357,10 +386,10 @@ namespace global {
                     {
                         global::input::Set(global::input::LEFT_KEY_INDEX, false);
                         WasLeftKeyPressed = true;
-                        GotoXY(x, 28);
+                        GotoXY(x, y);
                         std::cout << symbols[1];
 
-                        if (x > 79) x -= 5;
+                        if (x > 80) x -= 5;
                     }
                 }
                 else
@@ -374,10 +403,10 @@ namespace global {
                     {
                         global::input::Set(global::input::RIGHT_KEY_INDEX, false);
                         WasRightKeyPressed = true;
-                        GotoXY(x, 28);
+                        GotoXY(x, y);
                         std::cout << symbols[1];
 
-                        if (x < 89) x += 5;
+                        if (x < 90) x += 5;
                     }
                 }
                 else
@@ -399,7 +428,7 @@ namespace global {
                                 printf(" ");
                             }
                         }
-                        if (x == 89) // 도망
+                        if (x == 90) // 도망
                         {
                             global::hp = player.currentHeart;//도망 시 현재hp가져가도록
                             system("cls");//화면 초기화
@@ -411,7 +440,7 @@ namespace global {
                             
                             break;
                         }
-                        if (x == 79)
+                        if (x == 80)
                         {
                             patternAttack(playerRand, monsterRand, bossRand, charging); // 공격
                             GotoXY(5, 5);
@@ -419,7 +448,7 @@ namespace global {
                         }
                         global::input::Set(global::input::Space_KEY_INDEX, false);
                         WasSpaceKeyPressed = true;
-                        if (x == 84) // 회복
+                        if (x == 85) // 회복
                         {
                             patternRecovery(playerRand, monsterRand, bossRand, charging);
                             break;
@@ -522,13 +551,13 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack * 2;
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2);
                     }
 
                 }
@@ -536,13 +565,13 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack);
                     }
                 }
                 else {
@@ -584,41 +613,41 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack * 2;
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2);
                     }
 
                 }
-                else if (bossRand < 7) {
+                else if (bossRand < 6) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack* charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack* charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack);
                     }
                 }
-                else if(bossRand < 9){
+                else if(bossRand < 7){
                     charging += 1;
                     GotoXY(1, 2);
                     printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
                 }
-                else{
+                else if (bossRand < 8) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack/2 * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack/2 * charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack/2 * charging);
                         GotoXY(1, 3);
-                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.currentHeart/25);
+                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.heart /25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
@@ -631,9 +660,9 @@ namespace global {
                     else {
                         player.currentHeart -= monsterC.attack/2;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack/2);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack/2);
                         GotoXY(1, 3);
-                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.currentHeart / 25);
+                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.heart / 25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
@@ -642,6 +671,9 @@ namespace global {
                         poisonFlag = true;
                         count = 3;
                     }
+                }
+                else {
+
                 }
             }
             //startTick = GetTickCount();
@@ -709,13 +741,13 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack * 2;
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2);
                     }
 
                 }
@@ -723,13 +755,13 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterB.attack * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterB.attack;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack);
                     }
                 }
                 else {
@@ -752,41 +784,41 @@ namespace global {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack * 2;
                         GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
+                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2);
                     }
 
                 }
-                else if (bossRand < 3) {
+                else if (bossRand < 6) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * charging);
                         charging = 1;
                     }
                     else {
                         player.currentHeart -= monsterC.attack;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack);
                     }
                 }
-                else if (bossRand < 4) {
+                else if (bossRand < 7) {
                     charging += 1;
                     GotoXY(1, 2);
                     printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
                 }
-                else {
+                else if (bossRand < 8) {
                     if (charging > 1) {
                         player.currentHeart -= monsterC.attack / 2 * charging;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack / 2 * charging);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2 * charging);
                         GotoXY(1, 3);
-                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.currentHeart / 25);
+                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.heart / 25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
@@ -799,9 +831,9 @@ namespace global {
                     else {
                         player.currentHeart -= monsterC.attack / 2;
                         GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack / 2);
+                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2);
                         GotoXY(1, 3);
-                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.currentHeart / 25);
+                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.heart / 25);
                         setColor(13);
                         std::cout << monsterC.image2;
                         setColor(15);
@@ -810,6 +842,9 @@ namespace global {
                         poisonFlag = true;
                         count = 3;
                     }
+                }
+                else {
+
                 }
             }
         }
