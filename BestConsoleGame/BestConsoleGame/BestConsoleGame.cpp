@@ -86,13 +86,13 @@ namespace global
 
 
             // 효과음 로드 (한 번만 재생)
-            FMOD_System_CreateSound(system, "Buy50G.wav", FMOD_DEFAULT, 0, &sfx[0]);
-            FMOD_System_CreateSound(system, "CoinGet.wav", FMOD_DEFAULT, 0, &sfx[1]);
-            FMOD_System_CreateSound(system, "HealOnBed2.wav", FMOD_DEFAULT, 0, &sfx[2]);
-            FMOD_System_CreateSound(system, "Mining3.wav", FMOD_DEFAULT, 0, &sfx[3]);
-            FMOD_System_CreateSound(system, "PlayerAttack.mp3", FMOD_DEFAULT, 0, &sfx[4]);
-            FMOD_System_CreateSound(system, "StrengthFailed.wav", FMOD_DEFAULT, 0, &sfx[5]);
-            FMOD_System_CreateSound(system, "StrengthSuccess.wav", FMOD_DEFAULT, 0, &sfx[6]);
+            FMOD_System_CreateSound(system, "Buy50G.wav", FMOD_DEFAULT, 0, &sfx[0]); // 오토 머니 구매시 효과음
+            FMOD_System_CreateSound(system, "CoinGet.wav", FMOD_DEFAULT, 0, &sfx[1]); // 코인 모아서 집가면 나오는 효과음 
+            FMOD_System_CreateSound(system, "HealOnBed2.wav", FMOD_DEFAULT, 0, &sfx[2]); // 침대 근처 체력회복 효과음 + 퀘스트 수락 및 확인 효과음
+            FMOD_System_CreateSound(system, "Mining3.wav", FMOD_DEFAULT, 0, &sfx[3]); // 금광 효과음 << 너무길어서 소리가 겹침
+            FMOD_System_CreateSound(system, "PlayerAttack.mp3", FMOD_DEFAULT, 0, &sfx[4]); // 배틀시 공격 효과음
+            FMOD_System_CreateSound(system, "StrengthFailed.wav", FMOD_DEFAULT, 0, &sfx[5]); // 강화 실패 효과음
+            FMOD_System_CreateSound(system, "StrengthSuccess.wav", FMOD_DEFAULT, 0, &sfx[6]); // 강화 성공 효과음
         }
 
         // 배경음 재생
@@ -170,14 +170,7 @@ namespace global
     const std::vector<std::string> playerIconOptions = { ">", "★", "☆", "♀", "∵", "■", "д" };
     std::string playerIcon = ">"; // 기본값도 string으로 바꿔줘야 함
 
-    int gold = 500;
-    int hp = 10;
-    int max_hp = 100;
-    int atk = 10;
 
-    int up_atk = 5;
-    int up_hp = 50;
-    int heal_hp = 10;
 
     void setatk(int value) { atk = value; }
     int getatk() { return atk; }
@@ -249,6 +242,15 @@ namespace global
     bool isQuestMessageVisible = false; // 메시지 보이는지 체크
     bool gamestartflag = false;
     bool gametutorialflag = false;
+
+    int gold = 0;
+    int hp = 100;
+    int max_hp = 100;
+    int atk = 10;
+
+    int up_atk = 5;
+    int up_hp = 50;
+    int heal_hp = 10;
 
     SMALL_RECT goldZone = { 45, 21, 79, 27 }; // 골드존 영역 (좌, 상, 우, 하)
     SMALL_RECT homeZone = { 2, 2, 29, 27 }; // 집 영역
@@ -336,7 +338,7 @@ void UpdateAttackUpgrade() {
                     GotoXY(global::msg.x, global::msg.y);
 
                     global::atkCounter++;
-                    
+
                     UpdateQuestProgress_atkupgrade();
                     UpdateQuestProgress_atkupgrade2();
                     UpdateQuestProgress_atkupgrade3();
@@ -775,6 +777,7 @@ bool IsInsideZone(COORD pos, SMALL_RECT zone) {
 }
 
 void HealingHP() {
+    global::heal_hp = 10 + (5 * global::hpCounter);
     if (IsInsideZone(global::curPlayerPos, global::HealingZone)) { // 힐링존 내부 확인
         global::isHealing = true; // 힐링 상태 활성화
     }
@@ -790,11 +793,11 @@ void HealingHP() {
             if (global::hp < global::max_hp) { // 현재 hp가 최대 hp보다 낮을 시
                 global::hp += global::heal_hp;
                 if (global::hp > global::max_hp) {
-                    
+
                     global::hp = global::max_hp;
                 }
                 GotoXY(global::msg.x, global::msg.y);
-                printf("체력 회복중 ^~^  "); 
+                printf("체력 회복중 ^~^  ");
                 global::GameSound::PlaySFX(2);
             }
             else {
@@ -1139,20 +1142,22 @@ void DrawMonster_info() {
         GotoXY(95, 2);
         printf("MonsterB : 스켈레톤");
 
-        COORD start = { 91, 4 };
+        COORD start = { 93, 3 };
 
         std::string art[] = {
-            "          ▒▒▒▒▒▒          ",
-            "        ▒▒      ▒▒        ",
-            "      ▒▒          ▒▒      ",
-            "    ▒▒              ▒▒    ",
-            "  ▒▒   ●         ●    ▒▒  ",
-            "   ▒▒     ______     ▒▒   ",
-            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
+            "       ▒▒▒▒▒▒▒▒▒▒▒      ",
+            "      ▒           ▒     ",
+            "     ▒   |\\   /|   ▒   ",
+            "     ▒   |_\\ /_|   ▒   ",
+            "      ▒           ▒     ",
+            "       ▒         ▒      ",
+            "       ▒|▒|▒|▒|▒|▒      ",
+            "        ▒▒▒▒▒▒▒▒▒       "
+
         };
 
         setColor(8);
-        for (int i = 0; i < 7; ++i) {
+        for (int i = 0; i < 8; ++i) {
             COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
             SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
             std::wcout << art[i].c_str();
@@ -1165,20 +1170,21 @@ void DrawMonster_info() {
         GotoXY(100, 2);
         printf("BOSS : 마녀");
 
-        COORD start = { 91, 4 };
+        COORD start = { 91, 3 };
 
         std::string art[] = {
-            "          ▒▒▒▒▒▒          ",
-            "        ▒▒      ▒▒        ",
-            "      ▒▒          ▒▒      ",
-            "    ▒▒              ▒▒    ",
-            "  ▒▒   ●         ●    ▒▒  ",
-            "   ▒▒     ______     ▒▒   ",
-            "     ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒     "
+            "            ▒▒            ",
+            "           ▒  ▒           ",
+            "          ▒    ▒        ",
+            "        ▒▒      ▒▒      ",
+            "       ▒          ▒    ",
+            "      ▒     ★      ▒  ",
+            "     ▒              ▒   ",
+            " ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒"
         };
 
-        setColor(10);
-        for (int i = 0; i < 7; ++i) {
+        setColor(4);
+        for (int i = 0; i < 8; ++i) {
             COORD pos = { start.X, static_cast<SHORT>(start.Y + i) };
             SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
             std::wcout << art[i].c_str();
@@ -1188,7 +1194,6 @@ void DrawMonster_info() {
         printf("HP : %d , ATK : %d", global::battle::monsterC.heart, global::battle::monsterC.attack);
     }
 }
-
 
 
 
