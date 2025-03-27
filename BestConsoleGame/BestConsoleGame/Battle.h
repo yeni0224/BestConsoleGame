@@ -21,30 +21,14 @@ namespace global {
 			int heart;
 			int currentHeart;
 			int attack;
+			bool hpFlag;
+
 			const char* image1;
 			const char* image2;
 
-		}MONSTERA;
+		}MONSTER;
 
-		typedef struct
-		{
-			int heart;
-			int currentHeart;
-			int attack;
-			const char* image1;
-			const char* image2;
-
-		}MONSTERB;
-
-		typedef struct
-		{
-			int heart;
-			int currentHeart;
-			int attack;
-			const char* image1;
-			const char* image2;
-
-		}MONSTERC;
+		
 
 
 		void Reset();

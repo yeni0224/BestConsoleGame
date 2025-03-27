@@ -9,9 +9,9 @@
 namespace global {
     namespace battle {
         PLAYER player;
-        MONSTERA monsterA;
-        MONSTERB monsterB;
-        MONSTERC monsterC;
+        MONSTER monsterA;
+        MONSTER monsterB;
+        MONSTER monsterC;
         bool flag = false;
         bool clearflag = false;
         bool WasLeftKeyPressed = false;
@@ -43,6 +43,7 @@ namespace global {
             monsterA.heart = 100;
             monsterA.currentHeart = monsterA.heart;
             monsterA.attack = 10;
+            monsterA.hpFlag = true;
 
             monsterA.image1 = "\033[4;65H          @@@@@@@@@@@@                     \n\033[5;65H      @@%%------------%%@                  \n\033[6;65H    @%=----::...::::-----#%                \n\033[7;65H   %+---===::....::::------*@              \n\033[8;65H  @=--======*##**=:::--------*@           \n\033[9;65H @@=%%%===%%%%######====------*@          \n\033[10;65H @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H @--===-#=#*==+*####==++===-------+@      \n\033[12;65H@--====##-+%+==========-==----------*@    \n\033[13;65H@---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n";
             monsterA.image2 = "\033[4;65H                  @@@@@@@@@@@@                     \n\033[5;65H             @@%%------------%%@                  \n\033[6;65H          @%=----::...::::-----#%                \n\033[7;65H        %+---===::....::::------*@              \n\033[8;65H       @=--======*##**=:::--------*@           \n\033[9;65H     @@=%%%===%%%%######====------*@          \n\033[10;65H    @-=#%%%:=+#%%%#=####+====------*@        \n\033[11;65H    @--===-#=#*==+*####==++===-------+@      \n\033[12;65H  @--====##-+%+==========-==----------*@    \n\033[13;65H @---===#%%+%+=#:=========-::::::------#   \n\033[14;65H@--=-===%%+%%=##========-::.::::-------@@ \n\033[15;65H@--=====#%#*%==*========-:..::----------@ \n\033[16;65H@--:::-------------::----:::..::---------@ \n\033[17;65H@-+++++++++++++++++++++++++::::::++++++--@ \n\033[18;65H  @+++++++++++++++++++++++++++++++++++++@ \n\033[19;65H     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   \n";
@@ -53,6 +54,8 @@ namespace global {
             monsterB.heart = 100;
             monsterB.currentHeart = monsterB.heart;
             monsterB.attack = 10;
+            monsterB.hpFlag = true;
+
             monsterB.image1 = "\033[4;70H        -*+#*#@@#%##+==+==:       \n\033[5;70H    -=+=*#%%#%####%%%%@@#*#**=    \n\033[6;70H  -==%%=:                +*%%@+=  \n\033[7;70H:-@@%                      =@@*##:\n\033[8;70H==+=:=--:-:--::...:.-=---::.:-*###\n\033[9;70H=*+=...::-==:..=--...----:..-=+#%= \n\033[10;70H-=** %@@@@@@%+= **++@@@@@#%#:= :%=\n\033[11;70H:**=-%%@@@@@@@%  -=@@@@@@@@@*- -#:\n\033[12;70H:*+: %@@@@@@@%---+=@@@@@@@@@:: *= \n\033[13;70H.+:   #%@@@#-==@%%%-+@@@%#+-: =+  \n\033[14;70H:==-: --::==: @@#@@*= :-    :-=+  \n\033[15;70H  =+--= =:    @@@@@+++*===-::*+:  \n\033[16;70H   :#@%+ :    #@@@*+=--- *=#%:    \n\033[17;70H    :+ @@+=  :@@@*.++*+%@==       \n\033[18;70H     ==-*%*+-===--=++##*@+-=       \n\033[19;70H      += =#%*#-=-=*+**+@+:-=       \n\033[20;70H      :=-==#%%=#=+-*@@#:  +       \n\033[21;70H       :=-==-:::-+:     :+        \n\033[22;70H         =:--    :-:   ==         \n\033[23;70H          :+*=+++==+*#-           \n";
             monsterB.image2 = "\033[4;70H        -*+#*#@@#%##+==+==:       \n\033[5;70H    -=+=*#%%#%####%%%%@@#*#**=    \n\033[6;70H  -==%%=:                +*%%@+=  \n\033[7;70H:-@@%                      =@@*##:\n\033[8;70H==+=:=--:-:--::...:.-=---::.:-*###\n\033[9;70H=*+=...::-==:..=--...----:..-=+#%= \n\033[10;70H-=** %@@@@@@%+= **++@@@@@#%#:= :%=\n\033[11;70H:**=-%%@@@@@@@%  -=@@@@@@@@@*- -#:\n\033[12;70H:*+: %@@@@@@@%---+=@@@@@@@@@:: *= \n\033[13;70H.+:   #%@@@#-==@%%%-+@@@%#+-: =+  \n\033[14;70H:==-: --::==: @@#@@*= :-    :-=+  \n\033[15;70H  =+--= =:    @@@@@+++*===-::*+:  \n\033[16;70H   :#@%+ :    #@@@*+=--- *=#%:    \n\033[17;70H    :+ @@+=  :@@@*.++*+%@==       \n\033[18;70H     ==-*%*+-===--=++##*@+-=       \n\033[19;70H      += =#%*#-=-=*+**+@+:-=       \n\033[20;70H      :=-==#%%=#=+-*@@#:  +       \n\033[21;70H       :=-==-:::-+:     :+        \n\033[22;70H         =:--    :-:   ==         \n\033[23;70H          :+*=+++==+*#-           \n";
         }
@@ -62,6 +65,8 @@ namespace global {
             monsterC.heart = 100;
             monsterC.currentHeart = monsterC.heart;
             monsterC.attack = 10;
+            monsterC.hpFlag = true;
+
             monsterC.image1 = 
                 "\033[4;67H   -%%-::-#@=.    .*:.        @@+++++*@@%=.\n"
                 "\033[5;67H .=@*-:::::*@+.             .@@+++++*+++*%@@+\n"
@@ -92,11 +97,18 @@ namespace global {
             BattleText1();
             while (1)
             {
+                if (monsterA.currentHeart < 0)monsterA.hpFlag = false;
+                if (monsterB.currentHeart < 0)monsterB.hpFlag = false;
+                if (monsterC.currentHeart < 0)monsterC.hpFlag = false;
+
                 if (player.currentHeart <= 0)
                 {
                     monsterA.currentHeart = monsterA.heart;
                     monsterB.currentHeart = monsterB.heart;
                     monsterC.currentHeart = monsterC.heart;
+                    monsterA.hpFlag = true;
+                    monsterB.hpFlag = true;
+                    monsterC.hpFlag = true;
                     system("cls");
                     startGame();
                     break;
@@ -105,8 +117,6 @@ namespace global {
                 Battle2();
                 BattleText2();
                 
-                
-
                 if (flag)
                 {
                     flag = false;
@@ -117,9 +127,7 @@ namespace global {
                     clearflag = false;
                     break;
                 }
-
             }
-
         }
         void BattleText1()
         {
@@ -243,6 +251,9 @@ namespace global {
                             monsterA.currentHeart = monsterA.heart;
                             monsterB.currentHeart = monsterB.heart;
                             monsterC.currentHeart = monsterC.heart;
+                            monsterA.hpFlag = true;
+                            monsterB.hpFlag = true;
+                            monsterC.hpFlag = true;
                             system("cls");
                             startGame();
                             break;
@@ -321,6 +332,9 @@ namespace global {
                             monsterA.currentHeart = monsterA.heart;
                             monsterB.currentHeart = monsterB.heart;
                             monsterC.currentHeart = monsterC.heart;
+                            monsterA.hpFlag = true;
+                            monsterB.hpFlag = true;
+                            monsterC.hpFlag = true;
                             system("cls");//화면 초기화
                             startGame();//로비화면 출력
                             flag = true;//전체 반복문 나가는 flag
