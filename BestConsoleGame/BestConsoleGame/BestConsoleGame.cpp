@@ -81,11 +81,11 @@ namespace global
     std::vector<Quest> questList = {
    { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
    { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
-   { "몬스터 처치", "몬스터A 처치", Quest::LOCKED, 0,  true},
+   { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, true,  false},
    { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
    { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 0, 5 },
    { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 0, 5 },
-   { "몬스터 처치2", "몬스터B 처치", Quest::LOCKED, 0,  true},
+   { "몬스터B 처치", "몬스터B 처치", Quest::LOCKED, 0,  true},
    { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 0, 8 },
    { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 0, 8 }
     };
@@ -486,7 +486,7 @@ void CheckAcceptedQuest() {
     }
 }
 
-void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트
+void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트  // 1번 퀘스트 골드 수집
 {
     for (auto& q : global::questList)
     {
@@ -505,13 +505,13 @@ void UpdateQuestProgress_GoldMined() // 골드20원 수집 퀘스트
     }
 }
 
-void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행
+void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행 // 2번 퀘스트 공격강화
 {
     for (auto& q : global::questList)
     {
-        if (q.name == "ATK 강화" && q.state == Quest::IN_PROGRESS)
+        if (q.name == "ATK 강화 1" && q.state == Quest::IN_PROGRESS)
         {
-            q.current += 1; // 공격력 강화 1회 성공 → 진행도 1 증가
+            q.current = global::atkCounter; // 공격력 강화 1회 성공 = 현재 강화 정도 확인
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
@@ -524,13 +524,32 @@ void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행
     }
 }
 
-void UpdateQuestProgress_hpupgrade() // 공격력 강화 성공 시 진행
+void UpdateQuestProgress_monsterAclear() // 몬스터 A처치 시 진행 // 3번 퀘스트 공격강화
 {
     for (auto& q : global::questList)
     {
-        if (q.name == "HP 강화" && q.state == Quest::IN_PROGRESS)
+        if (q.name == "몬스터A 처치" && q.state == Quest::IN_PROGRESS)
         {
-            q.current += 1; // 공격력 강화 1회 성공 → 진행도 1 증가
+            q.current = global::battle::monsterA.hpFlag; // 몬스터 A 처치 성공 
+
+            if (q.IsComplete()) {
+                q.state = Quest::COMPLETE;
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+
+                global::gold += 50;
+                global::selectedQuestIndex++;
+            }
+        }
+    }
+}
+
+void UpdateQuestProgress_hpupgrade() // 체력 강화 성공 시 진행 // 4번 퀘스트
+{
+    for (auto& q : global::questList)
+    {
+        if (q.name == "HP 강화 1" && q.state == Quest::IN_PROGRESS)
+        {
+            q.current = global::hpCounter; // 체력 강화 1회 성공 → 진행도 1 증가
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
