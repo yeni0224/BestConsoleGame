@@ -155,7 +155,7 @@ namespace global
 
 
     std::vector<Quest> questList = {
-   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
+   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
    { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
    { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, false,  true},
    { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
@@ -225,9 +225,9 @@ namespace global
     // 골드 시스템 추가
     ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
     ULONGLONG goldTimer = 0; // 골드 증가 타이머
-  
 
-   
+
+
     int goldCounter = 0;      // 골드 카운트 (0~10)
     int atkCounter = 0;       // 공격력 업그레이드 카운터 (0~10)
     int hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
@@ -240,6 +240,27 @@ namespace global
         hpCounter = 0;        // 체력 업그레이드 카운터 (0~10)
         selectedQuestIndex = 0; // 0번 퀘스트 수락 예정
         purchaseCount = 0;  // 구매 횟수 (최대 3회)
+
+        global::questList[0].state = Quest::LOCKED;
+        global::questList[1].state = Quest::LOCKED;
+        global::questList[2].state = Quest::LOCKED;
+        global::questList[3].state = Quest::LOCKED;
+        global::questList[4].state = Quest::LOCKED;
+        global::questList[5].state = Quest::LOCKED;
+        global::questList[6].state = Quest::LOCKED;
+        global::questList[7].state = Quest::LOCKED;
+        global::questList[8].state = Quest::LOCKED;
+
+        global::questList[0].current = 0;
+        global::questList[1].current = 0;
+        global::questList[2].current = false;
+        global::questList[3].current = 0;
+        global::questList[4].current = 3;
+        global::questList[5].current = 3;
+        global::questList[6].current = false;
+        global::questList[7].current = 5;
+        global::questList[8].current = 5;
+
     }
 
     bool isMining = false;    // 채굴 상태 여부
@@ -253,7 +274,7 @@ namespace global
     bool gamestartflag = false;
     bool gametutorialflag = false;
 
-    int gold = 500;
+    int gold = 0;
     int hp = 100;
     int max_hp = 100;
     int atk = 10;
@@ -1760,3 +1781,4 @@ bool IsGameRun() // 게임 루프
 {
     return true;
 }
+
