@@ -220,7 +220,7 @@ namespace global
     SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
     SMALL_RECT playerMovableRect = { 5, 5, 30, 30 }; // 플레이어 이동 가능 영역
 
-    const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
+    const int playerMoveSpeed = 50; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
     ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
@@ -485,7 +485,7 @@ void AutoMoneyBuy() {
 void AutoMoney() {
     static ULONGLONG autoGoldTime = GetTickCount64();
 
-    if (GetTickCount64() - autoGoldTime >= 3000) { // 3초(3000ms)마다 증가
+    if (GetTickCount64() - autoGoldTime >= 4000) { // 4초(4000ms)마다 증가
         global::gold += global::purchaseCount * 1;
         autoGoldTime = GetTickCount64(); // 타이머 초기화
     }
@@ -577,7 +577,7 @@ void CheckAcceptedQuest() {
             bool found = false;
             for (const auto& q : global::questList) {
                 if (q.state == Quest::IN_PROGRESS) {
-                    std::string msg = "퀘스트: " + q.description + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")            ";
+                    std::string msg = "퀘스트: " + q.description + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")          ";
                     global::GameSound::PlaySFX(2);
                     ShowQuestMessage(msg); // 3초간 중앙 출력
                     found = true;
@@ -631,7 +631,7 @@ void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행 // 2
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -650,7 +650,7 @@ void UpdateQuestProgress_monsterAclear() // 몬스터 A처치 시 진행 // 3번
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -669,7 +669,7 @@ void UpdateQuestProgress_hpupgrade() // 체력 강화 성공 시 진행 // 4번 
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -688,7 +688,7 @@ void UpdateQuestProgress_atkupgrade2() // 공격력 강화 성공 시 진행 // 
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -707,7 +707,7 @@ void UpdateQuestProgress_hpupgrade2() // 체력 강화 성공 시 진행 // 6번
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -726,7 +726,7 @@ void UpdateQuestProgress_monsterBclear() // 몬스터 B처치 시 진행 // 7번
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -745,7 +745,7 @@ void UpdateQuestProgress_atkupgrade3() // 공격력 강화 성공 시 진행 // 
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -764,7 +764,7 @@ void UpdateQuestProgress_hpupgrade3() // 체력 강화 성공 시 진행 // 6번
                 q.state = Quest::COMPLETE;
                 ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
 
-                global::gold += 50;
+                global::gold += 30;
                 global::selectedQuestIndex++;
             }
         }
@@ -1729,6 +1729,8 @@ void startGame()
     DrawQuestBoard(); // 퀘스트 보드 그리기
     DrawQuestCheck(); // 퀘스트 리스트 그리기
     DrawOptionRect(); //옵션 벽 생성
+    
+    
 
     global::prePlayerPos.X = 10;
     global::prePlayerPos.Y = 20;
@@ -1762,7 +1764,9 @@ int main()
         }
     }
     system("cls");
+    global::playerIcon = "★";
     startGame(); //게임 시작, 기본 화면 구성
+   
 
     while (IsGameRun()) // 게임 루프
     {

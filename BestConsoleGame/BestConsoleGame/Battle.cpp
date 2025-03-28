@@ -204,6 +204,8 @@ namespace global {
                     global::GameSound::StopBGM();
                     startGame();//로비화면 출력
                     global::GameSound::PlayBGM(0);
+                    UpdateQuestProgress_monsterAclear();
+                    UpdateQuestProgress_monsterBclear();
                     break;
                 }
 
