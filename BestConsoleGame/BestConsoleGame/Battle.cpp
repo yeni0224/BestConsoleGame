@@ -89,6 +89,7 @@ namespace global {
         int y = 27;
         int pHp = 0;
         int mHp = 0;
+        int charging = 1;
 
 
         void Reset()
@@ -159,18 +160,28 @@ namespace global {
             while (1)
             {
                 if (monsterA.currentHeart <= 0 && player.currentHeart > 0) {
+                    GotoXY(1, 1);
+                    for (int i = 0; i < 49; i++) printf(" ");
+                    GotoXY(1, 2);
+                    for (int i = 0; i < 49; i++) printf(" ");
                     monsterA.hpFlag = true;
-                    
+                    charging = 1;
                 }
                 
                 if (monsterB.currentHeart <= 0 && player.currentHeart > 0) {
+                    GotoXY(1, 1);
+                    for (int i = 0; i < 49; i++) printf(" ");
+                    GotoXY(1, 2);
+                    for (int i = 0; i < 49; i++) printf(" ");
                     monsterB.hpFlag = true;
+                    charging = 1;
                 }
                 
                     
                 if (monsterC.currentHeart <= 0 && player.currentHeart > 0){
-                        monsterC.hpFlag = true;
-                        global::gamestartflag = false;
+                    monsterC.hpFlag = true;
+                    global::gamestartflag = false;
+                    charging = 1;
                 }
             
                     
@@ -316,7 +327,7 @@ namespace global {
         }
         void patternAttack(int playerRand, int monsterRand, int bossRand, int& charging);
         void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging);
-        int charging = 1;
+        
         void imageClear()
         {
             for (int y = 4; y <= 25; ++y) {
