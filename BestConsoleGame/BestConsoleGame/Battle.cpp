@@ -92,6 +92,9 @@ namespace global {
         int mHp = 0;
         int charging = 1;
 
+        void patternAttack(int playerRand, int monsterRand, int bossRand, int& charging);
+        void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging);
+
 
         void Reset()
         {
@@ -103,7 +106,7 @@ namespace global {
 
         void BattleManager()
         {
-            //DWORD startTick = GetTickCount();
+            
             player.heart = global::max_hp;
             player.currentHeart = global::hp;
             player.attack = global::atk;
@@ -136,7 +139,7 @@ namespace global {
                     printf("+");
                 }
             }
-            ///////////////////////////////////////
+            
             for (int x = 80; x < 96; x++) {
                 GotoXY(x, 26);
                 printf("-");
@@ -235,7 +238,7 @@ namespace global {
 
         void Battle1()// 플레이어 이미지 출력
         {
-            DWORD startTick = GetTickCount();
+            DWORD startTick = GetTickCount64();
 
             GotoXY(10, 7);
             printf("[ %d / %d ] \n", player.currentHeart, player.heart);
@@ -248,7 +251,7 @@ namespace global {
             {
                 setColor(11); std::cout << player.image; setColor(15);
             }
-            while (GetTickCount() - startTick < 500) {}
+            while (GetTickCount64() - startTick < 500) {}
 
 
             pHp = player.currentHeart;
@@ -265,7 +268,7 @@ namespace global {
         void Battle2() // 몬스터 이미지 출력
         {
             global::input::UpdateInput();
-            DWORD startTick = GetTickCount();
+            DWORD startTick = GetTickCount64();
 
             if (!monsterA.hpFlag)
             {
@@ -275,7 +278,7 @@ namespace global {
                 {
                     setColor(12); std::cout << monsterA.image2; setColor(15);
                 }
-                while (GetTickCount() - startTick < 500) {}
+                while (GetTickCount64() - startTick < 500) {}
                 setColor(10); std::cout << monsterA.image1; setColor(15);
 
             }
@@ -287,7 +290,7 @@ namespace global {
                 {
                     setColor(12); std::cout << monsterB.image2; setColor(15);
                 }
-                while (GetTickCount() - startTick < 500) {}
+                while (GetTickCount64() - startTick < 500) {}
                 setColor(8); std::cout << monsterB.image1; setColor(15);
             }
             else if (!monsterC.hpFlag)
@@ -298,7 +301,7 @@ namespace global {
                 {
                     setColor(12); std::cout << monsterC.image1; setColor(15);
                 }
-                while (GetTickCount() - startTick < 500) {}
+                while (GetTickCount64() - startTick < 500) {}
                 setColor(13); std::cout << monsterC.image1; setColor(15);
             }
             else
@@ -337,8 +340,7 @@ namespace global {
             }
 
         }
-        void patternAttack(int playerRand, int monsterRand, int bossRand, int& charging);
-        void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging);
+        
 
         void imageClear()
         {
@@ -688,10 +690,7 @@ namespace global {
                     }
                 }
             }
-            //startTick = GetTickCount();
-            //while (GetTickCount() - startTick < 500) {
-            //    // 게임 루프가 멈추지 않도록 적절한 작업 수행 가능
-            //}
+            
         }
         void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging)
         {

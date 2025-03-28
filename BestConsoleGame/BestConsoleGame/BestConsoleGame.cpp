@@ -204,7 +204,7 @@ namespace global
             currentTime = GetTickCount64();
 
             deltaTime = currentTime - previousTime; // 델타 타임 구하기
-            //std::cout << deltaTime << std::endl;
+            
         }
 
         ULONGLONG GetDeltaTime()
@@ -334,11 +334,9 @@ void Render()
 
     printf("주머니 : %d  현재 골드: %d  체력 : %d / %d  공격력 : %d ", global::goldCounter, global::gold, global::hp, global::max_hp, global::atk);
 
-    GotoXY(30, 0);
-    printf("Player Position (%d, %d)", global::curPlayerPos.X, global::curPlayerPos.Y);
+    
 
-    //GotoXY(101, 14);
-    //printf("Battle!");
+    
 
 
     if ((global::prePlayerPos.X != global::curPlayerPos.X) || (global::prePlayerPos.Y != global::curPlayerPos.Y))
@@ -629,7 +627,7 @@ void UpdateQuestProgress_atkupgrade() // 공격력 강화 성공 시 진행 // 2
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -648,7 +646,7 @@ void UpdateQuestProgress_monsterAclear() // 몬스터 A처치 시 진행 // 3번
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -667,7 +665,7 @@ void UpdateQuestProgress_hpupgrade() // 체력 강화 성공 시 진행 // 4번 
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -686,7 +684,7 @@ void UpdateQuestProgress_atkupgrade2() // 공격력 강화 성공 시 진행 // 
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -705,7 +703,7 @@ void UpdateQuestProgress_hpupgrade2() // 체력 강화 성공 시 진행 // 6번
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -724,7 +722,7 @@ void UpdateQuestProgress_monsterBclear() // 몬스터 B처치 시 진행 // 7번
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -743,7 +741,7 @@ void UpdateQuestProgress_atkupgrade3() // 공격력 강화 성공 시 진행 // 
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -762,7 +760,7 @@ void UpdateQuestProgress_hpupgrade3() // 체력 강화 성공 시 진행 // 6번
 
             if (q.IsComplete()) {
                 q.state = Quest::COMPLETE;
-                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 50G)");
+                ShowQuestMessage("퀘스트 완료: " + q.name + " (보상 : 30G)");
 
                 global::gold += 30;
                 global::selectedQuestIndex++;
@@ -839,12 +837,12 @@ void HealingHP() {
                 }
                 GotoXY(global::msg.x, global::msg.y);
                 global::GameSound::PlaySFX(2);
-                printf("체력 회복중 ^~^  ");
+                printf("체력 회복중 ^~^      ");
             }
             else {
 
                 GotoXY(global::msg.x, global::msg.y);
-                printf("체력 회복 완료!!  ");
+                printf("체력 회복 완료!!    ");
             }
             healingTime = GetTickCount64(); // 타이머 초기화
         }
@@ -960,7 +958,7 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::UP_KEY_INDEX, false);
         short newY = global::curPlayerPos.Y - 1;
 
-        // 이동하려는 위치의 문자가 ' ' 이면 이동 // getCharAtPosition(global::curPlayerPos.X, newY) != '@'
+        // 이동하려는 위치의 문자가 ' ' 이면 이동 
         if (getCharAtPosition(global::curPlayerPos.X, newY) == ' ') {
             global::curPlayerPos.Y = newY;
         }
@@ -974,7 +972,7 @@ void UpdatePlayerPosition()
     {
         global::input::Set(global::input::DOWN_KEY_INDEX, false);
         short newY = global::curPlayerPos.Y + 1;
-        //getCharAtPosition(global::curPlayerPos.X, newY) != '@'
+        
         if (getCharAtPosition(global::curPlayerPos.X, newY) == ' ') {
             global::curPlayerPos.Y = newY;
         }
@@ -989,7 +987,7 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::LEFT_KEY_INDEX, false);
         short newX = global::curPlayerPos.X - 1;
 
-        //getCharAtPosition(newX, global::curPlayerPos.Y) != '@'
+        
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == ' ') {
             global::curPlayerPos.X = newX;
         }
@@ -1005,7 +1003,7 @@ void UpdatePlayerPosition()
         global::input::Set(global::input::RIGHT_KEY_INDEX, false);
         short newX = global::curPlayerPos.X + 1;
 
-        // getCharAtPosition(newX, global::curPlayerPos.Y) != '@'
+        
         if (getCharAtPosition(newX, global::curPlayerPos.Y) == ' ') {
             global::curPlayerPos.X = newX;
         }
@@ -1062,28 +1060,28 @@ void DrawMovableRect() // 이동불가 영역 표시 = 벽
     {
         GotoXY(x, global::playerMovableRect.Top - 1);
         printf("■");
-        //putchar('@');
+        
     }
 
     for (int x = global::playerMovableRect.Left - 1; x < global::playerMovableRect.Right + 1; x++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
         GotoXY(x, global::playerMovableRect.Bottom + 1);
         printf("■");
-        //putchar('@');
+       
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
         GotoXY(global::playerMovableRect.Left - 1, y);
         printf("■");
-        //putchar('@');
+        
     }
 
     for (int y = global::playerMovableRect.Top - 1; y < global::playerMovableRect.Bottom + 1; y++) // 이동 불가지점보다 1칸씩 밖에 @ 그리기 
     {
         GotoXY(global::playerMovableRect.Right + 1, y);
         printf("■");
-        //putchar('@');
+        
     }
     setColor(15);
 }
@@ -1093,22 +1091,22 @@ void DrawHomeRect()
     for (int i = global::home_zone_up.w; i <= global::home_zone_up.s; i++) {
         GotoXY(global::home_zone_up.d, i);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = global::home_zone_down.w; i <= global::home_zone_down.s; i++) {
         GotoXY(global::home_zone_up.d, i);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = global::home_zone_up.a; i < global::home_zone_up.d; i++) {
         GotoXY(i, global::home_zone_up.s);
         printf("■");
-        // putchar('@');
+        
     }
     for (int i = global::home_zone_down.a; i < global::home_zone_down.d; i++) {
         GotoXY(i, global::home_zone_down.w);
         printf("■");
-        // putchar('@');
+        
     }
     setColor(15); // 기존색으로 복귀
 }
@@ -1287,12 +1285,12 @@ void DrawAtkRect() {
     for (int i = global::atk_zone.w; i <= global::atk_zone.s; i++) {
         GotoXY(global::atk_zone.a, i);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = 2; i <= 8; i++) {
         GotoXY(global::atk_zone.d, i);
         printf("■");
-        //putchar('@');
+        
     }
     setColor(15); // 기존색으로 복귀
 }
@@ -1304,12 +1302,12 @@ void DrawHpRect() {
     for (int i = global::hp_zone.w; i <= global::hp_zone.s; i++) {
         GotoXY(global::hp_zone.a, i);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = 2; i <= 8; i++) {
         GotoXY(global::hp_zone.d, i);
         printf("■");
-        //putchar('@');
+        
     }
     setColor(15); // 기존색으로 복귀
 }
@@ -1321,12 +1319,12 @@ void DrawGoldRect() {
     for (int i = global::gold_zone.w; i <= global::gold_zone.s; i++) {
         GotoXY(global::gold_zone.a, i);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = 21; i <= 27; i++) {
         GotoXY(global::gold_zone.d, i);
         printf("■");
-        //putchar('@');
+        
     }
     setColor(15); // 기존색으로 복귀
 }
@@ -1337,30 +1335,37 @@ void DrawDungeonRect() { //
     for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) { // top- 1 에서 임시로 +1로 변경
         GotoXY(90, y);
         printf("■");
-        //putchar('@');
+        
     }
     for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(89, y);
         printf("■");
-        //putchar('@');
+        
     }
     for (int y = global::playerMovableRect.Top; y < global::playerMovableRect.Bottom - 4; y++) {
         GotoXY(88, y);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = 91; i < 118; i++) {
         GotoXY(i, 12);
         printf("■");
-        //putchar('@');
+        
     }
     for (int i = 13; i < 17; i++) {
         GotoXY(96, i);
         printf("■");
-        //putchar('@');
+        
         GotoXY(112, i);
         printf("■");
-        //putchar('@');
+        
+    }
+    
+
+    setColor(9);
+    for (int i = 97; i < 112; i++) {
+        GotoXY(i, 13);
+        printf("■");
     }
     setColor(15);
 }
@@ -1429,9 +1434,8 @@ void RunCursorSelectionMenu()
 }
 
 
-/// <summary>
-/// 게임 설명 창 그리기
-/// </summary>
+
+// 게임 설명 창 그리기
 void RenderTutorial()
 {
     int x = 10;
@@ -1472,9 +1476,8 @@ void RenderTutorial()
     std::cout << "<< [Y] 누르면 첫화면으로 >>" << std::endl;
 }
 
-/// <summary>
-/// 게임 설명 창
-/// </summary>
+
+// 게임 설명 창
 void TutorialPage()
 {
     CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
@@ -1513,18 +1516,16 @@ void TutorialPage()
     }
 }
 
-/// <summary>
-/// 콘솔창 종료
-/// </summary>
+
+// 콘솔창 종료
 void QuitGame()
 {
     system("cls");
     exit(EXIT_FAILURE);
 }
 
-/// <summary>
-/// 방향키 움직이기, 화살표 출력, clamp 함수 넣어 테스트 해보아야함
-/// </summary>
+
+// 방향키 움직이기, 화살표 출력, clamp 함수 넣어 테스트 해보아야함
 void MoveSelectMenu()
 {
     DrawPlayer(false);
@@ -1543,7 +1544,7 @@ void MoveSelectMenu()
         if (!bDownKeyPressedInMenu && now - lastMoveTime >= moveCooldown)
         {
             bDownKeyPressedInMenu = true;
-            global::input::Set(global::input::DOWN_KEY_INDEX, false); // ✅ 추가됨!
+            global::input::Set(global::input::DOWN_KEY_INDEX, false); //  추가됨!
 
             if (global::curPlayerPos.Y < 17)
             {
@@ -1551,7 +1552,7 @@ void MoveSelectMenu()
                 global::curPlayerPos.Y++;
                 lastMoveTime = now;
 
-                DrawPlayer(true);  // ✅ 이동 후 화면 갱신
+                DrawPlayer(true);  //  이동 후 화면 갱신
             }
         }
     }
@@ -1566,7 +1567,7 @@ void MoveSelectMenu()
         if (!bUpKeyPressedInMenu && now - lastMoveTime >= moveCooldown)
         {
             bUpKeyPressedInMenu = true;
-            global::input::Set(global::input::UP_KEY_INDEX, false); // ✅ 추가됨!
+            global::input::Set(global::input::UP_KEY_INDEX, false); //  추가됨!
 
             if (global::curPlayerPos.Y > 15)
             {
@@ -1574,7 +1575,7 @@ void MoveSelectMenu()
                 global::curPlayerPos.Y--;
                 lastMoveTime = now;
 
-                DrawPlayer(true);  // ✅ 위로 이동 출력
+                DrawPlayer(true);  //  위로 이동 출력
             }
         }
     }
@@ -1608,9 +1609,8 @@ void MoveSelectMenu()
     }
 }
 
-/// <summary>
-/// 오프닝 메세지, 메뉴
-/// </summary>
+
+// 오프닝 메세지, 메뉴
 void RenderOpening()
 {
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -1618,8 +1618,7 @@ void RenderOpening()
 
     int x = 23;
     int y = 5;
-    GotoXY(global::msg.x, global::msg.y);
-    printf("x: %d, y: %d", global::curPlayerPos.X, global::curPlayerPos.Y);
+    
     GotoXY(x, y);
     std::cout << "...@@@@@@@@..@@......@@........@@........@@.......@@......@@.......@@....." << std::endl;
     GotoXY(x, y + 1);
@@ -1650,9 +1649,8 @@ void RenderOpening()
     std::cout << "[ 박준혁   윤동민   김예은 ]" << std::endl;
 }
 
-/// <summary>
-/// </summary>게임 플레이 전 오프닝 화면
-/// <returns></returns>
+
+// 게임 플레이 전 오프닝 화면
 void OpeningTitle()
 {
     CONSOLE_CURSOR_INFO cursorInfo = { 0, }; // 커서 관련 정보 구조체
