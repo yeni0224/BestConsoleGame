@@ -155,15 +155,15 @@ namespace global
 
 
     std::vector<Quest> questList = {
-   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 1 }, // 임시로 1 해둠 나중에 20으로 변경
-   { "ATK 강화 1", "공격력 3회 강화", Quest::LOCKED, 0, 3 },
+   { "초보 광부", "골드 20원 수집", Quest::LOCKED, 0, 20 }, // 임시로 1 해둠 나중에 20으로 변경
+   { "ATK 강화 1", "공격력 3회 강화성공", Quest::LOCKED, 0, 3 },
    { "몬스터A 처치", "몬스터A 처치", Quest::LOCKED, false,  true},
-   { "HP 강화 1", "체력 3회 강화", Quest::LOCKED, 0, 3 },
-   { "ATK 강화 2", "공격력 5회 강화", Quest::LOCKED, 3, 5 },
-   { "HP 강화 2", "체력 5회 강화", Quest::LOCKED, 3, 5 },
+   { "HP 강화 1", "체력 3회 강화성공", Quest::LOCKED, 0, 3 },
+   { "ATK 강화 2", "공격력 5회 강화성공", Quest::LOCKED, 3, 5 },
+   { "HP 강화 2", "체력 5회 강화성공", Quest::LOCKED, 3, 5 },
    { "몬스터B 처치", "몬스터B 처치", Quest::LOCKED, false,  true},
-   { "ATK 강화 3", "공격력 8회 강화", Quest::LOCKED, 5, 8 },
-   { "HP 강화 3", "체력 8회 강화", Quest::LOCKED, 5, 8 }
+   { "ATK 강화 3", "공격력 8회 강화성공", Quest::LOCKED, 5, 8 },
+   { "HP 강화 3", "체력 8회 강화성공", Quest::LOCKED, 5, 8 }
     };
     std::string questMessage = "";
 
@@ -220,7 +220,7 @@ namespace global
     SMALL_RECT consoleScreenSize; // 콘솔 화면 크기
     SMALL_RECT playerMovableRect = { 5, 5, 30, 30 }; // 플레이어 이동 가능 영역
 
-    const int playerMoveSpeed = 50; // 플레이어 이동 속도 : 작을수록 빠름
+    const int playerMoveSpeed = 20; // 플레이어 이동 속도 : 작을수록 빠름
 
     // 골드 시스템 추가
     ULONGLONG questMessageStartTime = 0; // 퀘스트 메시지 출력 시간 타이머
@@ -485,7 +485,7 @@ void AutoMoneyBuy() {
 void AutoMoney() {
     static ULONGLONG autoGoldTime = GetTickCount64();
 
-    if (GetTickCount64() - autoGoldTime >= 2000) { // 2초(2000ms)마다 증가
+    if (GetTickCount64() - autoGoldTime >= 3000) { // 3초(3000ms)마다 증가
         global::gold += global::purchaseCount * 1;
         autoGoldTime = GetTickCount64(); // 타이머 초기화
     }
@@ -543,7 +543,7 @@ void QuestAccept() {
 
                 if (q.state == Quest::LOCKED) {
                     q.state = Quest::IN_PROGRESS;
-                    ShowQuestMessage("'" + q.description + "' 퀘스트를 수락했습니다.");
+                    ShowQuestMessage("'" + q.name + "' 퀘스트를 수락했습니다.");
                     global::GameSound::PlaySFX(2);
                 }
                 else {
@@ -577,7 +577,7 @@ void CheckAcceptedQuest() {
             bool found = false;
             for (const auto& q : global::questList) {
                 if (q.state == Quest::IN_PROGRESS) {
-                    std::string msg = "퀘스트: " + q.name + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")             ";
+                    std::string msg = "퀘스트: " + q.description + " (" + std::to_string(q.current) + "/" + std::to_string(q.goal) + ")            ";
                     global::GameSound::PlaySFX(2);
                     ShowQuestMessage(msg); // 3초간 중앙 출력
                     found = true;
@@ -865,7 +865,7 @@ void UpdateGoldMining() {
     if (global::isMining) { // 골드존 내부에서만 실행
         static ULONGLONG miningTime = GetTickCount64();
 
-        if (GetTickCount64() - miningTime >= 1000) { // 0.5초(500ms)마다 증가
+        if (GetTickCount64() - miningTime >= 500) { // 0.5초(500ms)마다 증가
             if (global::goldCounter < 10) { // 최대 10까지 증가
                 global::goldCounter++;
                 GotoXY(global::msg.x, global::msg.y);
@@ -1317,7 +1317,7 @@ void DrawHpRect() {
 void DrawGoldRect() {
     setColor(6); //노란색
     GotoXY(global::gold_word_zone.x, global::gold_word_zone.y);
-    printf("MINE 1G/S");
+    printf("MINE 2G/S");
     for (int i = global::gold_zone.w; i <= global::gold_zone.s; i++) {
         GotoXY(global::gold_zone.a, i);
         printf("■");
@@ -1740,6 +1740,7 @@ void startGame()
 
 int main()
 {
+    srand(static_cast<unsigned int>(time(nullptr))); // 시드를 시간으로 변경
     global::GameSound::GameSoundInit();
     global::time::InitTime(); // 시간 초기화
     global::GameSound::PlayBGM(0);
