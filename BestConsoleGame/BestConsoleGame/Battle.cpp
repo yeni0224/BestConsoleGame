@@ -516,31 +516,17 @@ namespace global {
                 }
 
                 if (monsterRand < 1) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!" , monsterA.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterA.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
-                    }
+                    player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                    charging = 1;
 
                 }
                 else if (monsterRand < 6) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterA.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
-                    }
+                    player.currentHeart -= monsterA.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
+                    charging = 1;
                 }
                 else {
                     charging += 1;
@@ -575,31 +561,17 @@ namespace global {
                 }
 
                 if (monsterRand < 1) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterB.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2);
-                    }
+                    player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
+                    charging = 1;
 
                 }
                 else if (monsterRand < 6) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterB.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack);
-                    }
+                    player.currentHeart -= monsterB.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
+                    charging = 1;
                 }
                 else {
                     charging += 1;
@@ -618,7 +590,7 @@ namespace global {
                 }                
                 if (poisonFlag)
                 {
-                    player.currentHeart -= player.currentHeart / 25;
+                    player.currentHeart -= player.heart / 25;
                 }
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
@@ -643,31 +615,17 @@ namespace global {
                 }
 
                 if (bossRand < 2) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2);
-                    }
+                    player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
+                    charging = 1;
 
                 }
                 else if (bossRand < 6) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack* charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack);
-                    }
+                    player.currentHeart -= monsterC.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack* charging);
+                    charging = 1;
                 }
                 else if(bossRand < 7){
                     charging += 1;
@@ -675,66 +633,33 @@ namespace global {
                     printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
                 }
                 else if (bossRand < 8) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack/2 * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack/2 * charging);
-                        GotoXY(1, 3);
-                        printf("독이 묻어 매턴 %d 피해를 받습니다", player.heart /25);
-                        setColor(13);
-                        std::cout << monsterC.image2;
-                        setColor(15);
-                        while (GetTickCount64() - nowTick < 500) {}
-                        imageClear2();
-                        poisonFlag = true;
-                        count = 3;
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack/2;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack/2);
-                        GotoXY(1, 3);
-                        printf("독이 묻어 3턴 동안 %d 피해를 받습니다", player.heart / 25);
-                        setColor(13);
-                        std::cout << monsterC.image2;
-                        setColor(15);
-                        while (GetTickCount64() - nowTick < 500) {}
-                        imageClear2();
-                        poisonFlag = true;
-                        count = 3;
-                    }
+                    player.currentHeart -= monsterC.attack / 2 * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2 * charging);
+                    GotoXY(1, 3);
+                    printf("독이 묻어 매턴 %d 피해를 받습니다", player.heart / 25);
+                    setColor(13);
+                    std::cout << monsterC.image2;
+                    setColor(15);
+                    while (GetTickCount64() - nowTick < 500) {}
+                    imageClear2();
+                    poisonFlag = true;
+                    count = 3;
+                    charging = 1;
                 }
                 else {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 3 * charging;
-                        GotoXY(1, 2);
-                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
-                        for (int i = 1; i < 16; i++)
-                        {
-                            while (true) {
-                                if (GetTickCount64() - nowTick > 50) {
-                                    setColor(i);
-                                    std::cout << monsterC.image1;
-                                    nowTick = GetTickCount64();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack * 3;
-                        GotoXY(1, 2);
-                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3);
-                        for (int i = 1; i < 16; i++)
-                        {
-                            while (true) {
-                                if (GetTickCount64() - nowTick > 50) {
-                                    setColor(i);
-                                    std::cout << monsterC.image1;
-                                    nowTick = GetTickCount64();
-                                    break;
-                                }
+                    player.currentHeart -= monsterC.attack * 3 * charging;
+                    GotoXY(1, 2);
+                    printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
+                    charging = 1;
+                    for (int i = 1; i < 16; i++)
+                    {
+                        while (true) {
+                            if (GetTickCount64() - nowTick > 50) {
+                                setColor(i);
+                                std::cout << monsterC.image1;
+                                nowTick = GetTickCount64();
+                                break;
                             }
                         }
                     }
@@ -759,36 +684,21 @@ namespace global {
                 printf("회복! 플레이어가 체력%d 회복했습니다!", player.heart / 5);
                 
                 if (monsterRand < 1) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterA.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2);
-                    }
-
+                    player.currentHeart -= monsterA.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * 2 * charging);
+                    charging = 1;
                 }
                 else if (monsterRand < 5) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterA.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterA.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack);
-                    }
+                    player.currentHeart -= monsterA.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterA.attack * charging);
+                    charging = 1;
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
+                    printf("몬스터가 기를 모았습니다. 다음 피해는 %d배입니다!", charging);
                 }
             }
             else if (!monsterB.hpFlag)
@@ -801,36 +711,21 @@ namespace global {
                 printf("회복! 플레이어가 체력%d 회복했습니다!", player.heart / 5);
                 
                 if (monsterRand < 1) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterB.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2);
-                    }
-
+                    player.currentHeart -= monsterB.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * 2 * charging);
+                    charging = 1;
                 }
                 else if (monsterRand < 5) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterB.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterB.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack);
-                    }
+                    player.currentHeart -= monsterB.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterB.attack * charging);
+                    charging = 1;
                 }
                 else {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
+                    printf("몬스터가 기를 모았습니다. 다음 피해는 %d배입니다!", charging);
                 }
             }
             else if (!monsterC.hpFlag)
@@ -839,9 +734,12 @@ namespace global {
                 if (count > 0)
                 {
                     GotoXY(1, 3);
-                    printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count , player.heart / 25);
+                    printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count, player.heart / 25);
                 }
-                
+                if (poisonFlag)
+                {
+                    player.currentHeart -= player.heart / 25;
+                }
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
                 if ((player.currentHeart + player.heart / 5) > player.heart) player.currentHeart = player.heart;
@@ -851,98 +749,50 @@ namespace global {
 
                 
                 if (bossRand < 2) {//몬스터 크리티컬
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack * 2;
-                        GotoXY(1, 2);
-                        printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2);
-                    }
-
+                    player.currentHeart -= monsterC.attack * 2 * charging;//차징 수 만큼 곱
+                    GotoXY(1, 2);
+                    printf("치명적인 피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 2 * charging);
+                    charging = 1;
                 }
                 else if (bossRand < 6) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * charging;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * charging);
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack);
-                    }
+                    player.currentHeart -= monsterC.attack * charging;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack* charging);
+                    charging = 1;
                 }
                 else if (bossRand < 7) {
                     charging += 1;
                     GotoXY(1, 2);
-                    printf("몬스터가 기를 모았습니다. 다음 피해는 두배입니다!");
+                    printf("몬스터가 기를 모았습니다. 다음 피해는 %d배입니다!", charging);
                 }
                 else if (bossRand < 8) {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack / 2 * charging;
-                        count = 3;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2 * charging);
-                        GotoXY(1, 3);
-                        printf("독이 묻어 %d턴 %d 피해를 받습니다", count, player.heart / 25);
-                        setColor(13);
-                        std::cout << monsterC.image2;
-                        setColor(15);
-                        while (GetTickCount64() - nowTick < 500) {}
-                        imageClear2();
-                        poisonFlag = true;
-                        charging = 1;
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack / 2;
-                        count = 3;
-                        GotoXY(1, 2);
-                        printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2);
-                        GotoXY(1, 3);
-                        printf("독이 묻어 %d턴 동안 %d 피해를 받습니다", count , player.heart / 25);
-                        setColor(13);
-                        std::cout << monsterC.image2;
-                        setColor(15);
-                        while (GetTickCount64() - nowTick < 500) {}
-                        imageClear2();
-                        poisonFlag = true;
-                    }
+                    player.currentHeart -= monsterC.attack / 2 * charging;
+                    count = 3;
+                    GotoXY(1, 2);
+                    printf("피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack / 2 * charging);
+                    GotoXY(1, 3);
+                    printf("독이 묻어 %d턴 %d 피해를 받습니다", count, player.heart / 25);
+                    setColor(13);
+                    std::cout << monsterC.image2;
+                    setColor(15);
+                    while (GetTickCount64() - nowTick < 500) {}
+                    imageClear2();
+                    poisonFlag = true;
+                    charging = 1;
                 }
                 else {
-                    if (charging > 1) {
-                        player.currentHeart -= monsterC.attack * 3 * charging;
-                        GotoXY(1, 2);
-                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
-                        for (int i = 1; i < 16; i++)
-                        {
-                            while (true) {
-                                if (GetTickCount64() - nowTick > 50){
-                                    setColor(i);
-                                    std::cout << monsterC.image1;
-                                    nowTick = GetTickCount64();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        player.currentHeart -= monsterC.attack * 3;
-                        GotoXY(1, 2);
-                        printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3);
-                        for (int i = 1; i < 16; i++)
-                        {
-                            while (true) {
-                                if (GetTickCount64() - nowTick > 50) {
-                                    setColor(i);
-                                    std::cout << monsterC.image1;
-                                    nowTick = GetTickCount64();
-                                    break;
-                                }
+                    player.currentHeart -= monsterC.attack * 3 * charging;
+                    GotoXY(1, 2);
+                    printf("속성피해! 플레이어가 %d 피해를 받았습니다!", monsterC.attack * 3 * charging);
+                    charging = 1;
+                    for (int i = 1; i < 16; i++)
+                    {
+                        while (true) {
+                            if (GetTickCount64() - nowTick > 50) {
+                                setColor(i);
+                                std::cout << monsterC.image1;
+                                nowTick = GetTickCount64();
+                                break;
                             }
                         }
                     }
