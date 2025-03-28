@@ -178,6 +178,7 @@ namespace global {
                 if (player.currentHeart <= 0)
                 {
                     system("cls");
+                    global::hp = 10;
                     ShowQuestMessage("플레이어가 사망했습니다."); // 메시지 출력 시간 조절 함수
                     global::GameSound::StopBGM();
                     startGame();//로비화면 출력
