@@ -1511,6 +1511,7 @@ void TutorialPage()
         if (global::input::IsYKeyOn())
         {
             system("cls");
+            DrawMovableRect(); // 테두리 벽 생성
             break;
         }
     }

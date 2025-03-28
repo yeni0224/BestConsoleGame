@@ -420,8 +420,7 @@ namespace global {
                         WasEnterKeyPressed = false;
                     }
                 }
-
-                if (elapsedTick >= 500 && elapsedTick <= 999)
+                if (elapsedTick >= 150 )
                 {
                     GotoXY(x, y);
                     std::cout << symbols[index] << std::flush; // 화면 덮어쓰기
@@ -515,13 +514,14 @@ namespace global {
         void patternAttack(int playerRand, int monsterRand, int bossRand, int& charging)
         {
             ULONGLONG nowTick = GetTickCount64();
-
+            global::GameSound::PlaySFX(4);
             if (!monsterA.hpFlag)
             {
+                
                 pHp = player.currentHeart;
                 mHp = monsterA.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
-                    global::GameSound::PlaySFX(4);
+                    //global::GameSound::PlaySFX(4);
                     monsterA.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);
@@ -533,6 +533,7 @@ namespace global {
                 else {
                     monsterA.currentHeart -= player.attack;
                     GotoXY(1, 1);
+                    //global::GameSound::PlaySFX(4);
                     printf("공격! 몬스터에게 %d 피해를 주었습니다!", player.attack);
                     if (monsterA.currentHeart <= 0)
                     {
@@ -565,7 +566,7 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterB.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
-                    global::GameSound::PlaySFX(4);
+                    //global::GameSound::PlaySFX(4);
                     monsterB.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);
@@ -577,6 +578,7 @@ namespace global {
                 else {
                     monsterB.currentHeart -= player.attack;
                     GotoXY(1, 1);
+                    //global::GameSound::PlaySFX(4);
                     printf("공격! 몬스터에게 %d 피해를 주었습니다!", player.attack);
                     if (monsterB.currentHeart <= 0)
                     {
@@ -620,7 +622,7 @@ namespace global {
                 pHp = player.currentHeart;
                 mHp = monsterC.currentHeart;
                 if (playerRand == 0) {//플레이어 크리티컬
-                    global::GameSound::PlaySFX(4);
+                    //global::GameSound::PlaySFX(4);
                     monsterC.currentHeart -= player.attack * 2; // 몬스터 hp 감소
                     GotoXY(1, 1);
                     printf("치명적인 공격! 몬스터에게 %d 피해를 주었습니다!", player.attack * 2);
@@ -694,6 +696,7 @@ namespace global {
         }
         void patternRecovery(int playerRand, int monsterRand, int bossRand, int& charging)
         {
+            global::GameSound::PlaySFX(2);
             ULONGLONG nowTick = GetTickCount64();
             if (!monsterA.hpFlag)
             {
